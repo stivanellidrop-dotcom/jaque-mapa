@@ -119,6 +119,7 @@ tailwind.config = {
     <a href="#fases" class="nav-link px-4 py-2 hover:bg-surface flex items-center gap-2.5"><i data-lucide="list-ordered" class="w-4 h-4"></i> Fases F6.0–F6.10</a>
     <a href="#stack" class="nav-link px-4 py-2 hover:bg-surface flex items-center gap-2.5"><i data-lucide="layers" class="w-4 h-4"></i> Stack técnica</a>
     <a href="#workshop" class="nav-link px-4 py-2 hover:bg-surface flex items-center gap-2.5"><i data-lucide="graduation-cap" class="w-4 h-4"></i> Workshop</a>
+    <a href="#sala-secreta" class="nav-link px-4 py-2 hover:bg-surface flex items-center gap-2.5"><i data-lucide="key-round" class="w-4 h-4"></i> Sala Secreta <span class="ml-auto text-[10px] px-1.5 py-0.5 rounded-full bg-accent2 text-white">NOVO</span></a>
     <a href="#pesquisas" class="nav-link px-4 py-2 hover:bg-surface flex items-center gap-2.5"><i data-lucide="microscope" class="w-4 h-4"></i> Pesquisas</a>
     <a href="#riscos" class="nav-link px-4 py-2 hover:bg-surface flex items-center gap-2.5"><i data-lucide="shield-alert" class="w-4 h-4"></i> Riscos</a>
     <a href="#roadmap" class="nav-link px-4 py-2 hover:bg-surface flex items-center gap-2.5"><i data-lucide="map" class="w-4 h-4"></i> Roadmap pós-MVP</a>
@@ -586,6 +587,69 @@ graph TB
       <li>▸ "Antes de entregar grande: roteiro → aprovação → primeira amostra → aprovação → resto." <span class="not-italic text-xs">[02:22:14]</span></li>
       <li>▸ "Cópia de segurança antes de modificar." <span class="not-italic text-xs">[00:21:19]</span></li>
     </ul>
+  </div>
+</section>
+
+<section id="sala-secreta" class="fade-in scroll-mt-20">
+  <p class="text-xs text-accent2 font-mono uppercase tracking-widest mb-2">09b · Sala Secreta · descobertas extras (3h20min)</p>
+  <h2 class="text-3xl font-bold mb-2">5 mecanismos novos que mudam o V2.</h2>
+  <p class="text-muted mb-8 max-w-3xl">2 vídeos exclusivos do Denderson (SS1 68min + SS2 134min). Transcritos e cruzados com todo material anterior. Veredito: <strong class="text-white">30% repetição + 50% aprofundamento ao vivo + 20% pitch comunidade R$ 947/ano</strong> — comunidade NÃO vale comprar, conteúdo extraído.</p>
+
+  <div class="grid lg:grid-cols-2 gap-6 mb-8">
+    <div class="bg-surface border-l-4 border-accent2 rounded-r-xl p-5">
+      <h4 class="font-bold text-accent2 mb-3 flex items-center gap-2"><i data-lucide="zap" class="w-5 h-5"></i> 5 conceitos novos valiosos</h4>
+      <ol class="text-sm space-y-3 list-decimal pl-5">
+        <li><strong class="text-white">Pirâmide Claude Max + Tmux + Telegram</strong> <span class="text-xs text-muted">[ss2 00:59:30]</span><br><span class="text-muted">Instala Claude Code CLI na VPS + tmux 24h + plugin Telegram Anthropic = Opus rodando como agente via Max que você JÁ paga · custo marginal R$ 0. Substitui DeepSeek/Plus.</span></li>
+        <li><strong class="text-white">Debounce 10s</strong> <span class="text-xs text-muted">[ss1 00:12:55]</span><br><span class="text-muted">Middleware Telegram que junta mensagens picadas/áudios curtos antes de responder. Crítico pro seu jeito de mandar mensagem.</span></li>
+        <li><strong class="text-white">SOUL.md reescrito por IA externa</strong> <span class="text-xs text-muted">[ss2 01:26:42]</span><br><span class="text-muted">Você NÃO reescreve sozinho. Pede ao Claude desktop "reescreve SOUL da Jaque baseado em tudo que sabe de mim". Aproveita memória que outra IA já tem de você.</span></li>
+        <li><strong class="text-white">RAM matemática concreta</strong> <span class="text-xs text-muted">[ss2 01:01:23]</span><br><span class="text-muted">OpenClaw = 1.5 GB disco · cada workspace = 500-700 MB RAM. KVM2 8GB cabe 1 mestre + 5 subs com folga. Substitui chute do V2.</span></li>
+        <li><strong class="text-white">Blacklist explícita user_id</strong> <span class="text-xs text-muted">[ss1 00:11:46]</span><br><span class="text-muted">Além de whitelist, BLOCKED list. Caso real dele: esposa "Jaini" conversou 6 mensagens sem perceber que era bot. Anti-impostor.</span></li>
+      </ol>
+    </div>
+
+    <div class="bg-surface border-l-4 border-warn rounded-r-xl p-5">
+      <h4 class="font-bold text-warn mb-3 flex items-center gap-2"><i data-lucide="alert-triangle" class="w-5 h-5"></i> Mudança de tese importante</h4>
+      <p class="text-sm text-muted mb-3"><strong class="text-white">Risco Meta Ads</strong> <span class="text-xs">[ss2 02:11:00]</span><br>Antes: "Meta ban é paranoia." Agora: ele admite "Meta está banindo muitas contas conectadas a Claude e a agentes" — NÃO conecta agente à BM dele por isso. Mitigação inexistente.</p>
+      <p class="text-sm text-muted"><strong class="text-white">Impacto pra Jaque:</strong> se você quiser integrar Meta Ads (anúncios FB/IG) na Jaque fase 2, espera evolução — risco alto pelo retorno baixo de automatizar isso.</p>
+    </div>
+  </div>
+
+  <div class="bg-gradient-to-br from-surface to-surface2 border border-border rounded-xl p-6 mb-6">
+    <h4 class="font-bold mb-4 flex items-center gap-2"><i data-lucide="briefcase" class="w-5 h-5 text-accent"></i> Case real: advogado Caço Norte <span class="text-xs text-muted">[ss2 02:13:00]</span></h4>
+    <p class="text-sm text-muted">1 agente principal + <strong class="text-white">21 sub-agentes</strong> peticionando, baixando movimentações do E-Proc, escolhendo se peticiona via Telegram, protocolando. <strong class="text-accent">Prova viva</strong> de que a topologia "1 mestre + N subs" do nosso V2 escala em domínio especializado complexo. Confirma decisão D-T1 (1 mestre + 3 subs MVP, expandindo conforme necessidade).</p>
+  </div>
+
+  <div class="grid sm:grid-cols-2 gap-4 mb-6">
+    <div class="bg-surface border border-border rounded-xl p-5">
+      <p class="text-xs text-muted uppercase mb-2">Ferramentas novas mencionadas</p>
+      <ul class="text-sm space-y-1.5">
+        <li>▸ <strong class="text-white">Hermes</strong> — clone OpenClaw com memória evolutiva nativa. Plano B se Active Memory falhar.</li>
+        <li>▸ <strong class="text-white">NanoClaude</strong> — 4k linhas (vs 520k OpenClaw). Ideal pra SDR leve.</li>
+        <li>▸ <strong class="text-white">GoClaude</strong> — segurança extra mas docker travando.</li>
+        <li>▸ <strong class="text-white">Cody Claude</strong> — derivado.</li>
+      </ul>
+    </div>
+    <div class="bg-surface border border-border rounded-xl p-5">
+      <p class="text-xs text-muted uppercase mb-2">Outros casos citados</p>
+      <ul class="text-sm space-y-1.5">
+        <li>▸ Supermercado 42 lojas — agente gerencia operação distribuída</li>
+        <li>▸ Wajze / Cadu — case marketing</li>
+        <li>▸ Carrosséis comercial — produção em escala</li>
+        <li>▸ Rita Machado — R$ milhões artesanato católico (SS1)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="bg-bg border border-accent/40 rounded-xl p-6">
+    <h4 class="font-bold mb-3 flex items-center gap-2 text-accent"><i data-lucide="git-pull-request" class="w-5 h-5"></i> Patches aplicados ao V2 DELTA</h4>
+    <ul class="text-sm space-y-2">
+      <li><strong class="text-accent2">P-A:</strong> D1 ganha <strong class="text-white">opção C "Claude Max via Tmux"</strong> (custo R$ 5-15/mês total · LLM zero marginal usando sua Max).</li>
+      <li><strong class="text-accent2">P-B:</strong> Nova <strong class="text-white">D9 — debounce 10s</strong> default ON no middleware Telegram.</li>
+      <li><strong class="text-accent2">P-C:</strong> Nova <strong class="text-white">D8 — SOUL.md reescrito por Claude desktop</strong> que conhece você, não por você manualmente.</li>
+      <li><strong class="text-accent2">P-D:</strong> Nova <strong class="text-white">D10 — BLOCKED_USER_IDS</strong> além do whitelist (anti-impostor caso Jaini).</li>
+      <li><strong class="text-accent2">P-E:</strong> RAM budget V2 substituído por fórmula Sala Secreta: <code class="bg-bg px-1 rounded text-xs">1.5GB disco + 700MB × N_workspaces</code> → 1 mestre + 3 subs = 2.8GB.</li>
+    </ul>
+    <p class="text-xs text-muted mt-3 italic">Veredito final: vale ter assistido (SS1 inteiro · SS2 só primeiros 70min). Comunidade R$ 947/ano: <strong class="text-danger">não compra</strong> — extraímos tudo. Detalhe completo em <code class="bg-bg px-1 rounded">docs/research/22-sala-secreta-sintese.md</code>.</p>
   </div>
 </section>
 
