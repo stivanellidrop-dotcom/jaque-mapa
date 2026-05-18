@@ -1,0 +1,973 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Jaque · Mapa de Planejamento · v2-DELTA</title>
+<meta name="description" content="Plano consolidado da reconfiguração do agente OpenClaw Jaque — decisões interativas, custos, fases, riscos.">
+<meta property="og:title" content="Jaque · Sessão Planejamento 1.0">
+<meta property="og:description" content="Mapa interativo do plano de reconfiguração do agente OpenClaw.">
+<meta property="og:type" content="website">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        bg:      '#0a0a0f',
+        surface: '#13141a',
+        surface2:'#1c1d26',
+        border:  '#2a2b36',
+        accent:  '#00d4aa',
+        accent2: '#7c3aed',
+        warn:    '#f59e0b',
+        danger:  '#ef4444',
+        ok:      '#10b981',
+        muted:   '#9ca3af',
+      },
+      fontFamily: {
+        sans: ['Inter','ui-sans-serif','system-ui'],
+        mono: ['JetBrains Mono','ui-monospace','SFMono-Regular','monospace'],
+      },
+      boxShadow: { glow: '0 0 60px -10px rgba(0,212,170,0.35)' }
+    }
+  }
+}
+</script>
+
+<style>
+  html,body{background:#0a0a0f;color:#e5e7eb;font-family:'Inter',ui-sans-serif,system-ui}
+  ::selection{background:#00d4aa;color:#0a0a0f}
+  ::-webkit-scrollbar{width:10px;height:10px}
+  ::-webkit-scrollbar-track{background:#0a0a0f}
+  ::-webkit-scrollbar-thumb{background:#2a2b36;border-radius:8px}
+  ::-webkit-scrollbar-thumb:hover{background:#3a3b46}
+  .nav-link.active{background:#1c1d26;color:#00d4aa;border-left:3px solid #00d4aa}
+  .nav-link{border-left:3px solid transparent}
+  details>summary{cursor:pointer;list-style:none}
+  details>summary::-webkit-details-marker{display:none}
+  details[open]>summary .chev{transform:rotate(90deg)}
+  .chev{transition:transform .2s ease}
+  .pulse-dot{position:relative}
+  .pulse-dot::before{content:'';position:absolute;left:-14px;top:50%;transform:translateY(-50%);width:8px;height:8px;border-radius:50%;background:#00d4aa;box-shadow:0 0 0 0 rgba(0,212,170,.7);animation:pulse 2s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(0,212,170,.6)}70%{box-shadow:0 0 0 14px rgba(0,212,170,0)}100%{box-shadow:0 0 0 0 rgba(0,212,170,0)}}
+  .fade-in{animation:fadeIn .5s ease both}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  .opt-card{cursor:pointer;transition:all .15s ease}
+  .opt-card:hover{border-color:#00d4aa;background:#1c1d26}
+  .opt-card.selected{border-color:#00d4aa;background:rgba(0,212,170,.08);box-shadow:0 0 0 2px rgba(0,212,170,.35)}
+  .toast{position:fixed;bottom:24px;right:24px;background:#10b981;color:#0a0a0f;padding:12px 18px;border-radius:10px;font-weight:600;box-shadow:0 10px 30px rgba(0,0,0,.5);opacity:0;transform:translateY(20px);transition:.25s;z-index:100}
+  .toast.show{opacity:1;transform:none}
+  @media print{
+    aside,header.top,#toast{display:none!important}
+    main{margin-left:0!important}
+    section{break-inside:avoid;page-break-inside:avoid}
+    .bg-surface,.bg-surface2{background:#fff!important;color:#000!important;border:1px solid #ccc}
+  }
+</style>
+</head>
+<body class="min-h-screen">
+
+<header class="top sticky top-0 z-40 bg-bg/80 backdrop-blur border-b border-border">
+  <div class="max-w-[1400px] mx-auto px-6 py-3 flex items-center gap-4 flex-wrap">
+    <div class="flex items-center gap-3">
+      <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-accent to-accent2 flex items-center justify-center font-bold text-bg">J</div>
+      <div>
+        <h1 class="text-sm font-bold leading-tight">Jaque · Sessão Planejamento 1.0</h1>
+        <p class="text-xs text-muted leading-tight">v2-DELTA · 18 mai 2026 · OpenClaw self-hosted</p>
+      </div>
+    </div>
+    <div class="flex-1"></div>
+    <div class="hidden md:flex items-center gap-2 text-xs">
+      <span class="text-muted">Progresso:</span>
+      <div class="w-32 h-2 bg-surface2 rounded-full overflow-hidden">
+        <div id="progressBar" class="h-full bg-accent transition-all" style="width:0%"></div>
+      </div>
+      <span id="progressLabel" class="font-mono text-accent">0/5</span>
+    </div>
+    <button id="btnExport" class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-accent text-bg hover:bg-accent/90 flex items-center gap-1.5">
+      <i data-lucide="clipboard-copy" class="w-3.5 h-3.5"></i> Exportar
+    </button>
+    <button id="btnSave" class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-surface2 border border-border hover:border-accent flex items-center gap-1.5">
+      <i data-lucide="save" class="w-3.5 h-3.5"></i> Salvar
+    </button>
+    <button id="btnReset" class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-surface2 border border-border hover:border-danger hover:text-danger" title="Apagar respostas">
+      <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+    </button>
+  </div>
+</header>
+
+<div class="max-w-[1400px] mx-auto flex">
+
+<aside class="hidden lg:block w-64 shrink-0 sticky top-[60px] h-[calc(100vh-60px)] overflow-y-auto py-6 pr-3 text-sm">
+  <nav class="flex flex-col gap-0.5">
+    <a href="#visao" class="nav-link px-4 py-2 hover:bg-surface flex items-center gap-2.5"><i data-lucide="layout-dashboard" class="w-4 h-4"></i> Visão geral</a>
+    <a href="#feito" class="nav-link px-4 py-2 hover:bg-surface flex items-center gap-2.5"><i data-lucide="check-circle-2" class="w-4 h-4"></i> O que foi feito</a>
+    <a href="#arquitetura" class="nav-link px-4 py-2 hover:bg-surface flex items-center gap-2.5"><i data-lucide="git-fork" class="w-4 h-4"></i> Arquitetura</a>
+    <a href="#tomadas" class="nav-link px-4 py-2 hover:bg-surface flex items-center gap-2.5"><i data-lucide="badge-check" class="w-4 h-4"></i> Decisões tomadas</a>
+    <a href="#pendentes" class="nav-link px-4 py-2 hover:bg-surface flex items-center gap-2.5 font-semibold text-accent"><i data-lucide="alert-circle" class="w-4 h-4"></i> Decisões pendentes <span class="ml-auto text-[10px] px-1.5 py-0.5 rounded-full bg-accent text-bg" id="pendCount">5</span></a>
+    <a href="#custos" class="nav-link px-4 py-2 hover:bg-surface flex items-center gap-2.5"><i data-lucide="dollar-sign" class="w-4 h-4"></i> Custos</a>
+    <a href="#fases" class="nav-link px-4 py-2 hover:bg-surface flex items-center gap-2.5"><i data-lucide="list-ordered" class="w-4 h-4"></i> Fases F6.0–F6.10</a>
+    <a href="#stack" class="nav-link px-4 py-2 hover:bg-surface flex items-center gap-2.5"><i data-lucide="layers" class="w-4 h-4"></i> Stack técnica</a>
+    <a href="#workshop" class="nav-link px-4 py-2 hover:bg-surface flex items-center gap-2.5"><i data-lucide="graduation-cap" class="w-4 h-4"></i> Workshop</a>
+    <a href="#pesquisas" class="nav-link px-4 py-2 hover:bg-surface flex items-center gap-2.5"><i data-lucide="microscope" class="w-4 h-4"></i> Pesquisas</a>
+    <a href="#riscos" class="nav-link px-4 py-2 hover:bg-surface flex items-center gap-2.5"><i data-lucide="shield-alert" class="w-4 h-4"></i> Riscos</a>
+    <a href="#roadmap" class="nav-link px-4 py-2 hover:bg-surface flex items-center gap-2.5"><i data-lucide="map" class="w-4 h-4"></i> Roadmap pós-MVP</a>
+    <a href="#glossario" class="nav-link px-4 py-2 hover:bg-surface flex items-center gap-2.5"><i data-lucide="book-open" class="w-4 h-4"></i> Glossário</a>
+    <a href="#proximos" class="nav-link px-4 py-2 hover:bg-surface flex items-center gap-2.5"><i data-lucide="rocket" class="w-4 h-4"></i> Próximos passos</a>
+  </nav>
+</aside>
+
+<main class="flex-1 min-w-0 px-6 lg:px-10 py-10 space-y-24">
+
+<section id="visao" class="fade-in scroll-mt-20">
+  <p class="text-xs text-accent font-mono uppercase tracking-widest mb-2">01 · Visão geral</p>
+  <h2 class="text-4xl font-bold mb-4">Reconfigurar a Jaque sem queimar dinheiro nem segurança.</h2>
+  <p class="text-lg text-muted max-w-3xl mb-8">Plano consolidado para colocar o agente OpenClaw <strong class="text-white">"Jaque"</strong> do Igor em pé com memória persistente, heartbeats com circuit breaker e segurança 2026 (SOPS+age + Cloudflare Tunnel + whitelist Telegram). Tudo rodando na VPS Hostinger atual.</p>
+
+  <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-10">
+    <div class="bg-surface border border-border rounded-xl p-5"><p class="text-xs text-muted uppercase">Transcrição</p><p class="text-2xl font-bold mt-1">9.008</p><p class="text-xs text-muted">linhas / 6h workshop</p></div>
+    <div class="bg-surface border border-border rounded-xl p-5"><p class="text-xs text-muted uppercase">Pesquisas</p><p class="text-2xl font-bold mt-1">9</p><p class="text-xs text-muted">docs · ~150 KB</p></div>
+    <div class="bg-surface border border-border rounded-xl p-5"><p class="text-xs text-muted uppercase">Decisões para você</p><p class="text-2xl font-bold mt-1 text-accent">5</p><p class="text-xs text-muted">D1, D2, D3, D6, D7</p></div>
+    <div class="bg-surface border border-border rounded-xl p-5"><p class="text-xs text-muted uppercase">Custo recorrente</p><p class="text-2xl font-bold mt-1">R$ 12-50</p><p class="text-xs text-muted">por mês (mín–médio)</p></div>
+    <div class="bg-surface border border-border rounded-xl p-5"><p class="text-xs text-muted uppercase">Execução</p><p class="text-2xl font-bold mt-1">7–10</p><p class="text-xs text-muted">dias · 22-30h ativas</p></div>
+  </div>
+
+  <div class="bg-gradient-to-br from-surface to-surface2 border border-border rounded-xl p-6 mb-8">
+    <h3 class="font-bold mb-3 flex items-center gap-2"><i data-lucide="zap" class="w-5 h-5 text-accent"></i> TL;DR</h3>
+    <ul class="space-y-2 text-sm">
+      <li class="flex gap-2"><span class="text-accent">▸</span> <span><strong>Topologia:</strong> Jaque-mestre + 3 subagents fixos (workshop confirma "nunca falar direto com cliente").</span></li>
+      <li class="flex gap-2"><span class="text-accent">▸</span> <span><strong>LLM:</strong> DeepSeek V3.2 via OpenRouter — primário para tudo automatizado. Plus OAuth apenas manual via <code class="text-xs bg-bg px-1.5 py-0.5 rounded">/codex</code> (se quiser).</span></li>
+      <li class="flex gap-2"><span class="text-accent">▸</span> <span><strong>Segurança:</strong> SOPS+age para segredos · Cloudflare Tunnel com 2 apps separadas · whitelist Telegram user_id + canary tokens.</span></li>
+      <li class="flex gap-2"><span class="text-accent">▸</span> <span><strong>VPS apertada:</strong> auditoria antes de tudo (já em 74% RAM). F6.0 expandido em 4 sub-fases.</span></li>
+      <li class="flex gap-2"><span class="text-accent">▸</span> <span><strong>Nada vai pra produção</strong> sem você aprovar D1, D2, D3, D6, D7.</span></li>
+    </ul>
+  </div>
+
+  <div class="grid md:grid-cols-2 gap-6">
+    <div class="bg-surface border-l-4 border-danger rounded-r-xl p-5">
+      <h4 class="font-bold text-danger mb-3 flex items-center gap-2"><i data-lucide="x-circle" class="w-5 h-5"></i> V1 — Plano rejeitado</h4>
+      <ul class="text-sm space-y-1.5 text-muted">
+        <li>✗ GPT-5.5 Plus OAuth como primário → estoura cota em 24-48h</li>
+        <li>✗ Assumia 2.5GB RAM livre quando só tem ~0.1GB</li>
+        <li>✗ Cloudflare Tunnel com 1 app só → você perde acesso admin</li>
+        <li>✗ Plus em loop = risco ban TOS (perde Codex CLI no laptop)</li>
+        <li>✗ F6.5 (memória) antes de F6.6 (templates)</li>
+      </ul>
+    </div>
+    <div class="bg-surface border-l-4 border-accent rounded-r-xl p-5">
+      <h4 class="font-bold text-accent mb-3 flex items-center gap-2"><i data-lucide="check-circle" class="w-5 h-5"></i> V2-DELTA — Aprovado*</h4>
+      <ul class="text-sm space-y-1.5 text-muted">
+        <li>✓ DeepSeek V3.2 primário · Haiku triagem · Plus opcional</li>
+        <li>✓ F6.0 vira 4 sub-fases (snapshot → audit → você decide → parar containers)</li>
+        <li>✓ 2 Cloudflare Apps (webhook IP-allow + admin email+2FA)</li>
+        <li>✓ Plus banido em loops · só manual <code class="bg-bg px-1 rounded">/codex</code></li>
+        <li>✓ Sequência corrigida · pin :2026.5.17 · backup offsite B2</li>
+      </ul>
+      <p class="mt-3 text-xs text-muted">*Aprovado para F6.0–F6.3. Checkpoint antes de F6.4.</p>
+    </div>
+  </div>
+</section>
+
+<section id="feito" class="fade-in scroll-mt-20">
+  <p class="text-xs text-accent font-mono uppercase tracking-widest mb-2">02 · O que foi feito nesta sessão</p>
+  <h2 class="text-3xl font-bold mb-6">Tudo em modo autônomo, enquanto você estava fora.</h2>
+  <div class="relative pl-8 border-l-2 border-border space-y-6">
+    <div class="relative"><div class="absolute -left-[37px] w-4 h-4 rounded-full bg-accent ring-4 ring-bg"></div><p class="text-xs text-muted font-mono">21:04</p><h4 class="font-semibold">Vídeo do workshop extraído via Playwright</h4><p class="text-sm text-muted">URL S3 capturada por network interception (bypass do limite de download não-premium do AwesomeScreenshot).</p></div>
+    <div class="relative"><div class="absolute -left-[37px] w-4 h-4 rounded-full bg-accent ring-4 ring-bg"></div><p class="text-xs text-muted font-mono">21:12</p><h4 class="font-semibold">Download MP4 5.25 GB · áudio extraído WAV 16 kHz</h4><p class="text-sm text-muted">yt-dlp direto na URL S3 → ffmpeg pra WAV mono ideal pra Whisper.</p></div>
+    <div class="relative"><div class="absolute -left-[37px] w-4 h-4 rounded-full bg-accent ring-4 ring-bg"></div><p class="text-xs text-muted font-mono">21:13–22:17</p><h4 class="font-semibold">Transcrição faster-whisper (CPU int8, modelo "small")</h4><p class="text-sm text-muted">6h de áudio · 9.008 segmentos · output <code class="text-xs bg-bg px-1.5 py-0.5 rounded">transcricao.txt</code> (453 KB) e <code class="text-xs bg-bg px-1.5 py-0.5 rounded">.srt</code> (668 KB).</p></div>
+    <div class="relative"><div class="absolute -left-[37px] w-4 h-4 rounded-full bg-accent ring-4 ring-bg"></div><p class="text-xs text-muted font-mono">21:54–22:13</p><h4 class="font-semibold">8 subagents de research em paralelo</h4><p class="text-sm text-muted">OpenClaw releases · OpenRouter modelos baratos · memória persistente · heartbeats · segurança · otimização VPS · OAuth ChatGPT Plus · avaliação templates workshop.</p></div>
+    <div class="relative"><div class="absolute -left-[37px] w-4 h-4 rounded-full bg-accent ring-4 ring-bg"></div><p class="text-xs text-muted font-mono">22:13</p><h4 class="font-semibold">Síntese da transcrição (subagent 9)</h4><p class="text-sm text-muted">Workshop sintetizado em 12 seções com timestamps verbatim · bordões pro SOUL · gaps "paranoia" do Denderson.</p></div>
+    <div class="relative"><div class="absolute -left-[37px] w-4 h-4 rounded-full bg-accent ring-4 ring-bg"></div><p class="text-xs text-muted font-mono">22:13–22:57</p><h4 class="font-semibold">Plano V1 → Adendo → Review adversarial → V2 DELTA → LEIAME</h4><p class="text-sm text-muted">Pipeline: arquiteto-chefe monta V1 · editor adiciona insights do workshop · red-team reprova V1 com 5 P0 críticos · eu escrevo V2 DELTA + LEIAME final.</p></div>
+    <div class="relative"><div class="absolute -left-[37px] w-4 h-4 rounded-full bg-accent ring-4 ring-bg"></div><p class="text-xs text-muted font-mono">agora</p><h4 class="font-semibold">Este HTML — mapa interativo único</h4><p class="text-sm text-muted">Substitui leitura de 14 documentos. Decisões salvas em localStorage.</p></div>
+  </div>
+</section>
+
+<section id="arquitetura" class="fade-in scroll-mt-20">
+  <p class="text-xs text-accent font-mono uppercase tracking-widest mb-2">03 · Mapa da arquitetura</p>
+  <h2 class="text-3xl font-bold mb-6">Como a Jaque vai conversar com o mundo.</h2>
+  <div class="bg-surface border border-border rounded-xl p-6 mb-6 overflow-x-auto">
+    <div class="mermaid">
+graph TB
+    IGT["Igor no Telegram"]:::user
+    CFT1["webhook.jaque.dom<br/>IP-allow Telegram"]:::cf
+    CFT2["admin.jaque.dom<br/>Email Igor + 2FA"]:::cf
+    GW["OpenClaw Gateway :57017<br/>v2026.5.17"]:::core
+    JM["Jaque-mestre<br/>DeepSeek V3.2"]:::core
+    SA1["Subagent #1<br/>Marketplaces"]:::sub
+    SA2["Subagent #2<br/>Conteudo"]:::sub
+    SA3["Subagent #3<br/>Agenda/Email"]:::sub
+    HB["Heartbeat 20min<br/>Haiku triagem"]:::hb
+    MEM["Active Memory plugin"]:::data
+    AUD["Audit log JSONL"]:::data
+    VAULT["SOPS+age secrets"]:::sec
+    OBS["Netdata + Uptime Kuma"]:::obs
+    OR["OpenRouter DeepSeek"]:::llm
+    AN["Anthropic Haiku"]:::llm
+    ML["Mercado Livre"]:::tool
+    MAIL["Gmail/Calendar"]:::tool
+    IGT --&gt; CFT1
+    CFT1 --&gt; GW
+    GW --&gt; JM
+    JM --&gt; SA1
+    JM --&gt; SA2
+    JM --&gt; SA3
+    JM -.-&gt; OR
+    SA1 -.-&gt; OR
+    SA2 -.-&gt; OR
+    SA3 -.-&gt; OR
+    HB --&gt; AN
+    HB --&gt; JM
+    JM --- MEM
+    JM --- AUD
+    JM --- VAULT
+    SA1 --&gt; ML
+    SA3 --&gt; MAIL
+    Igor2["Igor admin"]:::user --&gt; CFT2
+    CFT2 --&gt; OBS
+    classDef user fill:#13141a,stroke:#9ca3af,color:#fff
+    classDef cf fill:#1c1d26,stroke:#f59e0b,color:#fff
+    classDef core fill:#13141a,stroke:#00d4aa,color:#00d4aa,stroke-width:2px
+    classDef sub fill:#13141a,stroke:#7c3aed,color:#fff
+    classDef hb fill:#13141a,stroke:#7c3aed,color:#fff
+    classDef data fill:#13141a,stroke:#3b82f6,color:#fff
+    classDef sec fill:#13141a,stroke:#10b981,color:#fff
+    classDef obs fill:#13141a,stroke:#3b82f6,color:#fff
+    classDef llm fill:#1c1d26,stroke:#00d4aa,color:#00d4aa
+    classDef tool fill:#1c1d26,stroke:#9ca3af,color:#9ca3af
+    </div>
+  </div>
+  <div class="grid md:grid-cols-2 gap-6 text-sm">
+    <div class="bg-surface border border-border rounded-xl p-5">
+      <h4 class="font-bold mb-2 flex items-center gap-2"><i data-lucide="navigation" class="w-4 h-4 text-accent"></i> Fluxo de uma mensagem sua</h4>
+      <ol class="space-y-1.5 text-muted list-decimal pl-4">
+        <li>Você manda mensagem no Telegram bot</li>
+        <li>Telegram POST HTTPS → <code class="bg-bg px-1 rounded">webhook.jaque.&lt;dom&gt;</code></li>
+        <li>Cloudflare valida IP do Telegram CIDR allow-list</li>
+        <li>Tunnel outbound entrega no Gateway OpenClaw :57017</li>
+        <li>Gateway valida <code class="bg-bg px-1 rounded">user_id</code> contra whitelist + <code class="bg-bg px-1 rounded">secret_token</code> HMAC</li>
+        <li>Roteia pra Jaque-mestre (workspace privilegiado)</li>
+        <li>Jaque planeja, consulta memória, decide delegar ou agir</li>
+        <li>Se delega → subagent isolado em workspace quarentena</li>
+        <li>Tool call passa por canary check + audit log JSONL</li>
+        <li>Resposta volta pelo mesmo caminho · custo registrado</li>
+      </ol>
+    </div>
+    <div class="bg-surface border border-border rounded-xl p-5">
+      <h4 class="font-bold mb-2 flex items-center gap-2"><i data-lucide="layers" class="w-4 h-4 text-accent2"></i> Por que dual-LLM e quarentena</h4>
+      <p class="text-muted mb-2">Workshop diz "Jaque NUNCA fala direto com cliente". Tecnicamente isso vira <strong class="text-white">dual-LLM pattern</strong>:</p>
+      <ul class="space-y-1.5 text-muted">
+        <li>▸ <strong class="text-white">Jaque-mestre</strong> = workspace privilegiado, vê segredos, conhece projetos, tem memória do Igor.</li>
+        <li>▸ <strong class="text-white">Subagents</strong> = workspaces de quarentena. Não acessam segredos do mestre. Recebem tarefa, retornam resultado.</li>
+        <li>▸ Se prompt injection roubar contexto do subagent → não vaza segredo do mestre.</li>
+        <li>▸ Canary token detecta tentativa de exfiltração.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="tomadas" class="fade-in scroll-mt-20">
+  <p class="text-xs text-accent font-mono uppercase tracking-widest mb-2">04 · Decisões já tomadas por mim</p>
+  <h2 class="text-3xl font-bold mb-2">Cinco escolhas que não precisam te ocupar.</h2>
+  <p class="text-muted mb-8 max-w-3xl">Cada uma com fonte da research, alternativas consideradas, e o porquê. Se discordar, marca aqui pra eu reabrir antes do go-live.</p>
+
+  <div class="space-y-3">
+    <details class="bg-surface border border-border rounded-xl p-5">
+      <summary class="flex items-center gap-3">
+        <i data-lucide="chevron-right" class="chev w-4 h-4 text-accent"></i>
+        <span class="text-xs font-mono text-muted">D-T1</span>
+        <span class="font-semibold flex-1">Topologia · 1 Jaque-mestre + 3 subagents fixos</span>
+        <span class="text-xs text-ok">workshop + research convergem</span>
+      </summary>
+      <div class="mt-4 pl-7 space-y-3 text-sm">
+        <p class="text-muted"><strong class="text-white">Por quê:</strong> Workshop [01:53:23] e [04:58:56] é taxativo — "Jaque NUNCA fala direto com cliente, sempre via subagents". Research 14 valida via dual-LLM pattern. Mono-agente expõe segredos a prompt injection. Sob-demanda é caro pra MVP.</p>
+        <p class="text-muted"><strong class="text-white">Alternativas:</strong> mono (rejeitado: sem isolamento), sob-demanda dinâmica (rejeitado: complexidade MVP), 4+ subagents (futuro pós-MVP).</p>
+        <div class="grid grid-cols-2 gap-3">
+          <div class="bg-bg border border-border rounded-lg p-3"><p class="text-xs text-ok font-semibold mb-1">GANHA</p><p class="text-xs">Isolamento de segredos · resistência a prompt injection · escala 0–N subagents depois.</p></div>
+          <div class="bg-bg border border-border rounded-lg p-3"><p class="text-xs text-warn font-semibold mb-1">CUSTA</p><p class="text-xs">Mais complexo que mono · roteamento extra (overhead ~50ms/chamada).</p></div>
+        </div>
+      </div>
+    </details>
+
+    <details class="bg-surface border border-border rounded-xl p-5">
+      <summary class="flex items-center gap-3">
+        <i data-lucide="chevron-right" class="chev w-4 h-4 text-accent"></i>
+        <span class="text-xs font-mono text-muted">D-T2</span>
+        <span class="font-semibold flex-1">Memória · Active Memory plugin nativo (Mem0 só fase 2)</span>
+        <span class="text-xs text-ok">research 12 · custo zero extra</span>
+      </summary>
+      <div class="mt-4 pl-7 space-y-3 text-sm">
+        <p class="text-muted"><strong class="text-white">Por quê:</strong> Reviewer encontrou redundância V1 — Mem0 + Active Memory faziam mesmo trabalho. Plugin nativo já cobre semantic recall + injection automática. Mem0 self-hosted custaria ~US$25-45/mês de embeddings + container Postgres+pgvector extra. Não justifica fase 1.</p>
+        <p class="text-muted"><strong class="text-white">Quando migrar:</strong> se após 1 mês de uso o recall ficar fraco (esquecimentos críticos, contradições) → migrar pra Mem0 self-hosted. Plano B pronto em research 12.</p>
+      </div>
+    </details>
+
+    <details class="bg-surface border border-border rounded-xl p-5">
+      <summary class="flex items-center gap-3">
+        <i data-lucide="chevron-right" class="chev w-4 h-4 text-accent"></i>
+        <span class="text-xs font-mono text-muted">D-T3</span>
+        <span class="font-semibold flex-1">LLM primário · DeepSeek V3.2 (não Plus OAuth)</span>
+        <span class="text-xs text-ok">research 11 + 16 · custo R$ 8-25/mês</span>
+      </summary>
+      <div class="mt-4 pl-7 space-y-3 text-sm">
+        <p class="text-muted"><strong class="text-white">Por quê:</strong> V1 sugeria GPT-5.5 via Plus OAuth (US$ 20 fixo). Red-team encontrou: Plus tem teto 100-150 msg/5h. Heartbeat 20min × 16h ativas = 48 ciclos/dia + 3 subagents + você livre → estoura cota em 24-48h. Pior: Plus em loop autônomo VPS = padrão robótico → risco ban TOS → perde Codex CLI no seu laptop também.</p>
+        <p class="text-muted"><strong class="text-white">DeepSeek V3.2:</strong> $0.252/M input + $0.378/M output. Cenário típico Jaque (~1.5M in + 0.3M out por mês) = US$ 0.49/mês ≈ R$ 2,70. Tool calling estruturado · janela 131K · PT-BR excelente. Provider independente (não Anthropic, não OpenAI).</p>
+        <p class="text-muted"><strong class="text-white">Plus OAuth via <code class="bg-bg px-1 rounded">/codex</code>:</strong> permanece como opção MANUAL. Você manda <code class="bg-bg px-1 rounded">/codex pergunta</code>, Jaque encaminha pro Plus uma vez. Nunca em loop. Decisão D1 abaixo se vale a pena ter.</p>
+      </div>
+    </details>
+
+    <details class="bg-surface border border-border rounded-xl p-5">
+      <summary class="flex items-center gap-3">
+        <i data-lucide="chevron-right" class="chev w-4 h-4 text-accent"></i>
+        <span class="text-xs font-mono text-muted">D-T4</span>
+        <span class="font-semibold flex-1">Imagem OpenClaw · pin <code class="bg-bg px-1.5 py-0.5 rounded text-xs">:2026.5.17</code> (não <code class="bg-bg px-1.5 py-0.5 rounded text-xs">:latest</code>)</span>
+        <span class="text-xs text-ok">research 10 · estabilidade</span>
+      </summary>
+      <div class="mt-4 pl-7 space-y-3 text-sm">
+        <p class="text-muted"><strong class="text-white">Por quê:</strong> Research 10 documentou cadência agressiva de releases OpenClaw (várias por semana) com 5 breaking changes em fev–mai/2026. Versão 2026.5.5 quebrou rotas Codex acidentalmente — revertida em 2026.5.6. Usar <code class="bg-bg px-1 rounded">:latest</code> = roleta russa.</p>
+        <p class="text-muted"><strong class="text-white">Estratégia:</strong> pin imutável + watchdog que notifica quando GHCR publica nova tag. Antes de atualizar: staging local no Windows (Docker Desktop) + 24h soak time + smoke test → só então toca VPS.</p>
+      </div>
+    </details>
+
+    <details class="bg-surface border border-border rounded-xl p-5">
+      <summary class="flex items-center gap-3">
+        <i data-lucide="chevron-right" class="chev w-4 h-4 text-accent"></i>
+        <span class="text-xs font-mono text-muted">D-T5</span>
+        <span class="font-semibold flex-1">Cloudflare · 2 Apps separadas (webhook IP-allow + admin email+2FA)</span>
+        <span class="text-xs text-ok">research 14 · UX correta</span>
+      </summary>
+      <div class="mt-4 pl-7 space-y-3 text-sm">
+        <p class="text-muted"><strong class="text-white">Por quê:</strong> Reviewer pegou: V1 propunha 1 Cloudflare Tunnel só com policy "IP-allow Telegram CIDRs". Mas o mesmo tunnel também exporia Netdata e Uptime Kuma — você seria barrado por não ser do IP do Telegram.</p>
+        <p class="text-muted"><strong class="text-white">Solução:</strong></p>
+        <ul class="space-y-1 text-muted ml-4">
+          <li>▸ <code class="bg-bg px-1 rounded">webhook.jaque.&lt;dom&gt;</code> → policy IP-allow Telegram CIDRs.</li>
+          <li>▸ <code class="bg-bg px-1 rounded">admin.jaque.&lt;dom&gt;</code> → policy email + 2FA.</li>
+        </ul>
+      </div>
+    </details>
+  </div>
+</section>
+
+<section id="pendentes" class="fade-in scroll-mt-20">
+  <p class="text-xs text-accent font-mono uppercase tracking-widest mb-2">05 · Decisões pendentes · só você pode tomar</p>
+  <h2 class="text-3xl font-bold mb-2">Cinco escolhas. Cada uma com minha recomendação.</h2>
+  <p class="text-muted mb-8 max-w-3xl">Suas respostas ficam salvas neste browser (localStorage). Clica <strong class="text-white">📋 Exportar</strong> no topo quando terminar e cola no chat comigo.</p>
+
+  <div class="bg-surface border border-border rounded-xl p-6 mb-6 pulse-dot" id="card-D1">
+    <div class="flex items-start gap-3 mb-4">
+      <span class="text-xs font-mono bg-accent text-bg px-2 py-1 rounded font-bold">D1</span>
+      <div class="flex-1">
+        <h3 class="text-xl font-bold">Adicionar <code class="bg-bg px-1.5 py-0.5 rounded text-base">/codex</code> ChatGPT Plus OAuth manual?</h3>
+        <p class="text-sm text-muted mt-1">Você quer poder pedir "Jaque, manda essa pergunta pro GPT-5.5" via comando explícito?</p>
+      </div>
+    </div>
+    <div class="grid md:grid-cols-3 gap-3 mb-5" data-decision="D1">
+      <div class="opt-card border-2 border-border rounded-lg p-4" data-value="sim"><p class="font-semibold mb-1">🟢 SIM, ativar</p><p class="text-xs text-muted">Custo extra US$ 20/mês (ChatGPT Plus). Você manda <code class="bg-bg px-1 rounded">/codex pergunta</code>, vai pro GPT-5.5.</p></div>
+      <div class="opt-card border-2 border-border rounded-lg p-4" data-value="nao"><p class="font-semibold mb-1">⚪ NÃO (recomendado)</p><p class="text-xs text-muted">DeepSeek resolve 95% dos casos. Economiza R$ 110/mês. Ativável depois se sentir falta.</p></div>
+      <div class="opt-card border-2 border-border rounded-lg p-4" data-value="depois"><p class="font-semibold mb-1">⏸ DECIDIR DEPOIS</p><p class="text-xs text-muted">Vai pra produção sem Plus. Reavalia após 2 semanas de uso real.</p></div>
+    </div>
+    <div class="grid md:grid-cols-2 gap-4 text-sm">
+      <div class="bg-bg border border-border rounded-lg p-4"><p class="text-xs font-bold text-accent mb-2">💡 MINHA RECOMENDAÇÃO</p><p class="text-muted">Comece <strong class="text-white">sem Plus</strong>. DeepSeek V3.2 entrega 95% da qualidade em PT-BR técnico/estratégico ao custo de R$ 3/mês. Os 5% (gírias BR finas, raciocínio literário) raramente importam pra automação de marketplace + agenda. Se em 2 semanas você sentir falta, ativamos — é 1 comando.</p></div>
+      <div class="bg-bg border border-border rounded-lg p-4"><p class="text-xs font-bold text-accent2 mb-2">🔬 CRUZAMENTO DE DADOS</p><p class="text-muted"><strong class="text-warn">Workshop sugere SIM</strong> [01:33] — Denderson defende ChatGPT Plus pra evitar conta de API. <strong class="text-ok">Research 16 confirma</strong> que funciona via <code class="bg-bg px-1 rounded">openclaw models auth login --provider openai-codex</code> desde v2026.3.13. <strong class="text-danger">Red-team rejeita</strong>: heartbeat estoura cota em 24-48h + risco ban TOS.</p></div>
+      <div class="bg-bg border border-border rounded-lg p-4"><p class="text-xs font-bold text-ok mb-2">🎯 GANHO se SIM</p><p class="text-muted">Qualidade PT-BR superior · contexto cultural BR · janela longa. Útil pra redação criativa, análise de pitch de venda, transcrição complexa.</p></div>
+      <div class="bg-bg border border-border rounded-lg p-4"><p class="text-xs font-bold text-danger mb-2">⚠️ RISCO se SIM</p><p class="text-muted">Ban da conta Plus → perde Codex CLI no laptop também. Mitigação: usar SÓ manual (nunca loop), monitor de rate-limit, fallback automático.</p></div>
+    </div>
+    <textarea data-text="D1_text" class="mt-4 w-full bg-bg border border-border rounded-lg p-3 text-sm" rows="2" placeholder="✍️ Quer adicionar algo sobre D1?"></textarea>
+  </div>
+
+  <div class="bg-surface border border-border rounded-xl p-6 mb-6 pulse-dot" id="card-D2">
+    <div class="flex items-start gap-3 mb-4">
+      <span class="text-xs font-mono bg-accent text-bg px-2 py-1 rounded font-bold">D2</span>
+      <div class="flex-1">
+        <h3 class="text-xl font-bold">Top 3 áreas onde a Jaque vai atuar primeiro?</h3>
+        <p class="text-sm text-muted mt-1">Escolha 3 (máximo 5). Define quais subagents serão criados em F6.8.</p>
+      </div>
+    </div>
+    <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-2 mb-5" data-decision-multi="D2" data-max="5">
+      <label class="opt-card border-2 border-border rounded-lg p-3 flex gap-2 items-start" data-value="marketplaces"><input type="checkbox" class="mt-0.5"><span><strong>Marketplaces</strong><br><span class="text-xs text-muted">ML, Shopee, SHEIN, TikTok</span></span></label>
+      <label class="opt-card border-2 border-border rounded-lg p-3 flex gap-2 items-start" data-value="conteudo"><input type="checkbox" class="mt-0.5"><span><strong>Conteúdo</strong><br><span class="text-xs text-muted">Freepik, Pikaso, foto/vídeo produto</span></span></label>
+      <label class="opt-card border-2 border-border rounded-lg p-3 flex gap-2 items-start" data-value="agenda"><input type="checkbox" class="mt-0.5"><span><strong>Agenda</strong><br><span class="text-xs text-muted">Calendário, lembretes</span></span></label>
+      <label class="opt-card border-2 border-border rounded-lg p-3 flex gap-2 items-start" data-value="email"><input type="checkbox" class="mt-0.5"><span><strong>Email</strong><br><span class="text-xs text-muted">Gmail triagem, draft</span></span></label>
+      <label class="opt-card border-2 border-border rounded-lg p-3 flex gap-2 items-start" data-value="leads"><input type="checkbox" class="mt-0.5"><span><strong>Leads/SDR</strong><br><span class="text-xs text-muted">Telegram, WhatsApp triagem</span></span></label>
+      <label class="opt-card border-2 border-border rounded-lg p-3 flex gap-2 items-start" data-value="financas"><input type="checkbox" class="mt-0.5"><span><strong>Finanças</strong><br><span class="text-xs text-muted">Planilhas, controle</span></span></label>
+      <label class="opt-card border-2 border-border rounded-lg p-3 flex gap-2 items-start" data-value="docs"><input type="checkbox" class="mt-0.5"><span><strong>Docs</strong><br><span class="text-xs text-muted">Notion, Drive, OneDrive</span></span></label>
+      <label class="opt-card border-2 border-border rounded-lg p-3 flex gap-2 items-start" data-value="github"><input type="checkbox" class="mt-0.5"><span><strong>GitHub</strong><br><span class="text-xs text-muted">PRs, issues, deploys</span></span></label>
+      <label class="opt-card border-2 border-border rounded-lg p-3 flex gap-2 items-start" data-value="pesquisa"><input type="checkbox" class="mt-0.5"><span><strong>Pesquisa web</strong><br><span class="text-xs text-muted">Inteligência competitiva</span></span></label>
+    </div>
+    <div class="grid md:grid-cols-2 gap-4 text-sm">
+      <div class="bg-bg border border-border rounded-lg p-4"><p class="text-xs font-bold text-accent mb-2">💡 RECOMENDAÇÃO</p><p class="text-muted">Padrão sugerido = <strong class="text-white">Marketplaces + Conteúdo + Agenda</strong>. Baseado no seu perfil (empreendedor de marketplace + automação criativa) e nos projetos anteriores (MAQUNIA, BOT-008, campanhas, videopipeline). Email e Leads vêm em fase 2.</p></div>
+      <div class="bg-bg border border-border rounded-lg p-4"><p class="text-xs font-bold text-accent2 mb-2">📐 IMPACTO ARQUITETURAL</p><p class="text-muted">Cada área = 1 subagent fixo dedicado. <strong class="text-white">Marketplaces</strong> precisa de MCPs ML/Shopee + skill <code class="bg-bg px-1 rounded">anuncios-otimize</code>. <strong class="text-white">Conteúdo</strong> precisa Freepik/Pikaso + <code class="bg-bg px-1 rounded">freepik-prompts-otimize</code>. <strong class="text-white">Agenda</strong> = Google Calendar MCP.</p></div>
+    </div>
+    <textarea data-text="D2_text" class="mt-4 w-full bg-bg border border-border rounded-lg p-3 text-sm" rows="2" placeholder="✍️ Outras áreas que vc tem em mente?"></textarea>
+  </div>
+
+  <div class="bg-surface border border-border rounded-xl p-6 mb-6 pulse-dot" id="card-D3">
+    <div class="flex items-start gap-3 mb-4">
+      <span class="text-xs font-mono bg-accent text-bg px-2 py-1 rounded font-bold">D3</span>
+      <div class="flex-1">
+        <h3 class="text-xl font-bold">Quais ações exigem <code class="bg-bg px-1.5 py-0.5 rounded text-base">/confirmar</code> sempre?</h3>
+        <p class="text-sm text-muted mt-1">Tudo marcado <code class="bg-bg px-1 rounded">destructive: true</code>. Sem o seu OK explícito, Jaque não faz.</p>
+      </div>
+    </div>
+    <div class="grid sm:grid-cols-2 gap-2 mb-5" data-decision-multi="D3">
+      <label class="opt-card border-2 border-border rounded-lg p-3 flex gap-2 items-start" data-value="postar_anuncio"><input type="checkbox" class="mt-0.5"><span><strong>Postar anúncio em marketplace</strong></span></label>
+      <label class="opt-card border-2 border-border rounded-lg p-3 flex gap-2 items-start" data-value="gastar_50"><input type="checkbox" class="mt-0.5"><span><strong>Gastar &gt; R$ 50</strong> em API/serviço</span></label>
+      <label class="opt-card border-2 border-border rounded-lg p-3 flex gap-2 items-start" data-value="email_externo"><input type="checkbox" class="mt-0.5"><span><strong>Enviar email externo</strong> em seu nome</span></label>
+      <label class="opt-card border-2 border-border rounded-lg p-3 flex gap-2 items-start" data-value="deletar"><input type="checkbox" class="mt-0.5"><span><strong>Deletar arquivo/dado</strong> não recuperável</span></label>
+      <label class="opt-card border-2 border-border rounded-lg p-3 flex gap-2 items-start" data-value="config_vps"><input type="checkbox" class="mt-0.5"><span><strong>Mudar config VPS</strong>, container, DNS, firewall</span></label>
+      <label class="opt-card border-2 border-border rounded-lg p-3 flex gap-2 items-start" data-value="msg_externa"><input type="checkbox" class="mt-0.5"><span><strong>Mandar mensagem</strong> Telegram/WhatsApp a terceiro</span></label>
+      <label class="opt-card border-2 border-border rounded-lg p-3 flex gap-2 items-start" data-value="git_push"><input type="checkbox" class="mt-0.5"><span><strong>Git push</strong> a repositório seu</span></label>
+      <label class="opt-card border-2 border-border rounded-lg p-3 flex gap-2 items-start" data-value="deploy"><input type="checkbox" class="mt-0.5"><span><strong>Deploy</strong> em produção</span></label>
+      <label class="opt-card border-2 border-border rounded-lg p-3 flex gap-2 items-start" data-value="pagamento"><input type="checkbox" class="mt-0.5"><span><strong>Aprovar pagamento</strong> ou transferência</span></label>
+      <label class="opt-card border-2 border-border rounded-lg p-3 flex gap-2 items-start" data-value="contrato"><input type="checkbox" class="mt-0.5"><span><strong>Assinar/aceitar</strong> contrato ou TOS</span></label>
+    </div>
+    <div class="grid md:grid-cols-2 gap-4 text-sm">
+      <div class="bg-bg border border-border rounded-lg p-4"><p class="text-xs font-bold text-accent mb-2">💡 RECOMENDAÇÃO</p><p class="text-muted">Padrão = <strong class="text-white">os 5 primeiros pré-marcados</strong>. Cobre 95% dos cenários "ops, não era pra fazer isso". Workshop apoia [02:22]. Pode adicionar via campo livre ações específicas do seu negócio.</p></div>
+      <div class="bg-bg border border-border rounded-lg p-4"><p class="text-xs font-bold text-accent2 mb-2">⚖️ TRADE-OFF</p><p class="text-muted">Quanto mais coisas em <code class="bg-bg px-1 rounded">destructive: true</code>, mais Jaque fica "pedindo OK" — perde produtividade. V1 errava pra <em>tudo</em> exigir OK (regressão 2023). V2 calibra: só ações <strong class="text-white">irreversíveis ou caras</strong>.</p></div>
+    </div>
+    <textarea data-text="D3_text" class="mt-4 w-full bg-bg border border-border rounded-lg p-3 text-sm" rows="2" placeholder="✍️ Outras ações específicas do seu negócio?"></textarea>
+  </div>
+
+  <div class="bg-surface border border-border rounded-xl p-6 mb-6 pulse-dot" id="card-D6">
+    <div class="flex items-start gap-3 mb-4">
+      <span class="text-xs font-mono bg-accent text-bg px-2 py-1 rounded font-bold">D6</span>
+      <div class="flex-1">
+        <h3 class="text-xl font-bold">Qual domínio próprio você tem pra usar com Cloudflare Tunnel?</h3>
+        <p class="text-sm text-muted mt-1">Precisa apontar DNS pra Cloudflare. Cria 2 subdomínios: webhook + admin.</p>
+      </div>
+    </div>
+    <input type="text" data-text="D6" class="w-full bg-bg border-2 border-accent/40 focus:border-accent rounded-lg px-4 py-3 text-base font-mono mb-5" placeholder="ex: otimize.digital">
+    <div class="grid md:grid-cols-2 gap-4 text-sm">
+      <div class="bg-bg border border-border rounded-lg p-4"><p class="text-xs font-bold text-accent mb-2">💡 RECOMENDAÇÃO</p><p class="text-muted">Você já citou <code class="bg-bg px-1 rounded">jaque.otimize.digital</code> — então <strong class="text-white">otimize.digital</strong> é o root. Se ainda não está na Cloudflare, fazemos transferência ou só altera nameservers no registro BR.</p><p class="text-muted mt-2"><strong class="text-white">Subdomínios criados:</strong></p><ul class="text-muted mt-1 ml-4 space-y-0.5"><li>▸ <code class="bg-bg px-1 rounded">webhook.jaque.otimize.digital</code> → Telegram webhook</li><li>▸ <code class="bg-bg px-1 rounded">admin.jaque.otimize.digital</code> → Netdata/Uptime Kuma</li><li>▸ <code class="bg-bg px-1 rounded">jaque.otimize.digital</code> → este HTML hospedado</li></ul></div>
+      <div class="bg-bg border border-border rounded-lg p-4"><p class="text-xs font-bold text-warn mb-2">📋 O QUE PRECISO DE VOCÊ DEPOIS</p><ul class="text-muted space-y-1"><li>1. Acesso Cloudflare (login ou API token escopado a esse zone)</li><li>2. Permissão pra criar 2 CNAME / Tunnel</li><li>3. Permissão pra criar 2 Access Apps (1 IP-allow Telegram, 1 email+2FA)</li></ul><p class="text-muted mt-2 italic">Se não estiver na Cloudflare ainda: ~10 min pra mover nameservers. Free tier resolve tudo.</p></div>
+    </div>
+  </div>
+
+  <div class="bg-surface border border-border rounded-xl p-6 mb-6 pulse-dot" id="card-D7">
+    <div class="flex items-start gap-3 mb-4">
+      <span class="text-xs font-mono bg-accent text-bg px-2 py-1 rounded font-bold">D7</span>
+      <div class="flex-1">
+        <h3 class="text-xl font-bold">Contratar backup automático Hostinger (R$ 32,99/mês)?</h3>
+        <p class="text-sm text-muted mt-1">Ou usar restic + Backblaze B2 (~US$ 3/mês = R$ 15)?</p>
+      </div>
+    </div>
+    <div class="grid md:grid-cols-2 gap-3 mb-5" data-decision="D7">
+      <div class="opt-card border-2 border-border rounded-lg p-4" data-value="sim"><p class="font-semibold mb-1">🟢 SIM, contratar Hostinger</p><p class="text-xs text-muted">Backup diário automático no painel · 1 clique restore · custo R$ 32,99/mês · lock-in Hostinger.</p></div>
+      <div class="opt-card border-2 border-border rounded-lg p-4" data-value="nao"><p class="font-semibold mb-1">⚪ NÃO (recomendado) · restic+B2</p><p class="text-xs text-muted">Cron + restic + Backblaze B2 cifrado · ~US$ 3/mês · portável · estratégia 3-2-1 completa.</p></div>
+    </div>
+    <div class="grid md:grid-cols-2 gap-4 text-sm">
+      <div class="bg-bg border border-border rounded-lg p-4"><p class="text-xs font-bold text-accent mb-2">💡 RECOMENDAÇÃO</p><p class="text-muted">restic + B2 é <strong class="text-white">mais barato e mais robusto</strong>. Incremental + dedupe + criptografia cliente-side (Hostinger não vê seu backup). Snapshot Hostinger fica como camada gratuita extra.</p></div>
+      <div class="bg-bg border border-border rounded-lg p-4"><p class="text-xs font-bold text-accent2 mb-2">🛡️ 3-2-1 EXPLICADO</p><ul class="text-muted space-y-1"><li>▸ 3 cópias: live VPS + restic local + B2 offsite</li><li>▸ 2 mídias: SSD VPS + cloud B2</li><li>▸ 1 offsite: B2 (fora da Hostinger)</li><li>▸ Teste de restore mensal automatizado</li></ul></div>
+    </div>
+  </div>
+
+  <div class="bg-gradient-to-br from-accent/10 to-accent2/10 border border-accent/40 rounded-xl p-6 text-center">
+    <h4 class="font-bold mb-2">Pronto pra responder?</h4>
+    <p class="text-sm text-muted mb-4">Clica <strong class="text-accent">📋 Exportar</strong> no header e cola o resultado no chat comigo.</p>
+    <button id="btnExport2" class="px-5 py-2.5 rounded-lg bg-accent text-bg font-semibold hover:bg-accent/90"><i data-lucide="clipboard-copy" class="inline w-4 h-4 mr-1"></i> Exportar minhas decisões</button>
+  </div>
+</section>
+
+<section id="custos" class="fade-in scroll-mt-20">
+  <p class="text-xs text-accent font-mono uppercase tracking-widest mb-2">06 · Custos recorrentes</p>
+  <h2 class="text-3xl font-bold mb-2">Quanto Jaque custa por mês.</h2>
+  <p class="text-muted mb-8 max-w-3xl">Mesmo o cenário cheio é 17% do que você já paga em Claude. O mínimo é 1%.</p>
+
+  <div class="grid lg:grid-cols-2 gap-6">
+    <div class="bg-surface border border-border rounded-xl p-6">
+      <h4 class="font-bold mb-4">Comparativo de cenários (R$/mês)</h4>
+      <canvas id="chartCusto" height="280"></canvas>
+    </div>
+    <div class="bg-surface border border-border rounded-xl p-6 overflow-x-auto">
+      <h4 class="font-bold mb-4">Detalhe por linha</h4>
+      <table class="w-full text-sm">
+        <thead><tr class="text-left text-xs text-muted uppercase border-b border-border"><th class="py-2">Linha</th><th class="text-right">Mín</th><th class="text-right">Méd</th><th class="text-right">Cheio</th></tr></thead>
+        <tbody class="font-mono">
+          <tr class="border-b border-border/50"><td class="py-2">LLM DeepSeek+Haiku</td><td class="text-right">R$ 8</td><td class="text-right">R$ 25</td><td class="text-right">R$ 25</td></tr>
+          <tr class="border-b border-border/50"><td class="py-2">VPS Hostinger (já paga)</td><td class="text-right">R$ 0</td><td class="text-right">R$ 0</td><td class="text-right">R$ 0</td></tr>
+          <tr class="border-b border-border/50"><td class="py-2">ChatGPT Plus (opcional)</td><td class="text-right">R$ 0</td><td class="text-right">R$ 0</td><td class="text-right">R$ 110</td></tr>
+          <tr class="border-b border-border/50"><td class="py-2">Mem0 embeddings (fase 2)</td><td class="text-right">R$ 0</td><td class="text-right">R$ 0</td><td class="text-right">R$ 50</td></tr>
+          <tr class="border-b border-border/50"><td class="py-2">Domínio + Cloudflare</td><td class="text-right">R$ 4</td><td class="text-right">R$ 4</td><td class="text-right">R$ 4</td></tr>
+          <tr class="border-b border-border/50"><td class="py-2">Backup B2 offsite</td><td class="text-right">R$ 0</td><td class="text-right">R$ 15</td><td class="text-right">R$ 15</td></tr>
+          <tr class="font-bold text-accent"><td class="py-2 pt-3">TOTAL</td><td class="text-right">R$ 12</td><td class="text-right">R$ 44</td><td class="text-right">R$ 204</td></tr>
+          <tr class="text-muted text-xs"><td class="py-1">% do Claude atual (R$ 1200)</td><td class="text-right">1%</td><td class="text-right">4%</td><td class="text-right">17%</td></tr>
+        </tbody>
+      </table>
+      <p class="text-xs text-muted mt-3">Fonte: research 11 + 16.</p>
+    </div>
+  </div>
+
+  <div class="mt-6 bg-surface border border-border rounded-xl p-5">
+    <h4 class="font-bold mb-3">Por que tão barato vs Claude?</h4>
+    <ul class="text-sm text-muted space-y-1.5">
+      <li>▸ <strong class="text-white">DeepSeek V3.2</strong>: $0.252/$0.378 por 1M tokens. Cenário Jaque típico = US$ 0.49 = R$ 2,70/mês.</li>
+      <li>▸ Claude Sonnet/Opus custa 6-15× mais por token.</li>
+      <li>▸ Sua assinatura Claude Code (R$ 1.200) é flat-rate de uso interativo seu — não usar pra agente 24/7.</li>
+      <li>▸ Active Memory plugin nativo = zero embedding cost extra.</li>
+      <li>▸ Cloudflare Free + Hostinger (já pago) = R$ 0 marginal de infra.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="fases" class="fade-in scroll-mt-20">
+  <p class="text-xs text-accent font-mono uppercase tracking-widest mb-2">07 · Execução faseada</p>
+  <h2 class="text-3xl font-bold mb-2">14 fases. Checkpoint seu entre cada uma.</h2>
+  <p class="text-muted mb-8 max-w-3xl">22-30 horas ativas em 7-10 dias. Marca cada fase concluída — fica salvo aqui.</p>
+  <div class="space-y-2" id="fasesList"></div>
+</section>
+
+<section id="stack" class="fade-in scroll-mt-20">
+  <p class="text-xs text-accent font-mono uppercase tracking-widest mb-2">08 · Stack técnica</p>
+  <h2 class="text-3xl font-bold mb-2">Cada peça escolhida, justificada e barata.</h2>
+  <p class="text-muted mb-8 max-w-3xl">Tudo open-source ou free-tier. Sem lock-in.</p>
+  <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div class="bg-surface border border-border rounded-xl p-5"><p class="text-xs text-muted uppercase">OS</p><p class="font-bold text-lg">Ubuntu 24.04 LTS</p><p class="text-xs text-muted mt-1">já instalado · 5 anos de suporte</p><p class="text-xs text-accent mt-2 font-mono">R$ 0</p></div>
+    <div class="bg-surface border border-border rounded-xl p-5"><p class="text-xs text-muted uppercase">Container</p><p class="font-bold text-lg">Docker + Compose v2</p><p class="text-xs text-muted mt-1">log rotation 10MB×3</p><p class="text-xs text-accent mt-2 font-mono">R$ 0</p></div>
+    <div class="bg-surface border border-border rounded-xl p-5"><p class="text-xs text-muted uppercase">Agente core</p><p class="font-bold text-lg">OpenClaw :2026.5.17</p><p class="text-xs text-muted mt-1">TypeScript/Node 22+ · grammY · MCP</p><p class="text-xs text-accent mt-2 font-mono">R$ 0 (MIT)</p></div>
+    <div class="bg-surface border border-border rounded-xl p-5"><p class="text-xs text-muted uppercase">LLM primário</p><p class="font-bold text-lg">DeepSeek V3.2</p><p class="text-xs text-muted mt-1">via OpenRouter · 131K ctx · tools</p><p class="text-xs text-accent mt-2 font-mono">~R$ 3-25/mês</p></div>
+    <div class="bg-surface border border-border rounded-xl p-5"><p class="text-xs text-muted uppercase">LLM triagem</p><p class="font-bold text-lg">Claude Haiku 4.5</p><p class="text-xs text-muted mt-1">Anthropic API · heartbeat triagem</p><p class="text-xs text-accent mt-2 font-mono">~US$ 0,10/dia</p></div>
+    <div class="bg-surface border border-border rounded-xl p-5"><p class="text-xs text-muted uppercase">Memória</p><p class="font-bold text-lg">Active Memory plugin</p><p class="text-xs text-muted mt-1">nativo OpenClaw · semantic recall</p><p class="text-xs text-accent mt-2 font-mono">R$ 0</p></div>
+    <div class="bg-surface border border-border rounded-xl p-5"><p class="text-xs text-muted uppercase">Segredos</p><p class="font-bold text-lg">SOPS + age</p><p class="text-xs text-muted mt-1">criptografia client-side · git-friendly</p><p class="text-xs text-accent mt-2 font-mono">R$ 0</p></div>
+    <div class="bg-surface border border-border rounded-xl p-5"><p class="text-xs text-muted uppercase">Túnel/proxy</p><p class="font-bold text-lg">Cloudflare Tunnel</p><p class="text-xs text-muted mt-1">2 apps · porta 57017 fechada</p><p class="text-xs text-accent mt-2 font-mono">R$ 0</p></div>
+    <div class="bg-surface border border-border rounded-xl p-5"><p class="text-xs text-muted uppercase">Observabilidade</p><p class="font-bold text-lg">Netdata + Uptime Kuma</p><p class="text-xs text-muted mt-1">~350 MB RAM · alertas Telegram</p><p class="text-xs text-accent mt-2 font-mono">R$ 0</p></div>
+    <div class="bg-surface border border-border rounded-xl p-5"><p class="text-xs text-muted uppercase">Backup</p><p class="font-bold text-lg">restic → Backblaze B2</p><p class="text-xs text-muted mt-1">incremental dedup · cifrado cliente</p><p class="text-xs text-accent mt-2 font-mono">~R$ 15/mês</p></div>
+    <div class="bg-surface border border-border rounded-xl p-5"><p class="text-xs text-muted uppercase">Healthcheck</p><p class="font-bold text-lg">Healthchecks.io</p><p class="text-xs text-muted mt-1">dead-man's switch cron · 20 free</p><p class="text-xs text-accent mt-2 font-mono">R$ 0</p></div>
+    <div class="bg-surface border border-border rounded-xl p-5"><p class="text-xs text-muted uppercase">Canal</p><p class="font-bold text-lg">Telegram Bot</p><p class="text-xs text-muted mt-1">grammY · webhook + secret_token</p><p class="text-xs text-accent mt-2 font-mono">R$ 0</p></div>
+  </div>
+</section>
+
+<section id="workshop" class="fade-in scroll-mt-20">
+  <p class="text-xs text-accent font-mono uppercase tracking-widest mb-2">09 · Workshop · o que serviu e o que não</p>
+  <h2 class="text-3xl font-bold mb-2">Cruzamento da transcrição (6h) com as 9 pesquisas.</h2>
+  <p class="text-muted mb-8 max-w-3xl">Denderson Rodrigues entregou ~80% de valor real + 20% de pitch.</p>
+  <div class="grid md:grid-cols-2 gap-6">
+    <div class="bg-surface border-l-4 border-ok rounded-r-xl p-5">
+      <h4 class="font-bold text-ok mb-3 flex items-center gap-2"><i data-lucide="thumbs-up" class="w-5 h-5"></i> APROVEITAMOS LITERAL</h4>
+      <ul class="text-sm space-y-2.5">
+        <li><strong class="text-white">"Jaque NUNCA fala direto com cliente"</strong> [01:53] · vira dual-LLM pattern.</li>
+        <li><strong class="text-white">"Se repetiu 2× vira skill"</strong> [02:17] · workflow evolução de skills.</li>
+        <li><strong class="text-white">"Agente é funcionária, Claude é médico"</strong> [02:02] · operacionaliza escalação.</li>
+        <li><strong class="text-white">"Roteiro → primeira amostra → resto"</strong> [02:22] · fluxo escalonado.</li>
+        <li><strong class="text-white">Stack mínima:</strong> Claude Max + Hostinger + GitHub + Cloudflare DNS · valida nossa escolha.</li>
+        <li><strong class="text-white">"Backup antes de modificar"</strong> [00:21] · vira F6.0.1.</li>
+        <li><strong class="text-white">Templates SOUL.md, projects.md, lessons.md</strong> · adotados com ajustes.</li>
+        <li><strong class="text-white">Conceitos novos:</strong> biMEDI · CAD interno · cron natural-language · ingestão de horas de transcrição sua.</li>
+      </ul>
+    </div>
+    <div class="bg-surface border-l-4 border-danger rounded-r-xl p-5">
+      <h4 class="font-bold text-danger mb-3 flex items-center gap-2"><i data-lucide="thumbs-down" class="w-5 h-5"></i> DESCARTAMOS / CORRIGIMOS</h4>
+      <ul class="text-sm space-y-2.5">
+        <li><strong class="text-white">"Sempre pedir OK pra TUDO"</strong> · regressão 2023, mata autonomia. Calibrado para <code class="bg-bg px-1 rounded">destructive: true</code>.</li>
+        <li><strong class="text-white">GPT Codex 5.5 Plus OAuth como primário</strong> · estoura cota + risco TOS.</li>
+        <li><strong class="text-white">Multi-tenant nativo</strong> · "1 VPS por cliente" é mais seguro.</li>
+        <li><strong class="text-white">.env raw pra segredos</strong> · 2026 = SOPS+age cifrado em git.</li>
+        <li><strong class="text-white">Lovable / n8n em produção</strong> · OpenClaw + MCPs + Docker direto.</li>
+        <li><strong class="text-white">Backup manual</strong> · automatizado com restic + B2.</li>
+        <li><strong class="text-white">"Paranoia desnecessária"</strong> · adotamos toda: eval-harness, RPO/RTO, cost-per-subagent, RBAC.</li>
+        <li><strong class="text-white">02-AGENTS.md, 03-MEMORY.md, 00-SEGURANCA.md</strong> · reescritos do zero.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="mt-6 bg-gradient-to-br from-accent2/10 to-bg border border-accent2/30 rounded-xl p-5">
+    <h4 class="font-bold mb-3 flex items-center gap-2"><i data-lucide="sparkles" class="w-5 h-5 text-accent2"></i> Bordões verbatim que vão pro SOUL.md da Jaque</h4>
+    <ul class="text-sm space-y-2 text-muted italic">
+      <li>▸ "Eu sou funcionária. Quando estou esquecendo, alucinando ou travada, peço ao Igor para chamar o Claude — o Claude é o médico, não eu." <span class="not-italic text-xs">[02:02:38]</span></li>
+      <li>▸ "Eu nunca falo direto com cliente. Cliente conversa com meus sub-agentes." <span class="not-italic text-xs">[01:53:23]</span></li>
+      <li>▸ "Se Igor pediu duas vezes a mesma coisa, eu documento e nunca mais ele precisa explicar." <span class="not-italic text-xs">[02:16:54]</span></li>
+      <li>▸ "Antes de entregar grande: roteiro → aprovação → primeira amostra → aprovação → resto." <span class="not-italic text-xs">[02:22:14]</span></li>
+      <li>▸ "Cópia de segurança antes de modificar." <span class="not-italic text-xs">[00:21:19]</span></li>
+    </ul>
+  </div>
+</section>
+
+<section id="pesquisas" class="fade-in scroll-mt-20">
+  <p class="text-xs text-accent font-mono uppercase tracking-widest mb-2">10 · 9 pesquisas técnicas</p>
+  <h2 class="text-3xl font-bold mb-2">Cada decisão tem fundamento citável.</h2>
+  <p class="text-muted mb-8 max-w-3xl">Subagents paralelos consultaram 100+ fontes (GitHub, docs oficiais, fóruns, Discord, blogs). Cada doc fica em <code class="bg-bg px-1 rounded">docs/research/</code>.</p>
+  <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div class="bg-surface border border-border rounded-xl p-5"><p class="text-xs text-accent2 font-mono">R10</p><h4 class="font-bold mt-1">OpenClaw overview</h4><p class="text-xs text-muted mt-1">Stack TypeScript/Node, releases fev-mai/2026, 5 breaking changes, bug Hostinger docker.sock, governance Steinberger.</p><p class="text-xs text-muted mt-2 italic">~35 fontes · 17.9 KB</p></div>
+    <div class="bg-surface border border-border rounded-xl p-5"><p class="text-xs text-accent2 font-mono">R11</p><h4 class="font-bold mt-1">OpenRouter modelos baratos</h4><p class="text-xs text-muted mt-1">DeepSeek V3.2 vence custo×qualidade. Gemini 2.5 Flash Lite menor latência. Free-tier estratégia.</p><p class="text-xs text-muted mt-2 italic">~18 fontes · 14.2 KB</p></div>
+    <div class="bg-surface border border-border rounded-xl p-5"><p class="text-xs text-accent2 font-mono">R12</p><h4 class="font-bold mt-1">Memória persistente</h4><p class="text-xs text-muted mt-1">Mem0 vs Letta vs Zep. Quatro camadas. MINJA poisoning. LongMemEval 94.4.</p><p class="text-xs text-muted mt-2 italic">~25 fontes · 14.4 KB</p></div>
+    <div class="bg-surface border border-border rounded-xl p-5"><p class="text-xs text-accent2 font-mono">R13</p><h4 class="font-bold mt-1">Heartbeats / loops</h4><p class="text-xs text-muted mt-1">Origem termo no MemGPT. Cron+LLM padrão. Circuit breaker US$5/dia. Incidentes US$4.2k e US$47k.</p><p class="text-xs text-muted mt-2 italic">~22 fontes · 19.5 KB</p></div>
+    <div class="bg-surface border border-border rounded-xl p-5"><p class="text-xs text-accent2 font-mono">R14</p><h4 class="font-bold mt-1">Segurança</h4><p class="text-xs text-muted mt-1">Whitelist user_id + secret_token HMAC. SOPS+age. Cloudflare Tunnel. Container hardened. Canary.</p><p class="text-xs text-muted mt-2 italic">~30 fontes · 22.8 KB</p></div>
+    <div class="bg-surface border border-border rounded-xl p-5"><p class="text-xs text-accent2 font-mono">R15</p><h4 class="font-bold mt-1">VPS Docker otimização</h4><p class="text-xs text-muted mt-1">Swap 4GB. Log rotation. mem_limits. Uvicorn async. Netdata vs Prometheus.</p><p class="text-xs text-muted mt-2 italic">~24 fontes · 20.0 KB</p></div>
+    <div class="bg-surface border border-border rounded-xl p-5"><p class="text-xs text-accent2 font-mono">R16</p><h4 class="font-bold mt-1">OAuth ChatGPT Plus / Codex</h4><p class="text-xs text-muted mt-1">Funciona desde v2026.3.13. Teto 100-150 msg/5h. Risco TOS em loop.</p><p class="text-xs text-muted mt-2 italic">~27 fontes · 20.1 KB</p></div>
+    <div class="bg-surface border border-border rounded-xl p-5"><p class="text-xs text-accent2 font-mono">R20</p><h4 class="font-bold mt-1">Avaliação templates workshop</h4><p class="text-xs text-muted mt-1">3 templates valem literal. 3 reescrever. Regra "sempre OK" = regressão.</p><p class="text-xs text-muted mt-2 italic">23.3 KB</p></div>
+    <div class="bg-surface border border-border rounded-xl p-5"><p class="text-xs text-accent2 font-mono">R21</p><h4 class="font-bold mt-1">Síntese transcrição 6h</h4><p class="text-xs text-muted mt-1">12 seções: princípios, padrões, comandos, casos reais, armadilhas, bordões.</p><p class="text-xs text-muted mt-2 italic">9008 → 4700 palavras</p></div>
+  </div>
+</section>
+
+<section id="riscos" class="fade-in scroll-mt-20">
+  <p class="text-xs text-accent font-mono uppercase tracking-widest mb-2">11 · Riscos & mitigações</p>
+  <h2 class="text-3xl font-bold mb-2">O que pode dar errado e como prevenimos.</h2>
+  <p class="text-muted mb-8 max-w-3xl">Top 10 do red-team adversarial. Severidade por <strong class="text-white">probabilidade × impacto</strong>.</p>
+  <div class="bg-surface border border-border rounded-xl overflow-x-auto">
+    <table class="w-full text-sm">
+      <thead class="bg-surface2 text-xs uppercase text-muted"><tr><th class="text-left p-3">#</th><th class="text-left p-3">Risco</th><th class="text-center p-3">Sev</th><th class="text-left p-3">Mitigação preventiva</th><th class="text-left p-3">Contingência</th></tr></thead>
+      <tbody>
+        <tr class="border-t border-border"><td class="p-3 font-mono text-danger">P0</td><td class="p-3"><strong class="text-white">OOM-kill</strong> · VPS 74% RAM</td><td class="p-3 text-center text-danger">●●●●</td><td class="p-3 text-muted">F6.0.2 audit; swap 4GB; mem_limits</td><td class="p-3 text-muted">restic restore; snapshot Hostinger</td></tr>
+        <tr class="border-t border-border"><td class="p-3 font-mono text-danger">P0</td><td class="p-3"><strong class="text-white">Cost runaway</strong> · loop queima US$ 4k+ overnight</td><td class="p-3 text-center text-danger">●●●●</td><td class="p-3 text-muted">Circuit breaker US$5/dia; max_tokens=4000; kill switch <code class="bg-bg px-1 rounded">/stop_jaque</code></td><td class="p-3 text-muted">Cap OpenRouter; alerta Telegram email</td></tr>
+        <tr class="border-t border-border"><td class="p-3 font-mono text-warn">P1</td><td class="p-3"><strong class="text-white">Ban conta ChatGPT Plus</strong></td><td class="p-3 text-center text-warn">●●●</td><td class="p-3 text-muted">Plus banido em loops; só manual <code class="bg-bg px-1 rounded">/codex</code></td><td class="p-3 text-muted">Fallback DeepSeek; conta nova</td></tr>
+        <tr class="border-t border-border"><td class="p-3 font-mono text-warn">P1</td><td class="p-3"><strong class="text-white">Prompt injection</strong> rouba segredos</td><td class="p-3 text-center text-warn">●●●</td><td class="p-3 text-muted">Dual-LLM · canary tokens · allow-list · /confirmar</td><td class="p-3 text-muted">Audit log JSONL · rotate secrets</td></tr>
+        <tr class="border-t border-border"><td class="p-3 font-mono text-warn">P1</td><td class="p-3"><strong class="text-white">Versão OpenClaw quebra produção</strong></td><td class="p-3 text-center text-warn">●●●</td><td class="p-3 text-muted">Pin :2026.5.17 · staging local · 24h soak</td><td class="p-3 text-muted">Rollback docker tag</td></tr>
+        <tr class="border-t border-border"><td class="p-3 font-mono text-warn">P1</td><td class="p-3"><strong class="text-white">Whitelist não funciona</strong></td><td class="p-3 text-center text-warn">●●●</td><td class="p-3 text-muted">Validar docs antes; fallback middleware grammY; teste</td><td class="p-3 text-muted">Bot pausa imediato; nova policy</td></tr>
+        <tr class="border-t border-border"><td class="p-3 font-mono text-warn">P2</td><td class="p-3"><strong class="text-white">Memória contaminada</strong> (MINJA)</td><td class="p-3 text-center text-warn">●●</td><td class="p-3 text-muted">Filtro admissão; teto gravação; logs imutáveis</td><td class="p-3 text-muted">Restore backup; quarentena</td></tr>
+        <tr class="border-t border-border"><td class="p-3 font-mono text-muted">P2</td><td class="p-3"><strong class="text-white">DNS Cloudflare mal config</strong></td><td class="p-3 text-center text-muted">●●</td><td class="p-3 text-muted">Validar zone; testar webhook fake; Access testado</td><td class="p-3 text-muted">Reverter porta direta + firewall</td></tr>
+        <tr class="border-t border-border"><td class="p-3 font-mono text-muted">P2</td><td class="p-3"><strong class="text-white">Backup falhou silencioso</strong></td><td class="p-3 text-center text-muted">●●</td><td class="p-3 text-muted">Healthchecks dead-man; restore mensal</td><td class="p-3 text-muted">Snapshot Hostinger</td></tr>
+        <tr class="border-t border-border"><td class="p-3 font-mono text-muted">P2</td><td class="p-3"><strong class="text-white">Quebra dependência Steinberger</strong></td><td class="p-3 text-center text-muted">●</td><td class="p-3 text-muted">Pin versão; mirror imagem; padrão MCP</td><td class="p-3 text-muted">Fork ou migrar Letta/CrewAI</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="roadmap" class="fade-in scroll-mt-20">
+  <p class="text-xs text-accent font-mono uppercase tracking-widest mb-2">12 · Roadmap pós-MVP</p>
+  <h2 class="text-3xl font-bold mb-2">O que vem depois que Jaque estiver rodando.</h2>
+  <p class="text-muted mb-8 max-w-3xl">Cada fase só começa após validação da anterior.</p>
+  <div class="space-y-4">
+    <div class="bg-surface border border-border rounded-xl p-5">
+      <div class="flex items-center gap-3 mb-2"><span class="px-3 py-1 text-xs font-bold rounded-full bg-accent text-bg">MÊS 1</span><h4 class="font-bold">Core operacional</h4></div>
+      <ul class="text-sm text-muted ml-4 space-y-1 list-disc">
+        <li>Jaque-mestre + 3 subagents fixos em produção</li>
+        <li>Heartbeats funcionando, circuit breaker ativo</li>
+        <li>Active Memory aprendendo seu jeito</li>
+        <li>Iteração diária via Telegram</li>
+      </ul>
+    </div>
+    <div class="bg-surface border border-border rounded-xl p-5">
+      <div class="flex items-center gap-3 mb-2"><span class="px-3 py-1 text-xs font-bold rounded-full bg-accent2 text-white">MÊS 2-3</span><h4 class="font-bold">Subagents especializados</h4></div>
+      <ul class="text-sm text-muted ml-4 space-y-1 list-disc">
+        <li>MCPs marketplace: Mercado Livre, Shopee, SHEIN, TikTok Shop</li>
+        <li>Skills: <code class="bg-bg px-1 rounded">anuncios-otimize</code>, <code class="bg-bg px-1 rounded">freepik-prompts-otimize</code>, <code class="bg-bg px-1 rounded">video-prompts-otimize</code></li>
+        <li>biMEDI por cliente · CAD interno (webhooks)</li>
+        <li>eval-harness 20-50 golden Qs por skill</li>
+        <li>Dashboard cost-per-subagent</li>
+      </ul>
+    </div>
+    <div class="bg-surface border border-border rounded-xl p-5">
+      <div class="flex items-center gap-3 mb-2"><span class="px-3 py-1 text-xs font-bold rounded-full bg-warn text-bg">MÊS 4-6</span><h4 class="font-bold">Monetização · "1 VPS por cliente"</h4></div>
+      <ul class="text-sm text-muted ml-4 space-y-1 list-disc">
+        <li>Pacote setup: "eu instalo Jaque na sua VPS"</li>
+        <li>Templates personalizáveis por cliente</li>
+        <li>NÃO multi-tenant nativo (LGPD + segurança)</li>
+        <li>RBAC schema pronto pra equipe</li>
+        <li>Voz / TTS · clone com sua transcrição</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="glossario" class="fade-in scroll-mt-20">
+  <p class="text-xs text-accent font-mono uppercase tracking-widest mb-2">13 · Glossário</p>
+  <h2 class="text-3xl font-bold mb-8">Vocabulário pra acompanhar tudo isso.</h2>
+  <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
+    <div class="bg-surface border border-border rounded-lg p-4"><p class="font-bold text-accent">OpenClaw</p><p class="text-muted text-xs mt-1">Framework agente self-hosted TypeScript/Node criado por Peter Steinberger. Gateway multicanal com memória, heartbeats e MCP.</p></div>
+    <div class="bg-surface border border-border rounded-lg p-4"><p class="font-bold text-accent">MCP</p><p class="text-muted text-xs mt-1">Model Context Protocol. Padrão Anthropic pra agentes consumirem ferramentas externas.</p></div>
+    <div class="bg-surface border border-border rounded-lg p-4"><p class="font-bold text-accent">DeepSeek V3.2</p><p class="text-muted text-xs mt-1">LLM open-weight chinês (MoE 671B/37B). Top custo×qualidade PT-BR.</p></div>
+    <div class="bg-surface border border-border rounded-lg p-4"><p class="font-bold text-accent">OpenRouter</p><p class="text-muted text-xs mt-1">Gateway de LLM passthrough. 1 API key acessa 100+ modelos.</p></div>
+    <div class="bg-surface border border-border rounded-lg p-4"><p class="font-bold text-accent">RAG</p><p class="text-muted text-xs mt-1">Retrieval-Augmented Generation. Agente busca info relevante antes de responder.</p></div>
+    <div class="bg-surface border border-border rounded-lg p-4"><p class="font-bold text-accent">RPO / RTO</p><p class="text-muted text-xs mt-1">Recovery Point Objective e Recovery Time Objective. Jaque: RPO 24h, RTO 2h.</p></div>
+    <div class="bg-surface border border-border rounded-lg p-4"><p class="font-bold text-accent">SOPS + age</p><p class="text-muted text-xs mt-1">Secrets cifrados com chave age, commitáveis em git. Decrypt só em memória no boot.</p></div>
+    <div class="bg-surface border border-border rounded-lg p-4"><p class="font-bold text-accent">Canary token</p><p class="text-muted text-xs mt-1">String falsa em segredos. Se aparecer em output = tentativa de exfiltração detectada.</p></div>
+    <div class="bg-surface border border-border rounded-lg p-4"><p class="font-bold text-accent">Heartbeat</p><p class="text-muted text-xs mt-1">Loop autônomo periódico. Jaque "acorda" de X em X minutos pra checar tarefas.</p></div>
+    <div class="bg-surface border border-border rounded-lg p-4"><p class="font-bold text-accent">Dual-LLM</p><p class="text-muted text-xs mt-1">Pattern Simon Willison: 1 modelo privilegiado + 1 quarentena. Defesa contra prompt injection.</p></div>
+    <div class="bg-surface border border-border rounded-lg p-4"><p class="font-bold text-accent">grammY</p><p class="text-muted text-xs mt-1">Framework moderno Telegram Bot em TypeScript. OpenClaw usa nativo.</p></div>
+    <div class="bg-surface border border-border rounded-lg p-4"><p class="font-bold text-accent">Cloudflare Tunnel</p><p class="text-muted text-xs mt-1">Conexão outbound da VPS pra CF. Expõe serviços SEM abrir porta. Free.</p></div>
+    <div class="bg-surface border border-border rounded-lg p-4"><p class="font-bold text-accent">restic</p><p class="text-muted text-xs mt-1">Backup CLI moderno. Incremental, deduplicado, cifrado cliente.</p></div>
+    <div class="bg-surface border border-border rounded-lg p-4"><p class="font-bold text-accent">Mem0</p><p class="text-muted text-xs mt-1">Camada memória semântica. Postgres+pgvector. LongMemEval 94.4.</p></div>
+    <div class="bg-surface border border-border rounded-lg p-4"><p class="font-bold text-accent">biMEDI</p><p class="text-muted text-xs mt-1">Brand/Market/Audit/Decision. Framework Denderson para SDR.</p></div>
+    <div class="bg-surface border border-border rounded-lg p-4"><p class="font-bold text-accent">Circuit breaker</p><p class="text-muted text-xs mt-1">Limite hard: bate US$5/dia ou US$0.50/min → Jaque pausa.</p></div>
+    <div class="bg-surface border border-border rounded-lg p-4"><p class="font-bold text-accent">eval-harness</p><p class="text-muted text-xs mt-1">Suíte 20-50 perguntas golden. Skill nova passa ≥80%.</p></div>
+    <div class="bg-surface border border-border rounded-lg p-4"><p class="font-bold text-accent">3-2-1 backup</p><p class="text-muted text-xs mt-1">3 cópias, 2 mídias, 1 offsite. Padrão indústria.</p></div>
+  </div>
+</section>
+
+<section id="proximos" class="fade-in scroll-mt-20 mb-10">
+  <p class="text-xs text-accent font-mono uppercase tracking-widest mb-2">14 · Próximos passos</p>
+  <h2 class="text-3xl font-bold mb-2">O caminho daqui até a Jaque rodando.</h2>
+  <p class="text-muted mb-8 max-w-3xl">Cada passo precisa do anterior. Nenhum mexe na VPS sem você autorizar.</p>
+  <ol class="space-y-4">
+    <li class="bg-surface border border-border rounded-xl p-5 flex gap-4"><span class="w-8 h-8 shrink-0 rounded-full bg-accent text-bg flex items-center justify-center font-bold">1</span><div><h4 class="font-bold">Você responde D1, D2, D3, D6, D7</h4><p class="text-sm text-muted mt-1">Marca aqui em cima e clica <strong class="text-accent">📋 Exportar</strong>. Cola no chat comigo.</p></div></li>
+    <li class="bg-surface border border-border rounded-xl p-5 flex gap-4"><span class="w-8 h-8 shrink-0 rounded-full bg-surface2 border border-border text-muted flex items-center justify-center font-bold">2</span><div><h4 class="font-bold">Eu gero <code class="bg-bg px-1.5 py-0.5 rounded text-sm">35-runbook-execucao.md</code></h4><p class="text-sm text-muted mt-1">Comandos copy-paste exatos pra F6.0.1 em diante. Usa seus valores reais.</p></div></li>
+    <li class="bg-surface border border-border rounded-xl p-5 flex gap-4"><span class="w-8 h-8 shrink-0 rounded-full bg-surface2 border border-border text-muted flex items-center justify-center font-bold">3</span><div><h4 class="font-bold">Você dispara F6.0.1 (snapshot Hostinger)</h4><p class="text-sm text-muted mt-1">Clica "Instantâneo" no painel. 2 min, manual. Único passo destrutivo (gera, não modifica).</p></div></li>
+    <li class="bg-surface border border-border rounded-xl p-5 flex gap-4"><span class="w-8 h-8 shrink-0 rounded-full bg-surface2 border border-border text-muted flex items-center justify-center font-bold">4</span><div><h4 class="font-bold">Eu rodo F6.0.2 (audit SSH read-only)</h4><p class="text-sm text-muted mt-1">Só LEITURA: <code class="bg-bg px-1 rounded">docker stats</code>, <code class="bg-bg px-1 rounded">ps aux</code>, <code class="bg-bg px-1 rounded">free -h</code>. Reporto.</p></div></li>
+    <li class="bg-surface border border-border rounded-xl p-5 flex gap-4"><span class="w-8 h-8 shrink-0 rounded-full bg-surface2 border border-border text-muted flex items-center justify-center font-bold">5</span><div><h4 class="font-bold">Você decide o que parar (F6.0.3)</h4><p class="text-sm text-muted mt-1">Com base no audit, qual container/serviço pode sair pra liberar RAM.</p></div></li>
+    <li class="bg-surface border border-border rounded-xl p-5 flex gap-4"><span class="w-8 h-8 shrink-0 rounded-full bg-surface2 border border-border text-muted flex items-center justify-center font-bold">6</span><div><h4 class="font-bold">Sigo F6.0.4 → F6.10 com checkpoint</h4><p class="text-sm text-muted mt-1">7-10 dias. Você aprova cada fase antes da próxima.</p></div></li>
+    <li class="bg-surface border border-border rounded-xl p-5 flex gap-4"><span class="w-8 h-8 shrink-0 rounded-full bg-accent2 text-white flex items-center justify-center font-bold">7</span><div><h4 class="font-bold">Jaque renasce turbinada · go-live</h4><p class="text-sm text-muted mt-1">Heartbeat ativo, memória aprendendo, segura, barata.</p></div></li>
+  </ol>
+  <div class="mt-8 bg-gradient-to-br from-accent/15 via-bg to-accent2/10 border border-accent/40 rounded-xl p-8 text-center">
+    <h3 class="text-2xl font-bold mb-2">Quando estiver pronto, exporta e cola no chat.</h3>
+    <p class="text-muted mb-5">Eu pego suas respostas e gero o runbook na hora. Direção &gt; velocidade.</p>
+    <button id="btnExport3" class="px-6 py-3 rounded-lg bg-accent text-bg font-bold text-base hover:bg-accent/90 inline-flex items-center gap-2"><i data-lucide="clipboard-copy" class="w-5 h-5"></i> Exportar minhas decisões</button>
+  </div>
+</section>
+
+<footer class="text-center text-xs text-muted py-8 border-t border-border">
+  Jaque · Mapa de Planejamento · v2-DELTA · 18/mai/2026 · gerado por Claude Code · todas decisões salvas localmente no seu browser
+</footer>
+
+</main>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<div id="exportModal" class="fixed inset-0 z-50 hidden bg-bg/90 backdrop-blur items-center justify-center p-6">
+  <div class="bg-surface border border-border rounded-2xl max-w-2xl w-full p-6 max-h-[80vh] flex flex-col">
+    <div class="flex items-center gap-3 mb-4">
+      <i data-lucide="clipboard-copy" class="w-5 h-5 text-accent"></i>
+      <h3 class="font-bold text-lg flex-1">Suas decisões — cole no chat comigo</h3>
+      <button id="closeModal" class="text-muted hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
+    </div>
+    <textarea id="exportContent" class="flex-1 bg-bg border border-border rounded-lg p-4 font-mono text-sm text-accent" readonly></textarea>
+    <div class="flex gap-2 mt-4">
+      <button id="copyExport" class="flex-1 px-4 py-2.5 rounded-lg bg-accent text-bg font-semibold hover:bg-accent/90">📋 Copiar pra área de transferência</button>
+      <button id="closeModal2" class="px-4 py-2.5 rounded-lg bg-surface2 border border-border hover:border-accent">Fechar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+mermaid.initialize({startOnLoad:true, theme:'dark', themeVariables:{
+  background:'#0a0a0f', primaryColor:'#13141a', primaryTextColor:'#e5e7eb',
+  primaryBorderColor:'#00d4aa', lineColor:'#2a2b36', fontFamily:'Inter'
+}});
+
+window.addEventListener('DOMContentLoaded',()=>lucide.createIcons());
+
+const NS='jaque.v2';
+const state = JSON.parse(localStorage.getItem(NS)||'{}');
+const defaults = {
+  D1: 'nao',
+  D2: ['marketplaces','conteudo','agenda'],
+  D3: ['postar_anuncio','gastar_50','email_externo','deletar','config_vps'],
+  D6: 'otimize.digital',
+  D7: 'nao',
+  D1_text:'', D2_text:'', D3_text:''
+};
+for(const k in defaults){ if(!(k in state)) state[k] = defaults[k]; }
+const fases = JSON.parse(localStorage.getItem(NS+'.fases')||'{}');
+
+function save(){
+  localStorage.setItem(NS, JSON.stringify(state));
+  localStorage.setItem(NS+'.fases', JSON.stringify(fases));
+  updateProgress();
+}
+
+function updateProgress(){
+  let answered=0;
+  if(state.D1) answered++;
+  if(state.D2 && state.D2.length>0) answered++;
+  if(state.D3 && state.D3.length>0) answered++;
+  if(state.D6 && state.D6.trim()) answered++;
+  if(state.D7) answered++;
+  document.getElementById('progressBar').style.width = (answered/5*100)+'%';
+  document.getElementById('progressLabel').textContent = answered+'/5';
+  document.getElementById('pendCount').textContent = (5-answered);
+}
+
+document.querySelectorAll('[data-decision]').forEach(group=>{
+  const dKey = group.dataset.decision;
+  group.querySelectorAll('.opt-card').forEach(card=>{
+    if(card.dataset.value === state[dKey]) card.classList.add('selected');
+    else card.classList.remove('selected');
+    card.addEventListener('click', ()=>{
+      group.querySelectorAll('.opt-card').forEach(c=>c.classList.remove('selected'));
+      card.classList.add('selected');
+      state[dKey] = card.dataset.value;
+      save();
+    });
+  });
+});
+
+document.querySelectorAll('[data-decision-multi]').forEach(group=>{
+  const dKey = group.dataset.decisionMulti;
+  const max = parseInt(group.dataset.max||'99');
+  const cards = group.querySelectorAll('.opt-card');
+  const current = new Set(state[dKey]||[]);
+  cards.forEach(card=>{
+    const v = card.dataset.value;
+    const cb = card.querySelector('input[type=checkbox]');
+    if(current.has(v)){ card.classList.add('selected'); cb.checked = true; }
+    else { card.classList.remove('selected'); cb.checked = false; }
+    card.addEventListener('click', e=>{
+      if(e.target.tagName!=='INPUT') cb.checked = !cb.checked;
+      if(cb.checked){
+        if(current.size>=max){
+          cb.checked = false;
+          showToast('Máximo '+max+' opções','warn');
+          return;
+        }
+        current.add(v); card.classList.add('selected');
+      } else {
+        current.delete(v); card.classList.remove('selected');
+      }
+      state[dKey] = [...current];
+      save();
+    });
+  });
+});
+
+document.querySelectorAll('[data-text]').forEach(el=>{
+  const k = el.dataset.text;
+  el.value = state[k] || '';
+  el.addEventListener('input', ()=>{ state[k] = el.value; save(); });
+});
+
+const FASES = [
+  {id:'F6.0.1', titulo:'Snapshot Hostinger', tempo:'2 min', dep:'manual no painel', ok:'snapshot listado em "Instantâneos"', rollback:'restaurar via painel', dec:[]},
+  {id:'F6.0.2', titulo:'Audit SSH read-only', tempo:'30 min', dep:'F6.0.1 + SSH', ok:'relatório containers/CPU/RAM entregue', rollback:'N/A (só leitura)', dec:[]},
+  {id:'F6.0.3', titulo:'Você decide o que parar', tempo:'~10 min', dep:'F6.0.2', ok:'lista de serviços aprovada por você', rollback:'N/A', dec:[]},
+  {id:'F6.0.4', titulo:'Parar containers + swap + log rotation', tempo:'30 min', dep:'F6.0.3', ok:'free RAM > 3GB · swap ativa', rollback:'compose up + swapoff', dec:[]},
+  {id:'F6.1', titulo:'Pull OpenClaw :2026.5.17 + mem_limits', tempo:'1h', dep:'F6.0.4', ok:'container roda mem_limit=1500m · healthcheck verde', rollback:'docker tag rollback', dec:[]},
+  {id:'F6.2', titulo:'doctor --fix · bug docker.sock', tempo:'30 min', dep:'F6.1', ok:'doctor 0 errors · sandbox tools funciona', rollback:'compose down + restore volumes', dec:[]},
+  {id:'F6.3', titulo:'Segurança · SOPS+age · Tunnel · whitelist', tempo:'3h', dep:'F6.2 · D6', ok:'porta 57017 fechada · 2 apps CF · bot 2º silenciado', rollback:'cloudflared down · firewall reopen', dec:['D6']},
+  {id:'F6.4', titulo:'LLM provider · budget cap · circuit breaker', tempo:'1h', dep:'F6.3 · D1', ok:'1ª mensagem DeepSeek responde · log cost OK', rollback:'env swap pra free-tier', dec:['D1']},
+  {id:'F6.5', titulo:'Templates SOUL/AGENTS/MEMORY/decisions/projects/lessons', tempo:'2h', dep:'F6.4 · D3', ok:'6 .md gravados · destructive validada', rollback:'mv ./templates ./templates.bak', dec:['D3']},
+  {id:'F6.6', titulo:'Memória · Active Memory plugin', tempo:'1h', dep:'F6.5', ok:'recall funciona em teste · vetor populado', rollback:'plugin disable', dec:[]},
+  {id:'F6.7', titulo:'Heartbeats · "chama médico" · max_tokens', tempo:'2h', dep:'F6.6 · D2', ok:'heartbeat 20min logado · escalada testada', rollback:'cron disable', dec:['D2']},
+  {id:'F6.8', titulo:'Subagents fixos + eval-harness', tempo:'4h', dep:'F6.7 · D2', ok:'3 subagents · eval golden 80%+', rollback:'workspaces delete', dec:['D2']},
+  {id:'F6.9', titulo:'Dry-run 1 semana · validação real', tempo:'7 dias', dep:'F6.8', ok:'0 incidentes 7d · custo dentro budget', rollback:'pausa + análise', dec:[]},
+  {id:'F6.10', titulo:'Go-live · monitoring · backup B2', tempo:'2h', dep:'F6.9 · D7', ok:'monitoring verde · 1º backup B2 OK · restore testado', rollback:'modo idle global', dec:['D7']}
+];
+
+const fasesList = document.getElementById('fasesList');
+FASES.forEach((f)=>{
+  const done = fases[f.id] === true;
+  const decBadges = f.dec.map(d=>`<span class="text-xs px-1.5 py-0.5 rounded bg-accent2/20 text-accent2 font-mono">${d}</span>`).join(' ');
+  const el = document.createElement('details');
+  el.className = 'bg-surface border border-border rounded-xl p-4'+(done?' opacity-60':'');
+  el.innerHTML = `
+    <summary class="flex items-center gap-3 flex-wrap">
+      <i data-lucide="chevron-right" class="chev w-4 h-4 text-accent"></i>
+      <input type="checkbox" data-fase="${f.id}" ${done?'checked':''} class="w-4 h-4 accent-accent">
+      <span class="text-xs font-mono text-muted">${f.id}</span>
+      <span class="font-semibold flex-1 ${done?'line-through':''}">${f.titulo}</span>
+      ${decBadges}
+      <span class="text-xs text-muted">${f.tempo}</span>
+    </summary>
+    <div class="mt-3 pl-7 grid sm:grid-cols-2 gap-3 text-sm">
+      <div><p class="text-xs text-muted uppercase mb-1">Pré-requisitos</p><p>${f.dep}</p></div>
+      <div><p class="text-xs text-muted uppercase mb-1">Tempo estimado</p><p>${f.tempo}</p></div>
+      <div><p class="text-xs text-ok uppercase mb-1">Critério de sucesso</p><p>${f.ok}</p></div>
+      <div><p class="text-xs text-warn uppercase mb-1">Rollback se falhar</p><p>${f.rollback}</p></div>
+    </div>`;
+  fasesList.appendChild(el);
+});
+fasesList.querySelectorAll('input[data-fase]').forEach(cb=>{
+  cb.addEventListener('change', e=>{
+    e.stopPropagation();
+    fases[cb.dataset.fase] = cb.checked;
+    save();
+    cb.closest('details').classList.toggle('opacity-60', cb.checked);
+    cb.closest('summary').querySelector('.font-semibold').classList.toggle('line-through', cb.checked);
+  });
+  cb.addEventListener('click', e=>e.stopPropagation());
+});
+
+const ctx = document.getElementById('chartCusto');
+new Chart(ctx, {
+  type:'bar',
+  data:{
+    labels:['Mínimo','Médio','Cheio','Claude atual'],
+    datasets:[{label:'R$ por mês', data:[12, 44, 204, 1200], backgroundColor:['#00d4aa','#7c3aed','#f59e0b','#ef4444'], borderRadius:6}]
+  },
+  options:{
+    indexAxis:'y',
+    plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>'R$ '+c.parsed.x.toLocaleString('pt-BR')}}},
+    scales:{x:{ticks:{color:'#9ca3af',callback:v=>'R$ '+v},grid:{color:'#2a2b36'}},y:{ticks:{color:'#e5e7eb',font:{weight:'600'}},grid:{display:false}}}
+  }
+});
+
+function buildExport(){
+  const d2 = (state.D2||[]).join(', ') || '(nenhuma)';
+  const d3 = (state.D3||[]).join(', ') || '(nenhuma)';
+  return `## Minhas decisões — Jaque v2 · ${new Date().toLocaleDateString('pt-BR')}
+
+**D1 (/codex ChatGPT Plus):** ${state.D1||'(sem resposta)'}
+${state.D1_text? '   Observação: '+state.D1_text:''}
+
+**D2 (Top áreas Jaque):** ${d2}
+${state.D2_text? '   Observação: '+state.D2_text:''}
+
+**D3 (Ações que exigem /confirmar):** ${d3}
+${state.D3_text? '   Observação: '+state.D3_text:''}
+
+**D6 (Domínio Cloudflare):** ${state.D6||'(sem resposta)'}
+
+**D7 (Backup Hostinger pago):** ${state.D7||'(sem resposta)'}
+
+---
+Cola isso no chat comigo (Claude Code) que eu gero o runbook.`;
+}
+
+function openExport(){
+  document.getElementById('exportContent').value = buildExport();
+  const m = document.getElementById('exportModal');
+  m.classList.remove('hidden'); m.classList.add('flex');
+}
+function closeExportModal(){
+  const m = document.getElementById('exportModal');
+  m.classList.add('hidden'); m.classList.remove('flex');
+}
+['btnExport','btnExport2','btnExport3'].forEach(id=>document.getElementById(id)?.addEventListener('click', openExport));
+['closeModal','closeModal2'].forEach(id=>document.getElementById(id)?.addEventListener('click', closeExportModal));
+document.getElementById('exportModal').addEventListener('click', e=>{ if(e.target.id==='exportModal') closeExportModal(); });
+document.getElementById('copyExport').addEventListener('click', async()=>{
+  try{
+    await navigator.clipboard.writeText(document.getElementById('exportContent').value);
+    showToast('Copiado! Cole no chat comigo','ok');
+  } catch(err){
+    document.getElementById('exportContent').select();
+    showToast('Selecione e Ctrl+C','warn');
+  }
+});
+
+document.getElementById('btnSave').addEventListener('click', ()=>{ save(); showToast('Salvo localmente','ok'); });
+document.getElementById('btnReset').addEventListener('click', ()=>{
+  if(confirm('Apagar TODAS as decisões salvas neste browser?')){
+    localStorage.removeItem(NS); localStorage.removeItem(NS+'.fases'); location.reload();
+  }
+});
+
+document.addEventListener('keydown', e=>{
+  if((e.ctrlKey||e.metaKey) && e.key==='s'){
+    e.preventDefault(); save(); showToast('Salvo (Ctrl+S)','ok');
+  }
+});
+
+function showToast(msg, kind){
+  kind = kind || 'ok';
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.background = kind==='warn'?'#f59e0b':(kind==='danger'?'#ef4444':'#10b981');
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 2200);
+}
+
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-link');
+const observer = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const id = e.target.id;
+      navLinks.forEach(l=>l.classList.toggle('active', l.getAttribute('href')==='#'+id));
+    }
+  });
+},{rootMargin:'-30% 0px -60% 0px'});
+sections.forEach(s=>observer.observe(s));
+
+updateProgress();
+lucide.createIcons();
+</script>
+
+</body>
+</html>
