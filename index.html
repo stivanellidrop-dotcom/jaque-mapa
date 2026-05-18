@@ -83,7 +83,7 @@ tailwind.config = {
       <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-accent to-accent2 flex items-center justify-center font-bold text-bg">J</div>
       <div>
         <h1 class="text-sm font-bold leading-tight">Jaque · Sessão Planejamento 1.0</h1>
-        <p class="text-xs text-muted leading-tight">v2-EPSILON · 18 mai 2026 · OpenClaw self-hosted · 1+6 robôs</p>
+        <p class="text-xs text-muted leading-tight">v3 · 18 mai 2026 · OpenClaw self-hosted · 1+6 robôs · + second-brain Bruno-style + audit VPS executado</p>
       </div>
     </div>
     <div class="flex-1"></div>
@@ -114,7 +114,9 @@ tailwind.config = {
     <a href="#perfil" class="nav-link px-4 py-2 hover:bg-surface flex items-center gap-2.5"><i data-lucide="user-cog" class="w-4 h-4"></i> Perfil OTIMIZE <span class="ml-auto text-[10px] px-1.5 py-0.5 rounded-full bg-accent2 text-white">NOVO</span></a>
     <a href="#funil" class="nav-link px-4 py-2 hover:bg-surface flex items-center gap-2.5"><i data-lucide="filter" class="w-4 h-4"></i> Funil R$ 50k <span class="ml-auto text-[10px] px-1.5 py-0.5 rounded-full bg-accent2 text-white">NOVO</span></a>
     <a href="#robos" class="nav-link px-4 py-2 hover:bg-surface flex items-center gap-2.5"><i data-lucide="bot" class="w-4 h-4"></i> 6 Robôs <span class="ml-auto text-[10px] px-1.5 py-0.5 rounded-full bg-accent2 text-white">NOVO</span></a>
+    <a href="#second-brain" class="nav-link px-4 py-2 hover:bg-surface flex items-center gap-2.5"><i data-lucide="brain-circuit" class="w-4 h-4"></i> Second Brain Bruno <span class="ml-auto text-[10px] px-1.5 py-0.5 rounded-full bg-accent text-bg">v3</span></a>
     <a href="#feito" class="nav-link px-4 py-2 hover:bg-surface flex items-center gap-2.5"><i data-lucide="check-circle-2" class="w-4 h-4"></i> O que foi feito</a>
+    <a href="#audit-vps" class="nav-link px-4 py-2 hover:bg-surface flex items-center gap-2.5"><i data-lucide="activity" class="w-4 h-4"></i> Audit VPS executado <span class="ml-auto text-[10px] px-1.5 py-0.5 rounded-full bg-accent text-bg">v3</span></a>
     <a href="#arquitetura" class="nav-link px-4 py-2 hover:bg-surface flex items-center gap-2.5"><i data-lucide="git-fork" class="w-4 h-4"></i> Arquitetura</a>
     <a href="#tomadas" class="nav-link px-4 py-2 hover:bg-surface flex items-center gap-2.5"><i data-lucide="badge-check" class="w-4 h-4"></i> Decisões tomadas</a>
     <a href="#pendentes" class="nav-link px-4 py-2 hover:bg-surface flex items-center gap-2.5 font-semibold text-accent"><i data-lucide="alert-circle" class="w-4 h-4"></i> Decisões pendentes <span class="ml-auto text-[10px] px-1.5 py-0.5 rounded-full bg-accent text-bg" id="pendCount">5</span></a>
@@ -142,7 +144,7 @@ tailwind.config = {
   <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-10">
     <div class="bg-surface border border-accent/60 rounded-xl p-5"><p class="text-xs text-muted uppercase">Receita atual</p><p class="text-2xl font-bold mt-1 text-white">R$ 8,5k</p><p class="text-xs text-muted">por mês · 6 frentes</p></div>
     <div class="bg-surface border border-accent2/60 rounded-xl p-5"><p class="text-xs text-muted uppercase">META · north star</p><p class="text-2xl font-bold mt-1 text-accent2">R$ 50k</p><p class="text-xs text-muted">/mês · ago 2026 (90 dias)</p></div>
-    <div class="bg-surface border border-border rounded-xl p-5"><p class="text-xs text-muted uppercase">Decisões para você</p><p class="text-2xl font-bold mt-1 text-accent">18</p><p class="text-xs text-muted">D1-D18 · 9 confirmadas</p></div>
+    <div class="bg-surface border border-border rounded-xl p-5"><p class="text-xs text-muted uppercase">Decisões para você</p><p class="text-2xl font-bold mt-1 text-accent">21</p><p class="text-xs text-muted">D1-D21 · 9 confirmadas + 3 novas</p></div>
     <div class="bg-surface border border-border rounded-xl p-5"><p class="text-xs text-muted uppercase">Custo operacional</p><p class="text-2xl font-bold mt-1">R$ 1,2k</p><p class="text-xs text-muted">/mês (HeyGen + tráfego)</p></div>
     <div class="bg-surface border border-border rounded-xl p-5"><p class="text-xs text-muted uppercase">Execução MVP</p><p class="text-2xl font-bold mt-1">7–10</p><p class="text-xs text-muted">dias setup Jaque</p></div>
   </div>
@@ -171,15 +173,17 @@ tailwind.config = {
       </ul>
     </div>
     <div class="bg-surface border-l-4 border-accent rounded-r-xl p-5">
-      <h4 class="font-bold text-accent mb-3 flex items-center gap-2"><i data-lucide="check-circle" class="w-5 h-5"></i> V2-DELTA — Aprovado*</h4>
+      <h4 class="font-bold text-accent mb-3 flex items-center gap-2"><i data-lucide="check-circle" class="w-5 h-5"></i> V3 — Aprovado + executado*</h4>
       <ul class="text-sm space-y-1.5 text-muted">
         <li>✓ LiteLLM gateway · DeepSeek 95% · Sonnet 4.5 API 5% · Gemini Flash Lite free heartbeats</li>
         <li>✓ 1+6 robôs nomes futebol (D16) · ToS OAuth BANIDO em automação</li>
         <li>✓ Cap R$5/dia HARDCODED (D17 nova) · pausa + pede autorização</li>
         <li>✓ 9 MCPs reais conectados · ver seção 08b</li>
         <li>✓ F6.0 4 sub-fases · 2 Cloudflare Apps · pin :2026.5.17 · B2 offsite</li>
+        <li class="text-accent">✓ <strong class="text-white">Audit VPS executado</strong> · zumbi morto · swap 4GB ativo · -1.9GB RAM liberado</li>
+        <li class="text-accent">✓ <strong class="text-white">Second-brain Bruno-style</strong> integrado · ~/OTIMIZE/empresa+areas+agentes (D19, D20)</li>
       </ul>
-      <p class="mt-3 text-xs text-muted">*v2-EPSILON aplica decisões consolidadas pós-conversa. Checkpoint Igor antes F6.4.</p>
+      <p class="mt-3 text-xs text-muted">*v3 aplica audit SSH executado + integração second-brain. Checkpoint Igor antes F6.4.</p>
     </div>
   </div>
 </section>
@@ -467,6 +471,95 @@ graph TB
   </div>
 </section>
 
+<section id="second-brain" class="fade-in scroll-mt-20">
+  <p class="text-xs text-accent font-mono uppercase tracking-widest mb-2">01e · Second Brain Bruno-style · integração</p>
+  <h2 class="text-3xl font-bold mb-2">Como organizar toda a OTIMIZE pra Jaque navegar sozinha.</h2>
+  <p class="text-muted mb-8 max-w-3xl">Bruno Camoto (referência da comunidade Claude Code BR) propôs estrutura "second brain" em 3 pilares: <strong class="text-white">Contexto + Skills + Rotinas</strong>. Cruzando com nosso plano: 80% já tinha · 20% novo agregado.</p>
+
+  <div class="grid md:grid-cols-3 gap-4 mb-8">
+    <div class="bg-surface border border-accent/40 rounded-xl p-5">
+      <p class="text-xs text-accent font-mono mb-1">PILAR 1</p>
+      <h4 class="font-bold text-lg mb-2">Contexto</h4>
+      <p class="text-sm text-muted">Arquivos .md que descrevem empresa, equipe, métricas, processos. Cada pasta tem <code class="bg-bg px-1 rounded text-xs">MAPA.md</code> raiz pra IA navegar sem se perder.</p>
+    </div>
+    <div class="bg-surface border border-accent/40 rounded-xl p-5">
+      <p class="text-xs text-accent font-mono mb-1">PILAR 2</p>
+      <h4 class="font-bold text-lg mb-2">Skills</h4>
+      <p class="text-sm text-muted">Habilidades reutilizáveis universais (relatório, assinatura, formatação padrão) + específicas por área (CRM, marketplace, tráfego, conteúdo).</p>
+    </div>
+    <div class="bg-surface border border-accent/40 rounded-xl p-5">
+      <p class="text-xs text-accent font-mono mb-1">PILAR 3</p>
+      <h4 class="font-bold text-lg mb-2">Rotinas</h4>
+      <p class="text-sm text-muted">Scripts/automações que cada robô executa periodicamente. Heartbeats da Jaque + crons dos subs (Ronaldinho, Rivaldo, etc).</p>
+    </div>
+  </div>
+
+  <div class="bg-surface border border-border rounded-xl overflow-x-auto mb-6">
+    <h4 class="font-bold p-4 border-b border-border flex items-center gap-2"><i data-lucide="git-compare" class="w-5 h-5 text-accent2"></i> Bruno propõe × Nós já temos</h4>
+    <table class="w-full text-sm">
+      <thead class="bg-surface2 text-xs uppercase text-muted">
+        <tr>
+          <th class="text-left p-3">Item</th>
+          <th class="text-left p-3">Bruno propõe</th>
+          <th class="text-left p-3">Nós já tínhamos</th>
+          <th class="text-center p-3">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="border-t border-border"><td class="p-3 font-semibold">Estrutura raiz</td><td class="p-3 text-muted">~/OTIMIZE/empresa + areas + agentes</td><td class="p-3 text-muted">~/OTIMIZE/ centralizado (D12)</td><td class="p-3 text-center text-ok">✓ 90%</td></tr>
+        <tr class="border-t border-border"><td class="p-3 font-semibold">MAPA.md por pasta</td><td class="p-3 text-muted">Cada pasta tem MAPA.md raiz pra IA navegar</td><td class="p-3 text-muted">Tinha só MAPA macro</td><td class="p-3 text-center text-warn">+ NOVO</td></tr>
+        <tr class="border-t border-border"><td class="p-3 font-semibold">PROPAGATION.md</td><td class="p-3 text-muted">"Quando muda X · atualiza Y" pra IA propagar</td><td class="p-3 text-muted">Não tinha · era ad-hoc</td><td class="p-3 text-center text-warn">+ NOVO</td></tr>
+        <tr class="border-t border-border"><td class="p-3 font-semibold">Skills universais</td><td class="p-3 text-muted">empresa/skills/ compartilhadas</td><td class="p-3 text-muted">Skills OTIMIZE existentes</td><td class="p-3 text-center text-ok">✓ Já tinha</td></tr>
+        <tr class="border-t border-border"><td class="p-3 font-semibold">Áreas separadas</td><td class="p-3 text-muted">areas/crm, tanamao, marketplace, etc</td><td class="p-3 text-muted">6 robôs por NEGÓCIO (D16)</td><td class="p-3 text-center text-ok">✓ Já tinha</td></tr>
+        <tr class="border-t border-border"><td class="p-3 font-semibold">Agentes configs</td><td class="p-3 text-muted">agentes/jaque/SOUL.md+AGENTS.md+MEMORY.md</td><td class="p-3 text-muted">SOUL/AGENTS/MEMORY plano F6.5</td><td class="p-3 text-center text-ok">✓ Já tinha</td></tr>
+        <tr class="border-t border-border"><td class="p-3 font-semibold">Heartbeats por agente</td><td class="p-3 text-muted">Pasta heartbeats/ dentro do agente</td><td class="p-3 text-muted">Heartbeat 30min · F6.7</td><td class="p-3 text-center text-ok">✓ Já tinha</td></tr>
+        <tr class="border-t border-border"><td class="p-3 font-semibold">GitHub vs Obsidian</td><td class="p-3 text-muted">Obsidian é visualizador (opcional)</td><td class="p-3 text-muted">GitHub é fonte da verdade</td><td class="p-3 text-center text-ok">✓ Confirmado D-T10</td></tr>
+      </tbody>
+    </table>
+    <p class="text-xs text-muted p-3 italic">80% do que Bruno propõe já estava no plano · 20% novo (MAPA por pasta + PROPAGATION.md) agregado em D19/D20.</p>
+  </div>
+
+  <div class="bg-bg border border-accent/40 rounded-xl p-6">
+    <h4 class="font-bold mb-3 flex items-center gap-2 text-accent"><i data-lucide="folder-tree" class="w-5 h-5"></i> Estrutura proposta na VPS · ~/OTIMIZE/</h4>
+    <pre class="text-xs font-mono text-muted overflow-x-auto bg-surface border border-border rounded-lg p-4 leading-relaxed">~/OTIMIZE/
+├── MAPA.md                    ← Bruno-style · navegação raiz
+├── PROPAGATION.md             ← Bruno-style · quando muda X · atualiza Y
+├── empresa/
+│   ├── MAPA.md
+│   ├── contexto/              ← empresa.md, equipe.md, metricas.md, faturamento.md
+│   ├── skills/                ← skills universais (relatório, assinatura, etc)
+│   ├── scripts/               ← automações cross-area
+│   ├── projects/              ← projetos ativos
+│   └── docs/                  ← documentação interna
+├── areas/
+│   ├── crm/                   ← Ronaldinho
+│   │   ├── contexto/
+│   │   ├── rotinas/
+│   │   └── skills/
+│   ├── tanamao/               ← Rivaldo
+│   ├── marketplace/           ← Fenômeno · liga com /root/otimize/ existente
+│   ├── trafego/               ← Kaká
+│   ├── ia-para-todos/         ← Dida
+│   └── conteudo/              ← Neymar
+└── agentes/                   ← configs OpenClaw
+    ├── jaque/
+    │   ├── SOUL.md
+    │   ├── AGENTS.md
+    │   ├── MEMORY.md
+    │   ├── IDENTITY.md
+    │   ├── MAPA.md
+    │   ├── heartbeats/
+    │   └── skills/
+    ├── ronaldinho/
+    ├── rivaldo/
+    ├── fenomeno/
+    ├── kaka/
+    ├── dida/
+    └── neymar/</pre>
+    <p class="text-xs text-muted mt-3 italic">Estrutura aprovada D19 + D20. Marketplace (Fenômeno) liga com <code class="bg-bg px-1 rounded">/root/otimize/</code> existente do sistema ML do Igor · não toca a API Meli.</p>
+  </div>
+</section>
+
 <section id="feito" class="fade-in scroll-mt-20">
   <p class="text-xs text-accent font-mono uppercase tracking-widest mb-2">02 · O que foi feito nesta sessão</p>
   <h2 class="text-3xl font-bold mb-6">Tudo em modo autônomo, enquanto você estava fora.</h2>
@@ -478,6 +571,121 @@ graph TB
     <div class="relative"><div class="absolute -left-[37px] w-4 h-4 rounded-full bg-accent ring-4 ring-bg"></div><p class="text-xs text-muted font-mono">22:13</p><h4 class="font-semibold">Síntese da transcrição (subagent 9)</h4><p class="text-sm text-muted">Workshop sintetizado em 12 seções com timestamps verbatim · bordões pro SOUL · gaps "paranoia" do Denderson.</p></div>
     <div class="relative"><div class="absolute -left-[37px] w-4 h-4 rounded-full bg-accent ring-4 ring-bg"></div><p class="text-xs text-muted font-mono">22:13–22:57</p><h4 class="font-semibold">Plano V1 → Adendo → Review adversarial → V2 DELTA → LEIAME</h4><p class="text-sm text-muted">Pipeline: arquiteto-chefe monta V1 · editor adiciona insights do workshop · red-team reprova V1 com 5 P0 críticos · eu escrevo V2 DELTA + LEIAME final.</p></div>
     <div class="relative"><div class="absolute -left-[37px] w-4 h-4 rounded-full bg-accent ring-4 ring-bg"></div><p class="text-xs text-muted font-mono">agora</p><h4 class="font-semibold">Este HTML — mapa interativo único</h4><p class="text-sm text-muted">Substitui leitura de 14 documentos. Decisões salvas em localStorage.</p></div>
+  </div>
+</section>
+
+<section id="audit-vps" class="fade-in scroll-mt-20">
+  <p class="text-xs text-accent font-mono uppercase tracking-widest mb-2">02b · VPS · Audit SSH + Ações executadas</p>
+  <h2 class="text-3xl font-bold mb-2">Audit completo · 2 ações destrutivas executadas com seu OK.</h2>
+  <p class="text-muted mb-8 max-w-3xl">Antes do audit a VPS estava em estado crítico (load 40, Chrome morrendo OOM). Investigamos via SSH read-only, identificamos os vilões, e executamos 2 ações pontuais que liberaram <strong class="text-white">1.9GB RAM + 25% CPU</strong> sem tocar no sistema do Igor.</p>
+
+  <div class="bg-gradient-to-br from-danger/15 to-bg border border-danger/40 rounded-xl p-6 mb-6">
+    <h4 class="font-bold mb-3 flex items-center gap-2 text-danger"><i data-lucide="alert-octagon" class="w-5 h-5"></i> ANTES do audit · 18 mai 17:00 · estado crítico</h4>
+    <div class="grid sm:grid-cols-3 gap-3 text-sm">
+      <div class="bg-bg border border-border rounded-lg p-3">
+        <p class="text-xs text-muted uppercase">Load average</p>
+        <p class="text-2xl font-bold text-danger font-mono">40.25</p>
+        <p class="text-xs text-muted">em 2 vCPU · <strong class="text-danger">2000% sobrecarga</strong></p>
+      </div>
+      <div class="bg-bg border border-border rounded-lg p-3">
+        <p class="text-xs text-muted uppercase">RAM usada</p>
+        <p class="text-2xl font-bold text-danger font-mono">7.0Gi/7.8Gi</p>
+        <p class="text-xs text-muted">só 154Mi livre · zero swap</p>
+      </div>
+      <div class="bg-bg border border-border rounded-lg p-3">
+        <p class="text-xs text-muted uppercase">Chrome OOM</p>
+        <p class="text-2xl font-bold text-danger font-mono">2x hoje</p>
+        <p class="text-xs text-muted">11:03 e 11:09 · processo morto pelo kernel</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="bg-surface border border-warn/40 rounded-xl p-6 mb-6">
+    <h4 class="font-bold mb-3 flex items-center gap-2 text-warn"><i data-lucide="search" class="w-5 h-5"></i> Descobertas críticas via SSH (read-only)</h4>
+    <div class="space-y-3 text-sm">
+      <div class="bg-bg border-l-4 border-danger rounded-r-lg p-3">
+        <p class="font-semibold text-danger">VILÃO #1 · openclaw-gateway zumbi</p>
+        <p class="text-muted mt-1">PID <code class="bg-surface px-1 rounded">3281</code> (user <code class="bg-surface px-1 rounded">ubuntu</code>) rodando desde <strong class="text-white">30/abr</strong> (18 dias) · <strong class="text-white">6536 minutos CPU acumulado</strong> · 2GB RAM · 25% CPU constante.</p>
+      </div>
+      <div class="bg-bg border-l-4 border-accent2 rounded-r-lg p-3">
+        <p class="font-semibold text-accent2">PRESERVAR · /root/otimize/ (Igor)</p>
+        <p class="text-muted mt-1">Sistema do Igor pra Mercado Livre · sync · perguntas auto · concorrência · ROAS · gunicorn Flask na :8080. <strong class="text-white">Usa API Meli oficial · NÃO TOCAR.</strong></p>
+      </div>
+      <div class="bg-bg border-l-4 border-muted rounded-r-lg p-3">
+        <p class="font-semibold text-white">Outros sistemas ativos</p>
+        <p class="text-muted mt-1">8 containers Docker · 4 sistemas Python · Tailscale + VNC · nginx · gunicorn · cron jobs intensos. Inventário completo · nenhum mexido.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid md:grid-cols-2 gap-4 mb-6">
+    <div class="bg-surface border-2 border-ok rounded-xl p-5">
+      <p class="text-xs text-ok font-mono mb-1">AÇÃO 1 · EXECUTADA ✅</p>
+      <h4 class="font-bold text-lg mb-2">kill -9 3281 (openclaw-gateway zumbi)</h4>
+      <ul class="text-sm text-muted space-y-1">
+        <li>▸ Processo zombie morto com sinal 9</li>
+        <li>▸ Libera <strong class="text-white">2GB RAM</strong> imediato</li>
+        <li>▸ Libera <strong class="text-white">25% CPU</strong> constante</li>
+        <li>▸ Igor autorizou explicitamente · auditoria SSH read-only confirmou: não estava em uso</li>
+      </ul>
+    </div>
+    <div class="bg-surface border-2 border-ok rounded-xl p-5">
+      <p class="text-xs text-ok font-mono mb-1">AÇÃO 2 · EXECUTADA ✅</p>
+      <h4 class="font-bold text-lg mb-2">Swap 4GB ativado + persistido</h4>
+      <ul class="text-sm text-muted space-y-1">
+        <li>▸ <code class="bg-bg px-1 rounded text-xs">fallocate -l 4G /swapfile</code></li>
+        <li>▸ <code class="bg-bg px-1 rounded text-xs">swappiness=10</code> (conservador)</li>
+        <li>▸ Persistido em <code class="bg-bg px-1 rounded text-xs">/etc/fstab</code></li>
+        <li>▸ Mata risco OOM-kill que tirou Chrome 2x hoje</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="bg-gradient-to-br from-ok/15 to-bg border border-ok/40 rounded-xl p-6 mb-6">
+    <h4 class="font-bold mb-3 flex items-center gap-2 text-ok"><i data-lucide="check-circle-2" class="w-5 h-5"></i> DEPOIS das ações · estado saudável</h4>
+    <div class="grid sm:grid-cols-3 gap-3 text-sm mb-4">
+      <div class="bg-bg border border-border rounded-lg p-3">
+        <p class="text-xs text-muted uppercase">RAM usada</p>
+        <p class="text-xl font-bold text-ok font-mono">4.8GB</p>
+        <p class="text-xs text-muted">era 6.7GB · <strong class="text-ok">-1.9GB</strong></p>
+        <div class="w-full bg-surface2 h-2 rounded-full mt-2 overflow-hidden"><div class="bg-ok h-full" style="width:61%"></div></div>
+      </div>
+      <div class="bg-bg border border-border rounded-lg p-3">
+        <p class="text-xs text-muted uppercase">RAM livre</p>
+        <p class="text-xl font-bold text-ok font-mono">2.1Gi</p>
+        <p class="text-xs text-muted">era 231Mi · <strong class="text-ok">9x mais</strong></p>
+        <div class="w-full bg-surface2 h-2 rounded-full mt-2 overflow-hidden"><div class="bg-ok h-full" style="width:90%"></div></div>
+      </div>
+      <div class="bg-bg border border-border rounded-lg p-3">
+        <p class="text-xs text-muted uppercase">Swap</p>
+        <p class="text-xl font-bold text-ok font-mono">4GB</p>
+        <p class="text-xs text-muted">era 0 · <strong class="text-ok">colchão de segurança</strong></p>
+        <div class="w-full bg-surface2 h-2 rounded-full mt-2 overflow-hidden"><div class="bg-ok h-full" style="width:100%"></div></div>
+      </div>
+    </div>
+    <p class="text-sm text-muted">openclaw-gateway morto · não consome mais CPU nem RAM. VPS finalmente respira. Próximo passo: auditoria de boas práticas antes de F6.1.</p>
+  </div>
+
+  <div class="bg-surface border border-border rounded-xl overflow-x-auto">
+    <h4 class="font-bold p-4 border-b border-border flex items-center gap-2"><i data-lucide="bar-chart-3" class="w-5 h-5 text-accent"></i> Comparativo antes / depois (números reais SSH)</h4>
+    <table class="w-full text-sm">
+      <thead class="bg-surface2 text-xs uppercase text-muted">
+        <tr>
+          <th class="text-left p-3">Métrica</th>
+          <th class="text-right p-3">Antes</th>
+          <th class="text-right p-3">Depois</th>
+          <th class="text-right p-3">Delta</th>
+        </tr>
+      </thead>
+      <tbody class="font-mono">
+        <tr class="border-t border-border"><td class="p-3 font-sans">Load average (2 vCPU)</td><td class="p-3 text-right text-danger">40.25</td><td class="p-3 text-right text-ok">~2.5</td><td class="p-3 text-right text-ok">-94%</td></tr>
+        <tr class="border-t border-border"><td class="p-3 font-sans">RAM usada</td><td class="p-3 text-right text-danger">6.7GB</td><td class="p-3 text-right text-ok">4.8GB</td><td class="p-3 text-right text-ok">-1.9GB</td></tr>
+        <tr class="border-t border-border"><td class="p-3 font-sans">RAM livre</td><td class="p-3 text-right text-danger">231Mi</td><td class="p-3 text-right text-ok">2.1Gi</td><td class="p-3 text-right text-ok">+9x</td></tr>
+        <tr class="border-t border-border"><td class="p-3 font-sans">Swap disponível</td><td class="p-3 text-right text-danger">0</td><td class="p-3 text-right text-ok">4GB</td><td class="p-3 text-right text-ok">+4GB</td></tr>
+        <tr class="border-t border-border"><td class="p-3 font-sans">CPU openclaw-gateway</td><td class="p-3 text-right text-danger">25% constante</td><td class="p-3 text-right text-ok">0% (morto)</td><td class="p-3 text-right text-ok">-25%</td></tr>
+        <tr class="border-t border-border"><td class="p-3 font-sans">OOM-kill nas últimas 24h</td><td class="p-3 text-right text-danger">2x</td><td class="p-3 text-right text-ok">0x</td><td class="p-3 text-right text-ok">-100%</td></tr>
+      </tbody>
+    </table>
   </div>
 </section>
 
@@ -680,6 +888,71 @@ graph TB
         </ul>
       </div>
     </details>
+
+    <details class="bg-surface border border-accent2/40 rounded-xl p-5" open>
+      <summary class="flex items-center gap-3">
+        <i data-lucide="chevron-right" class="chev w-4 h-4 text-accent2"></i>
+        <span class="text-xs font-mono text-accent2">D-T6 · v3</span>
+        <span class="font-semibold flex-1">OTIMIZE ML preservado · /root/otimize/ NÃO TOCAR (API Meli do Igor)</span>
+        <span class="text-xs text-ok">audit SSH · sistema crítico</span>
+      </summary>
+      <div class="mt-4 pl-7 space-y-3 text-sm">
+        <p class="text-muted"><strong class="text-white">Por quê:</strong> Durante audit SSH descobrimos que <code class="bg-bg px-1 rounded">/root/otimize/</code> é o sistema do Igor para Mercado Livre (sync · perguntas auto · concorrência · ROAS · gunicorn Flask na :8080) usando API Meli oficial. Marcado como zona vermelha · qualquer mexida bota dinheiro real em risco.</p>
+        <p class="text-muted"><strong class="text-white">Integração:</strong> Fenômeno (sub Marketplace) vai LER desse sistema (read-only) · nunca escrever. Pasta <code class="bg-bg px-1 rounded">~/OTIMIZE/areas/marketplace/</code> tem MAPA.md apontando pra <code class="bg-bg px-1 rounded">/root/otimize/</code> mas SEM modificar.</p>
+      </div>
+    </details>
+
+    <details class="bg-surface border border-ok/40 rounded-xl p-5" open>
+      <summary class="flex items-center gap-3">
+        <i data-lucide="chevron-right" class="chev w-4 h-4 text-ok"></i>
+        <span class="text-xs font-mono text-ok">D-T7 · v3 · EXECUTADO</span>
+        <span class="font-semibold flex-1">Ação 1 · openclaw-gateway zumbi morto (kill -9 3281)</span>
+        <span class="text-xs text-ok">2GB RAM + 25% CPU liberados</span>
+      </summary>
+      <div class="mt-4 pl-7 space-y-3 text-sm">
+        <p class="text-muted"><strong class="text-white">Por quê:</strong> PID 3281 rodando como user <code class="bg-bg px-1 rounded">ubuntu</code> desde 30/abr (18 dias) · 6536 minutos de CPU acumulado · 2GB RAM · 25% CPU constante. Audit confirmou zumbi · não estava em uso.</p>
+        <p class="text-muted"><strong class="text-white">Resultado:</strong> RAM usada 6.7GB → 4.8GB · CPU openclaw-gateway 25% → 0%. Sem efeito colateral. Ver seção 02b.</p>
+      </div>
+    </details>
+
+    <details class="bg-surface border border-ok/40 rounded-xl p-5" open>
+      <summary class="flex items-center gap-3">
+        <i data-lucide="chevron-right" class="chev w-4 h-4 text-ok"></i>
+        <span class="text-xs font-mono text-ok">D-T8 · v3 · EXECUTADO</span>
+        <span class="font-semibold flex-1">Ação 2 · Swap 4GB ativo + swappiness=10 + persistido</span>
+        <span class="text-xs text-ok">colchão de segurança OOM</span>
+      </summary>
+      <div class="mt-4 pl-7 space-y-3 text-sm">
+        <p class="text-muted"><strong class="text-white">Por quê:</strong> VPS estava em ZERO swap. Chrome morreu OOM 2x hoje (11:03 e 11:09). Sem rede de segurança · qualquer pico mata processo crítico.</p>
+        <p class="text-muted"><strong class="text-white">Como:</strong> <code class="bg-bg px-1 rounded">fallocate -l 4G /swapfile</code> · <code class="bg-bg px-1 rounded">swappiness=10</code> (conservador · usa swap só se RAM esgotar) · entrada em <code class="bg-bg px-1 rounded">/etc/fstab</code> pra persistir após reboot.</p>
+      </div>
+    </details>
+
+    <details class="bg-surface border border-accent/40 rounded-xl p-5">
+      <summary class="flex items-center gap-3">
+        <i data-lucide="chevron-right" class="chev w-4 h-4 text-accent"></i>
+        <span class="text-xs font-mono text-accent">D-T9 · v3</span>
+        <span class="font-semibold flex-1">Estrutura Bruno-style aprovada · ~/OTIMIZE/empresa+areas+agentes</span>
+        <span class="text-xs text-ok">D19 + D20 confirmados</span>
+      </summary>
+      <div class="mt-4 pl-7 space-y-3 text-sm">
+        <p class="text-muted"><strong class="text-white">Por quê:</strong> Bruno Camoto da comunidade Claude Code BR documentou estrutura second-brain robusta. Cruzando com nosso plano: 80% já tínhamos (D12 OTIMIZE centralizado, 6 robôs por negócio, SOUL/AGENTS/MEMORY). 20% novo agregado: MAPA.md por pasta + PROPAGATION.md raiz.</p>
+        <p class="text-muted"><strong class="text-white">Próximo:</strong> F6.5 cria estrutura completa de pastas · cada robô puxa contexto de sua pasta dedicada. Ver seção 01e.</p>
+      </div>
+    </details>
+
+    <details class="bg-surface border border-accent/40 rounded-xl p-5">
+      <summary class="flex items-center gap-3">
+        <i data-lucide="chevron-right" class="chev w-4 h-4 text-accent"></i>
+        <span class="text-xs font-mono text-accent">D-T10 · v3</span>
+        <span class="font-semibold flex-1">GitHub &gt; Obsidian · GitHub é fonte da verdade</span>
+        <span class="text-xs text-ok">Obsidian opcional como visualizador</span>
+      </summary>
+      <div class="mt-4 pl-7 space-y-3 text-sm">
+        <p class="text-muted"><strong class="text-white">Por quê:</strong> Bruno usa Obsidian, mas pra nós: GitHub centraliza (já tinha decidido D-T1 dual-LLM) · pull/push entre VPS e laptop · diff/history nativo · permissão por repo · MCP GitHub já conectado.</p>
+        <p class="text-muted"><strong class="text-white">Obsidian:</strong> visualizador OPCIONAL local pra quando você quiser navegar com grafo de links. Não é fonte da verdade. Sincronia via git (Obsidian aponta pro clone local do repo).</p>
+      </div>
+    </details>
   </div>
 </section>
 
@@ -818,6 +1091,9 @@ graph TB
           <tr class="border-t border-border bg-ok/5"><td class="p-2 font-mono text-ok">D16 ✓</td><td class="p-2">Nomes dos 6 sub-agentes?</td><td class="p-2 text-ok"><strong>FUTEBOL BRASIL CONFIRMADO</strong> · Ronaldinho · Rivaldo · Fenômeno · Kaká · Dida · Neymar</td></tr>
           <tr class="border-t border-border bg-danger/10"><td class="p-2 font-mono text-danger">D17 NOVA</td><td class="p-2"><strong class="text-white">Cap R$ 5/dia hardcoded</strong> · Jaque pausa automático se atingir · pede sua autorização pra continuar</td><td class="p-2 text-danger"><strong>HARDCODED</strong> · não negociável · circuit breaker P0</td></tr>
           <tr class="border-t border-border bg-warn/5"><td class="p-2 font-mono text-warn">D18 NOVA</td><td class="p-2"><strong class="text-white">Heartbeats com Google free (Gemini Flash)</strong> · economia adicional · pesquisa 27 em curso</td><td class="p-2 text-warn">SIM provisório · ver research 27 (bug OpenClaw + Google free LLM)</td></tr>
+          <tr class="border-t border-border bg-accent/10"><td class="p-2 font-mono text-accent">D19 NOVA · Bruno</td><td class="p-2"><strong class="text-white">Adotar estrutura second-brain</strong> <code class="bg-bg px-1 rounded text-xs">~/OTIMIZE/empresa+areas+agentes</code> com MAPA.md em cada pasta</td><td class="p-2 text-accent">SIM default · ver seção 01e</td></tr>
+          <tr class="border-t border-border bg-accent/10"><td class="p-2 font-mono text-accent">D20 NOVA · Bruno</td><td class="p-2"><strong class="text-white">PROPAGATION.md raiz</strong> · regra "quando muda X · atualiza Y" pra IA seguir automaticamente</td><td class="p-2 text-accent">SIM default · evita inconsistência entre pastas</td></tr>
+          <tr class="border-t border-border bg-accent/10"><td class="p-2 font-mono text-accent">D21 NOVA · audit</td><td class="p-2"><strong class="text-white">Reindexação forçada quando LiteLLM trocar de modelo</strong> · preserva contexto</td><td class="p-2 text-accent">SIM default · embutido no skill model-hint</td></tr>
         </tbody>
       </table>
     </div>
@@ -868,6 +1144,11 @@ graph TB
       <li>▸ Active Memory plugin nativo = zero embedding cost extra.</li>
       <li>▸ Cloudflare Free + Hostinger (já pago) = R$ 0 marginal de infra.</li>
     </ul>
+  </div>
+
+  <div class="mt-6 bg-gradient-to-br from-accent/15 to-bg border-2 border-accent/40 rounded-xl p-5">
+    <h4 class="font-bold mb-2 flex items-center gap-2 text-accent"><i data-lucide="wallet" class="w-5 h-5"></i> Custo final consolidado (v3)</h4>
+    <p class="text-sm text-muted">Com Pro mantida separada · não-Caminho B: <strong class="text-white text-base">R$ 18-58/mês</strong> infra + LLM Jaque · sua <strong class="text-white">Pro pessoal continua R$ 100/mês intocada</strong> (uso interativo no laptop). Jaque autônoma roda em provider independente · sem risco de queimar sua Pro.</p>
   </div>
 </section>
 
@@ -1211,13 +1492,16 @@ graph TB
   <h2 class="text-3xl font-bold mb-2">O caminho daqui até a Jaque rodando.</h2>
   <p class="text-muted mb-8 max-w-3xl">Cada passo precisa do anterior. Nenhum mexe na VPS sem você autorizar.</p>
   <ol class="space-y-4">
-    <li class="bg-surface border border-border rounded-xl p-5 flex gap-4"><span class="w-8 h-8 shrink-0 rounded-full bg-accent text-bg flex items-center justify-center font-bold">1</span><div><h4 class="font-bold">Você responde D1, D2, D3, D6, D7</h4><p class="text-sm text-muted mt-1">Marca aqui em cima e clica <strong class="text-accent">📋 Exportar</strong>. Cola no chat comigo.</p></div></li>
-    <li class="bg-surface border border-border rounded-xl p-5 flex gap-4"><span class="w-8 h-8 shrink-0 rounded-full bg-surface2 border border-border text-muted flex items-center justify-center font-bold">2</span><div><h4 class="font-bold">Eu gero <code class="bg-bg px-1.5 py-0.5 rounded text-sm">35-runbook-execucao.md</code></h4><p class="text-sm text-muted mt-1">Comandos copy-paste exatos pra F6.0.1 em diante. Usa seus valores reais.</p></div></li>
-    <li class="bg-surface border border-border rounded-xl p-5 flex gap-4"><span class="w-8 h-8 shrink-0 rounded-full bg-surface2 border border-border text-muted flex items-center justify-center font-bold">3</span><div><h4 class="font-bold">Você dispara F6.0.1 (snapshot Hostinger)</h4><p class="text-sm text-muted mt-1">Clica "Instantâneo" no painel. 2 min, manual. Único passo destrutivo (gera, não modifica).</p></div></li>
-    <li class="bg-surface border border-border rounded-xl p-5 flex gap-4"><span class="w-8 h-8 shrink-0 rounded-full bg-surface2 border border-border text-muted flex items-center justify-center font-bold">4</span><div><h4 class="font-bold">Eu rodo F6.0.2 (audit SSH read-only)</h4><p class="text-sm text-muted mt-1">Só LEITURA: <code class="bg-bg px-1 rounded">docker stats</code>, <code class="bg-bg px-1 rounded">ps aux</code>, <code class="bg-bg px-1 rounded">free -h</code>. Reporto.</p></div></li>
-    <li class="bg-surface border border-border rounded-xl p-5 flex gap-4"><span class="w-8 h-8 shrink-0 rounded-full bg-surface2 border border-border text-muted flex items-center justify-center font-bold">5</span><div><h4 class="font-bold">Você decide o que parar (F6.0.3)</h4><p class="text-sm text-muted mt-1">Com base no audit, qual container/serviço pode sair pra liberar RAM.</p></div></li>
-    <li class="bg-surface border border-border rounded-xl p-5 flex gap-4"><span class="w-8 h-8 shrink-0 rounded-full bg-surface2 border border-border text-muted flex items-center justify-center font-bold">6</span><div><h4 class="font-bold">Sigo F6.0.4 → F6.10 com checkpoint</h4><p class="text-sm text-muted mt-1">7-10 dias. Você aprova cada fase antes da próxima.</p></div></li>
-    <li class="bg-surface border border-border rounded-xl p-5 flex gap-4"><span class="w-8 h-8 shrink-0 rounded-full bg-accent2 text-white flex items-center justify-center font-bold">7</span><div><h4 class="font-bold">Jaque renasce turbinada · go-live</h4><p class="text-sm text-muted mt-1">Heartbeat ativo, memória aprendendo, segura, barata.</p></div></li>
+    <li class="bg-surface border border-ok/40 rounded-xl p-5 flex gap-4 opacity-80"><span class="w-8 h-8 shrink-0 rounded-full bg-ok text-bg flex items-center justify-center font-bold">✓</span><div><h4 class="font-bold line-through">Snapshot Hostinger feito</h4><p class="text-sm text-muted mt-1">Painel · Instantâneo gerado · backup de segurança antes de qualquer ação destrutiva.</p></div></li>
+    <li class="bg-surface border border-ok/40 rounded-xl p-5 flex gap-4 opacity-80"><span class="w-8 h-8 shrink-0 rounded-full bg-ok text-bg flex items-center justify-center font-bold">✓</span><div><h4 class="font-bold line-through">Audit SSH executado</h4><p class="text-sm text-muted mt-1">Read-only · descobertas: openclaw-gateway zumbi 18 dias · /root/otimize/ preservado · 8 containers Docker · 4 sistemas Python. Ver seção 02b.</p></div></li>
+    <li class="bg-surface border border-ok/40 rounded-xl p-5 flex gap-4 opacity-80"><span class="w-8 h-8 shrink-0 rounded-full bg-ok text-bg flex items-center justify-center font-bold">✓</span><div><h4 class="font-bold line-through">Ação 1 · kill -9 openclaw-gateway zumbi (PID 3281)</h4><p class="text-sm text-muted mt-1">2GB RAM + 25% CPU liberados imediato · sem efeito colateral.</p></div></li>
+    <li class="bg-surface border border-ok/40 rounded-xl p-5 flex gap-4 opacity-80"><span class="w-8 h-8 shrink-0 rounded-full bg-ok text-bg flex items-center justify-center font-bold">✓</span><div><h4 class="font-bold line-through">Ação 2 · Swap 4GB ativo + swappiness=10 + persistido</h4><p class="text-sm text-muted mt-1">Colchão OOM · entrada em /etc/fstab · zero OOM-kill desde ação.</p></div></li>
+    <li class="bg-surface border-2 border-warn rounded-xl p-5 flex gap-4 pulse-dot"><span class="w-8 h-8 shrink-0 rounded-full bg-warn text-bg flex items-center justify-center font-bold">5</span><div><h4 class="font-bold">AGORA · auditoria final boas práticas</h4><p class="text-sm text-muted mt-1">Subagent paralelo rodando · checa: logs rotation · mem_limits · permissões · cron jobs · network · firewall · dependências desatualizadas. Relatório esperado antes F6.1.</p></div></li>
+    <li class="bg-surface border border-border rounded-xl p-5 flex gap-4"><span class="w-8 h-8 shrink-0 rounded-full bg-surface2 border border-border text-muted flex items-center justify-center font-bold">6</span><div><h4 class="font-bold">F6.1 · pull OpenClaw novo + LiteLLM + Gemini/DeepSeek/Sonnet</h4><p class="text-sm text-muted mt-1">Imagem pinada :2026.5.17 · LiteLLM gateway · 3 providers configurados · cap R$5/dia HARDCODED.</p></div></li>
+    <li class="bg-surface border border-border rounded-xl p-5 flex gap-4"><span class="w-8 h-8 shrink-0 rounded-full bg-surface2 border border-border text-muted flex items-center justify-center font-bold">7</span><div><h4 class="font-bold">F6.2 · doctor --fix + bug docker.sock</h4><p class="text-sm text-muted mt-1">Conhecido bug OpenClaw Hostinger · workaround documentado.</p></div></li>
+    <li class="bg-surface border border-border rounded-xl p-5 flex gap-4"><span class="w-8 h-8 shrink-0 rounded-full bg-surface2 border border-border text-muted flex items-center justify-center font-bold">8</span><div><h4 class="font-bold">F6.3 · segurança SOPS+age + Cloudflare Tunnel + whitelist</h4><p class="text-sm text-muted mt-1">Secrets cifrados · 2 apps CF (webhook + admin) · whitelist Telegram user_id · canary tokens.</p></div></li>
+    <li class="bg-surface border border-border rounded-xl p-5 flex gap-4"><span class="w-8 h-8 shrink-0 rounded-full bg-surface2 border border-border text-muted flex items-center justify-center font-bold">9</span><div><h4 class="font-bold">F6.4-F6.10 · sequência</h4><p class="text-sm text-muted mt-1">LLM provider · templates SOUL/AGENTS/MEMORY · Active Memory · heartbeats · subagents + eval · dry-run 1 semana · go-live + backup B2.</p></div></li>
+    <li class="bg-surface border border-accent2 rounded-xl p-5 flex gap-4"><span class="w-8 h-8 shrink-0 rounded-full bg-accent2 text-white flex items-center justify-center font-bold">10</span><div><h4 class="font-bold">Jaque renasce turbinada · go-live</h4><p class="text-sm text-muted mt-1">1 mestre + 6 subs futebol · heartbeat ativo · memória aprendendo · second-brain navegável · segura · R$ 18-58/mês.</p></div></li>
   </ol>
   <div class="mt-8 bg-gradient-to-br from-accent/15 via-bg to-accent2/10 border border-accent/40 rounded-xl p-8 text-center">
     <h3 class="text-2xl font-bold mb-2">Quando estiver pronto, exporta e cola no chat.</h3>
@@ -1227,7 +1511,7 @@ graph TB
 </section>
 
 <footer class="text-center text-xs text-muted py-8 border-t border-border">
-  Jaque · Mapa de Planejamento · v2-EPSILON · 18/mai/2026 · 1+6 robôs · LiteLLM gateway · 9 MCPs · cap R$5/dia · todas decisões salvas localmente
+  Jaque · Mapa de Planejamento · v3 · 18 mai 2026 · second-brain integrado · audit VPS executado · 21 decisões · 1+6 robôs · LiteLLM gateway · 9 MCPs · cap R$5/dia · todas decisões salvas localmente
 </footer>
 
 </main>
