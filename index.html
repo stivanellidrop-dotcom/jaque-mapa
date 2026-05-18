@@ -111,6 +111,9 @@ tailwind.config = {
 <aside class="hidden lg:block w-64 shrink-0 sticky top-[60px] h-[calc(100vh-60px)] overflow-y-auto py-6 pr-3 text-sm">
   <nav class="flex flex-col gap-0.5">
     <a href="#visao" class="nav-link px-4 py-2 hover:bg-surface flex items-center gap-2.5"><i data-lucide="layout-dashboard" class="w-4 h-4"></i> Visão geral</a>
+    <a href="#perfil" class="nav-link px-4 py-2 hover:bg-surface flex items-center gap-2.5"><i data-lucide="user-cog" class="w-4 h-4"></i> Perfil OTIMIZE <span class="ml-auto text-[10px] px-1.5 py-0.5 rounded-full bg-accent2 text-white">NOVO</span></a>
+    <a href="#funil" class="nav-link px-4 py-2 hover:bg-surface flex items-center gap-2.5"><i data-lucide="filter" class="w-4 h-4"></i> Funil R$ 50k <span class="ml-auto text-[10px] px-1.5 py-0.5 rounded-full bg-accent2 text-white">NOVO</span></a>
+    <a href="#robos" class="nav-link px-4 py-2 hover:bg-surface flex items-center gap-2.5"><i data-lucide="bot" class="w-4 h-4"></i> 5 Robôs <span class="ml-auto text-[10px] px-1.5 py-0.5 rounded-full bg-accent2 text-white">NOVO</span></a>
     <a href="#feito" class="nav-link px-4 py-2 hover:bg-surface flex items-center gap-2.5"><i data-lucide="check-circle-2" class="w-4 h-4"></i> O que foi feito</a>
     <a href="#arquitetura" class="nav-link px-4 py-2 hover:bg-surface flex items-center gap-2.5"><i data-lucide="git-fork" class="w-4 h-4"></i> Arquitetura</a>
     <a href="#tomadas" class="nav-link px-4 py-2 hover:bg-surface flex items-center gap-2.5"><i data-lucide="badge-check" class="w-4 h-4"></i> Decisões tomadas</a>
@@ -136,11 +139,11 @@ tailwind.config = {
   <p class="text-lg text-muted max-w-3xl mb-8">Plano consolidado para colocar o agente OpenClaw <strong class="text-white">"Jaque"</strong> do Igor em pé com memória persistente, heartbeats com circuit breaker e segurança 2026 (SOPS+age + Cloudflare Tunnel + whitelist Telegram). Tudo rodando na VPS Hostinger atual.</p>
 
   <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-10">
-    <div class="bg-surface border border-border rounded-xl p-5"><p class="text-xs text-muted uppercase">Transcrição</p><p class="text-2xl font-bold mt-1">9.008</p><p class="text-xs text-muted">linhas / 6h workshop</p></div>
-    <div class="bg-surface border border-border rounded-xl p-5"><p class="text-xs text-muted uppercase">Pesquisas</p><p class="text-2xl font-bold mt-1">9</p><p class="text-xs text-muted">docs · ~150 KB</p></div>
-    <div class="bg-surface border border-border rounded-xl p-5"><p class="text-xs text-muted uppercase">Decisões para você</p><p class="text-2xl font-bold mt-1 text-accent">5</p><p class="text-xs text-muted">D1, D2, D3, D6, D7</p></div>
-    <div class="bg-surface border border-border rounded-xl p-5"><p class="text-xs text-muted uppercase">Custo recorrente</p><p class="text-2xl font-bold mt-1">R$ 12-50</p><p class="text-xs text-muted">por mês (mín–médio)</p></div>
-    <div class="bg-surface border border-border rounded-xl p-5"><p class="text-xs text-muted uppercase">Execução</p><p class="text-2xl font-bold mt-1">7–10</p><p class="text-xs text-muted">dias · 22-30h ativas</p></div>
+    <div class="bg-surface border border-accent/60 rounded-xl p-5"><p class="text-xs text-muted uppercase">Receita atual</p><p class="text-2xl font-bold mt-1 text-white">R$ 8,5k</p><p class="text-xs text-muted">por mês · 6 frentes</p></div>
+    <div class="bg-surface border border-accent2/60 rounded-xl p-5"><p class="text-xs text-muted uppercase">META · north star</p><p class="text-2xl font-bold mt-1 text-accent2">R$ 50k</p><p class="text-xs text-muted">/mês · ago 2026 (90 dias)</p></div>
+    <div class="bg-surface border border-border rounded-xl p-5"><p class="text-xs text-muted uppercase">Decisões para você</p><p class="text-2xl font-bold mt-1 text-accent">13</p><p class="text-xs text-muted">D1-D15 · 2 decididas</p></div>
+    <div class="bg-surface border border-border rounded-xl p-5"><p class="text-xs text-muted uppercase">Custo operacional</p><p class="text-2xl font-bold mt-1">R$ 1,2k</p><p class="text-xs text-muted">/mês (HeyGen + tráfego)</p></div>
+    <div class="bg-surface border border-border rounded-xl p-5"><p class="text-xs text-muted uppercase">Execução MVP</p><p class="text-2xl font-bold mt-1">7–10</p><p class="text-xs text-muted">dias setup Jaque</p></div>
   </div>
 
   <div class="bg-gradient-to-br from-surface to-surface2 border border-border rounded-xl p-6 mb-8">
@@ -175,6 +178,262 @@ tailwind.config = {
         <li>✓ Sequência corrigida · pin :2026.5.17 · backup offsite B2</li>
       </ul>
       <p class="mt-3 text-xs text-muted">*Aprovado para F6.0–F6.3. Checkpoint antes de F6.4.</p>
+    </div>
+  </div>
+</section>
+
+<section id="perfil" class="fade-in scroll-mt-20">
+  <p class="text-xs text-accent2 font-mono uppercase tracking-widest mb-2">01b · Perfil Igor · OTIMIZE · 6 frentes</p>
+  <h2 class="text-3xl font-bold mb-2">Quem você é, o que vende, onde está hoje.</h2>
+  <p class="text-muted mb-8 max-w-3xl">Documentação viva pra Jaque saber tudo sem você repetir. Atualizado 18/05/2026.</p>
+
+  <div class="grid md:grid-cols-3 gap-4 mb-8">
+    <div class="bg-surface border border-border rounded-xl p-5">
+      <p class="text-xs text-muted uppercase mb-1">Pessoa</p>
+      <p class="text-lg font-bold">Igor Stivanelli</p>
+      <p class="text-sm text-muted mt-1">Campinas SP · esposa Monique · 1 sócio Tá na Mão (50/50) · zero equipe (empresa de 1)</p>
+      <p class="text-sm text-muted mt-2"><strong class="text-white">Rotina:</strong> acorda 5-6h · treino academia · dia produtivo cedo</p>
+    </div>
+    <div class="bg-surface border border-border rounded-xl p-5">
+      <p class="text-xs text-muted uppercase mb-1">Stack pessoal</p>
+      <p class="text-sm">PC Ryzen 7 5700G · 32GB · 50% tempo</p>
+      <p class="text-sm">MacBook M3 16GB · mobile</p>
+      <p class="text-sm">Claude Code <code class="bg-bg px-1 rounded text-xs">ultrathink</code> autônomo</p>
+      <p class="text-sm">Assinatura <strong class="text-accent">Claude Max ~R$ 1.200/mês</strong></p>
+    </div>
+    <div class="bg-surface border border-border rounded-xl p-5">
+      <p class="text-xs text-muted uppercase mb-1">Maior dor declarada</p>
+      <p class="text-sm">TRAVADO · procrastinando</p>
+      <p class="text-sm">Sem começar conteúdo nas redes</p>
+      <p class="text-sm">10 pastas projetos separadas — cansado de repetir contexto</p>
+      <p class="text-sm">Weclei (1 cliente · R$1M/mês vendas) consome horas manualmente</p>
+    </div>
+  </div>
+
+  <div class="bg-surface border border-border rounded-xl overflow-x-auto mb-6">
+    <table class="w-full text-sm">
+      <thead class="bg-surface2 text-xs uppercase text-muted">
+        <tr>
+          <th class="text-left p-3">Frente</th>
+          <th class="text-right p-3">R$/mês (Igor)</th>
+          <th class="text-left p-3">Status</th>
+          <th class="text-left p-3">Estratégia</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="border-t border-border"><td class="p-3 font-semibold">Otimize CRM (WL Helena)</td><td class="p-3 text-right font-mono">R$ 4.000</td><td class="p-3 text-muted">Legado · margem apertada · mercado prostituído</td><td class="p-3 text-muted">ORDENHAR sem investir · upsell único pros antigos · churn natural</td></tr>
+        <tr class="border-t border-border"><td class="p-3 font-semibold">Weclei (gestão marketplace)</td><td class="p-3 text-right font-mono">R$ 2.000 + 1%</td><td class="p-3 text-muted">Cliente vende ~R$ 1M/mês · ML/Shopee/TikTok manuais</td><td class="p-3 text-muted">Automatizar com UpSeller (oficial ML) + Jaque na criatividade</td></tr>
+        <tr class="border-t border-border"><td class="p-3 font-semibold">Mentoria veterinárias</td><td class="p-3 text-right font-mono">R$ 2.000</td><td class="p-3 text-muted">3 sócias · funil/tráfego/consultoria</td><td class="p-3 text-muted">Manter · não escalar 1:1</td></tr>
+        <tr class="border-t border-border"><td class="p-3 font-semibold">Tá na Mão IA SaaS (sua fatia 50%)</td><td class="p-3 text-right font-mono">R$ 750 / 0 líq</td><td class="p-3 text-muted">13 assinaturas R$ 119 · MRR R$ 1.500 · tráfego R$ 1.5k consome margem</td><td class="p-3 text-muted">Jaque mede CAC vs LTV semanal · alerta sócio</td></tr>
+        <tr class="border-t border-border"><td class="p-3 font-semibold">Marketplace próprio</td><td class="p-3 text-right text-muted">piloto auto</td><td class="p-3 text-muted">Logista SP posta abatendo dívida · zero esforço</td><td class="p-3 text-muted">Manter piloto · não focar</td></tr>
+        <tr class="border-t border-border bg-accent2/5"><td class="p-3 font-bold text-accent2">IA PARA TODOS (futuro)</td><td class="p-3 text-right font-mono text-accent2">meta R$ 30-50k</td><td class="p-3 text-muted">Comunidade R$ 997 (12x) · primeiros 100 fundadores</td><td class="p-3 text-muted">Lançar em 60 dias · alavanca principal pra meta R$ 50k</td></tr>
+        <tr class="border-t border-border bg-accent/10 font-bold"><td class="p-3">TOTAL atual</td><td class="p-3 text-right text-accent">R$ 8.500</td><td class="p-3 text-muted" colspan="2">Gap pra meta: <strong class="text-accent2">R$ 41.500/mês</strong> · alavanca = IA PARA TODOS</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="grid md:grid-cols-2 gap-4 text-sm">
+    <div class="bg-surface border border-border rounded-xl p-5">
+      <p class="text-xs text-muted uppercase mb-2">Canais ativos</p>
+      <ul class="space-y-1">
+        <li>▸ WhatsApp Meta API oficial · (11) 97820-2286 · WABA <code class="bg-bg px-1 rounded text-xs">2829806954028256</code></li>
+        <li>▸ WhatsApp Z-API · (19) 98130-6507</li>
+        <li>▸ Bot Telegram Jaque · <code class="bg-bg px-1 rounded text-xs">@JaqueVoceBot</code></li>
+        <li>▸ Instagram pessoal · <code class="bg-bg px-1 rounded text-xs">@igor_stivanelli</code> (crescer)</li>
+        <li>▸ Instagram empresa · <code class="bg-bg px-1 rounded text-xs">@otimizecrm</code> · <code class="bg-bg px-1 rounded text-xs">@tanamaoIA</code></li>
+        <li>▸ Sistema próprio · <code class="bg-bg px-1 rounded text-xs">grupos.otimize.digital</code> (multiplexador grupos WhatsApp)</li>
+      </ul>
+    </div>
+    <div class="bg-surface border border-border rounded-xl p-5">
+      <p class="text-xs text-muted uppercase mb-2">Preferências fortes (regras pra mim e pra Jaque)</p>
+      <ul class="space-y-1">
+        <li>▸ Pt-BR · caveman OK</li>
+        <li>▸ <strong class="text-white">PESQUISAR antes de afirmar</strong> · odeia afirmação sem fonte</li>
+        <li>▸ <strong class="text-white">DISCORDAR com DADOS</strong> · odeia puxa-saco</li>
+        <li>▸ Direção &gt; velocidade · plano antes de execução</li>
+        <li>▸ Linguagem SIMPLIFICADA quando técnica · sem jargão</li>
+        <li>▸ Ciclo: Pesquisar → Construir → Auditar → Entregar</li>
+        <li>▸ Sócio operacional, não assistente passivo</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="funil" class="fade-in scroll-mt-20">
+  <p class="text-xs text-accent2 font-mono uppercase tracking-widest mb-2">01c · Funil OTIMIZE · caminho pra R$ 50k/mês</p>
+  <h2 class="text-3xl font-bold mb-2">Como sair de R$ 8,5k para R$ 50k em 90 dias.</h2>
+  <p class="text-muted mb-8 max-w-3xl">Alavanca: lançar comunidade <strong class="text-white">IA PARA TODOS</strong> · 50 vendas × R$ 997 = R$ 49.850 ≈ meta. Resto das frentes mantém base.</p>
+
+  <div class="bg-surface border border-border rounded-xl p-6 mb-6 overflow-x-auto">
+    <div class="mermaid">
+graph TB
+    C1["Conteúdo MASSA<br/>IG · YouTube · X · TikTok<br/>Avatar HeyGen · 30% real Igor + 70% avatar"]:::topo
+    C2["Tráfego pago R$ 30-50/dia (Mês 1)"]:::topo
+    LP["LP imersaoIA.otimize.digital<br/>HTML simples no GitHub Pages · grátis"]:::meio
+    GR["grupos.otimize.digital<br/>multiplexador N grupos WhatsApp · sistema próprio Igor"]:::meio
+    AQ["Aquece grupo<br/>Jaque manda conteúdo · responde · cria expectativa"]:::meio
+    WK["WORKSHOP AO VIVO R$ 19<br/>Resolve 1 dor concreta · entrega ouro"]:::fundo
+    PI["PITCH ao vivo no final<br/>Comunidade IA PARA TODOS R$ 997 (12x)<br/>Plataforma: Hubla (taxa baixa, foco WhatsApp)"]:::fundo
+    F100["Primeiros 100 fundadores<br/>Cupom limitado · preço lifetime · 1:1 mensal · selo · voto roadmap"]:::fundo
+    COM["Comunidade ativa<br/>Lives · projetos prontos · network · suporte Igor + Jaque"]:::extra
+    META["50 vendas × R$ 997 = R$ 49.850 ≈ META R$ 50k/mês"]:::meta
+
+    C1 --> LP
+    C2 --> LP
+    LP --> GR
+    GR --> AQ
+    AQ --> WK
+    WK --> PI
+    PI --> F100
+    F100 --> COM
+    COM --> META
+
+    classDef topo fill:#13141a,stroke:#00d4aa,color:#fff,stroke-width:2px
+    classDef meio fill:#1c1d26,stroke:#7c3aed,color:#fff
+    classDef fundo fill:#13141a,stroke:#f59e0b,color:#fff,stroke-width:2px
+    classDef extra fill:#1c1d26,stroke:#3b82f6,color:#fff
+    classDef meta fill:#00d4aa,stroke:#00d4aa,color:#0a0a0f,stroke-width:3px
+    </div>
+  </div>
+
+  <div class="grid md:grid-cols-2 gap-6">
+    <div class="bg-surface border border-border rounded-xl p-5">
+      <h4 class="font-bold mb-3 flex items-center gap-2"><i data-lucide="calculator" class="w-5 h-5 text-accent"></i> Matemática reversa pra meta</h4>
+      <ul class="text-sm text-muted space-y-2">
+        <li>▸ <strong class="text-white">Meta:</strong> 50 vendas comunidade R$ 997 = R$ 49.850</li>
+        <li>▸ <strong class="text-white">Workshop → comunidade:</strong> ~10-15% conversão (referência BR)</li>
+        <li>▸ Precisa: <strong class="text-white">400 pessoas no workshop R$ 19</strong></li>
+        <li>▸ <strong class="text-white">Grupo → workshop:</strong> ~20-30% conversão</li>
+        <li>▸ Precisa: <strong class="text-white">1.500-2.000 pessoas nos grupos</strong></li>
+        <li>▸ <strong class="text-white">Tráfego → grupo:</strong> CPL ~R$ 3-8 (nicho IA BR)</li>
+        <li>▸ Custo tráfego pago: R$ 4.500-16.000 (50% orgânico mistura)</li>
+        <li>▸ <strong class="text-accent">Bate meta no Mês 2-3</strong> se conteúdo orgânico funcionar</li>
+      </ul>
+    </div>
+    <div class="bg-surface border border-border rounded-xl p-5">
+      <h4 class="font-bold mb-3 flex items-center gap-2"><i data-lucide="gift" class="w-5 h-5 text-accent2"></i> Estratégia 100 fundadores (research 23)</h4>
+      <ul class="text-sm text-muted space-y-2">
+        <li>▸ <strong class="text-white">Cupom Hubla/Hotmart</strong> limitado a 100 usos</li>
+        <li>▸ <strong class="text-white">Preço lifetime</strong> congelado pros 100</li>
+        <li>▸ <strong class="text-white">Workshop pago R$ 9-19 antes</strong> = audiência até 20× mais qualificada</li>
+        <li>▸ <strong class="text-white">Bônus exclusivos só pros 100:</strong></li>
+        <li class="ml-4">— 1:1 mensal de 30min com Igor</li>
+        <li class="ml-4">— Voto no roadmap do que ele constrói</li>
+        <li class="ml-4">— Selo "Fundador" perpétuo</li>
+        <li class="ml-4">— Preço congelado pra sempre (mesmo se Igor subir o ticket depois)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="mt-6 bg-gradient-to-br from-warn/10 to-bg border border-warn/30 rounded-xl p-5">
+    <h4 class="font-bold mb-2 flex items-center gap-2 text-warn"><i data-lucide="info" class="w-5 h-5"></i> Plataforma comunidade · qual escolher?</h4>
+    <table class="w-full text-sm">
+      <thead class="text-xs text-muted uppercase"><tr><th class="text-left py-1">Plataforma</th><th class="text-left py-1">Taxa</th><th class="text-left py-1">Forte em</th><th class="text-left py-1">Recomendação</th></tr></thead>
+      <tbody>
+        <tr class="border-t border-border/50"><td class="py-2 font-semibold">Hubla</td><td class="py-2">8,9% + R$ 2,49</td><td class="py-2 text-muted">Comunidade WhatsApp/Telegram nativa</td><td class="py-2 text-accent">★ MELHOR pra Comunidade R$ 997</td></tr>
+        <tr class="border-t border-border/50"><td class="py-2 font-semibold">Hotmart</td><td class="py-2">~9,9% + R$ 1</td><td class="py-2 text-muted">Member Area robusta · afiliados · escala</td><td class="py-2 text-muted">Bom · mas overkill MVP</td></tr>
+        <tr class="border-t border-border/50"><td class="py-2 font-semibold">Kiwify</td><td class="py-2">3,89% ou fixo</td><td class="py-2 text-muted">Margem máxima · checkout simples</td><td class="py-2 text-muted">Bom pra ticket alto · falta foco comunidade</td></tr>
+      </tbody>
+    </table>
+    <p class="text-xs text-muted mt-3 italic">Recomendação default: <strong class="text-warn">Hubla</strong>. Lançamento Mês 2 · primeiros 100 fundadores aproveitam taxa menor + UX nativo grupo. Confirmação research 23.</p>
+  </div>
+</section>
+
+<section id="robos" class="fade-in scroll-mt-20">
+  <p class="text-xs text-accent2 font-mono uppercase tracking-widest mb-2">01d · 5 Robôs por NEGÓCIO (não por função)</p>
+  <h2 class="text-3xl font-bold mb-2">Cada robô = especialista total em 1 negócio.</h2>
+  <p class="text-muted mb-8 max-w-3xl">Você sugeriu · eu concordei · workshop confirma. Cada robô vai fundo no contexto do SEU negócio em vez de fazer um pouco de tudo em todos.</p>
+
+  <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div class="bg-gradient-to-br from-accent/15 to-bg border-2 border-accent rounded-xl p-5">
+      <p class="text-xs text-accent font-mono mb-1">MESTRE</p>
+      <h4 class="font-bold text-lg">JAQUE-MESTRE</h4>
+      <p class="text-xs text-muted mt-1">Segundo cérebro Igor</p>
+      <ul class="text-sm mt-3 space-y-1 text-muted">
+        <li>▸ Telegram dele · responde + executa</li>
+        <li>▸ Triagei toda mensagem · roteia pro robô certo</li>
+        <li>▸ Agenda · transcrever áudio · planejar</li>
+        <li>▸ Brainstorm estratégico</li>
+        <li>▸ Mentoria veterinárias (cliente único) vira tool dela</li>
+      </ul>
+    </div>
+    <div class="bg-surface border-2 border-accent2/60 rounded-xl p-5">
+      <p class="text-xs text-accent2 font-mono mb-1">SA-1 · ALAVANCA PRINCIPAL</p>
+      <h4 class="font-bold text-lg">SA-CONTEUDO</h4>
+      <p class="text-xs text-muted mt-1">IA PARA TODOS (futuro)</p>
+      <ul class="text-sm mt-3 space-y-1 text-muted">
+        <li>▸ Gera vídeos avatar HeyGen 30/70 (real + avatar)</li>
+        <li>▸ Roteiros · agenda postagem · carrosséis IG</li>
+        <li>▸ Mantém LP imersaoIA.otimize.digital</li>
+        <li>▸ Gerencia grupos WhatsApp (via grupos.otimize)</li>
+        <li>▸ Workshop ao vivo · pitch comunidade</li>
+        <li>▸ Responde DMs @igor_stivanelli/@otimizecrm/@tanamaoIA</li>
+      </ul>
+    </div>
+    <div class="bg-surface border-2 border-border rounded-xl p-5">
+      <p class="text-xs text-warn font-mono mb-1">SA-2</p>
+      <h4 class="font-bold text-lg">SA-TANAMAO</h4>
+      <p class="text-xs text-muted mt-1">Tá na Mão IA SaaS</p>
+      <ul class="text-sm mt-3 space-y-1 text-muted">
+        <li>▸ Monitora 13 assinaturas R$ 119</li>
+        <li>▸ CAC vs LTV diário (tráfego R$ 1,5k)</li>
+        <li>▸ Alerta churn (você + sócio)</li>
+        <li>▸ Entrega foto cliente: recebe → Magnific/Freepik → WhatsApp dele</li>
+        <li>▸ Reports semanais sócio (50/50)</li>
+      </ul>
+    </div>
+    <div class="bg-surface border-2 border-border rounded-xl p-5">
+      <p class="text-xs text-warn font-mono mb-1">SA-3</p>
+      <h4 class="font-bold text-lg">SA-OTIMIZE-CRM</h4>
+      <p class="text-xs text-muted mt-1">Helena WL · clientes legados</p>
+      <ul class="text-sm mt-3 space-y-1 text-muted">
+        <li>▸ Cuida clientes antigos (R$ 4k/mês)</li>
+        <li>▸ Responde 2 WhatsApps corporativos</li>
+        <li>▸ MCP Helena conectado</li>
+        <li>▸ Retenção · não busca cliente novo</li>
+        <li>▸ Upsell ÚNICO pros antigos: comunidade IA PARA TODOS desconto</li>
+      </ul>
+    </div>
+    <div class="bg-surface border-2 border-border rounded-xl p-5">
+      <p class="text-xs text-warn font-mono mb-1">SA-4</p>
+      <h4 class="font-bold text-lg">SA-WECLEI</h4>
+      <p class="text-xs text-muted mt-1">Marketplace gestão (R$ 1M/mês!)</p>
+      <ul class="text-sm mt-3 space-y-1 text-muted">
+        <li>▸ Cria anúncios ML/Shopee/TikTok via UpSeller (oficial)</li>
+        <li>▸ Gera título · descrição · imagens otimizadas</li>
+        <li>▸ Monitora vendas · calcula sua comissão 1%</li>
+        <li>▸ Captura métricas pra escalar pra novos clientes Weclei-style</li>
+        <li>▸ Avalia Bling/Tiny se vale migrar parte do trabalho</li>
+      </ul>
+    </div>
+    <div class="bg-surface border border-border rounded-xl p-5">
+      <p class="text-xs text-muted font-mono mb-1">RAM USAGE</p>
+      <h4 class="font-bold text-lg">Cabe na VPS?</h4>
+      <p class="text-sm text-muted mt-3">Fórmula Sala Secreta: 1.5GB disco + 700MB/workspace.</p>
+      <p class="text-sm text-muted mt-2">1 mestre + 4 subs = <strong class="text-accent">3,5GB RAM</strong> · sobra <strong class="text-accent">4,5GB</strong> pro sistema/Postgres.</p>
+      <p class="text-sm text-muted mt-2">VPS 8GB confortável · sem swap agressivo.</p>
+    </div>
+  </div>
+
+  <div class="mt-6 bg-gradient-to-br from-accent2/10 to-bg border border-accent2/30 rounded-xl p-5">
+    <h4 class="font-bold mb-3 flex items-center gap-2 text-accent2"><i data-lucide="brain" class="w-5 h-5"></i> Como funciona o roteamento (exemplo prático)</h4>
+    <div class="grid md:grid-cols-2 gap-4 text-sm">
+      <div>
+        <p class="font-semibold mb-1 text-white">Cenário 1 · Você manda no Telegram</p>
+        <p class="text-muted text-xs">"Jaque, posta um carrossel sobre os 5 maiores erros usando IA"</p>
+        <p class="text-muted text-xs mt-2">→ JAQUE-MESTRE recebe</p>
+        <p class="text-muted text-xs">→ Roteia pra SA-CONTEUDO</p>
+        <p class="text-muted text-xs">→ SA-CONTEUDO pesquisa, escreve roteiro, gera artes, agenda</p>
+        <p class="text-muted text-xs">→ Devolve "Tá agendado pra amanhã 10h, quer revisar?"</p>
+      </div>
+      <div>
+        <p class="font-semibold mb-1 text-white">Cenário 2 · Cliente Tá na Mão manda foto</p>
+        <p class="text-muted text-xs">Cliente paga R$ 119/mês · manda foto bruta de produto</p>
+        <p class="text-muted text-xs mt-2">→ SA-TANAMAO recebe automaticamente (webhook)</p>
+        <p class="text-muted text-xs">→ Roda Magnific/Freepik com prompts otimize</p>
+        <p class="text-muted text-xs">→ Entrega foto pronta direto no WhatsApp do cliente</p>
+        <p class="text-muted text-xs">→ Reporta sócio: "Cliente X entregue · MRR estável"</p>
+      </div>
     </div>
   </div>
 </section>
@@ -471,10 +730,32 @@ graph TB
     </div>
   </div>
 
+  <div class="bg-surface border border-border rounded-xl p-6 mb-6">
+    <h3 class="font-bold mb-3 flex items-center gap-2"><i data-lucide="list-checks" class="w-5 h-5 text-accent2"></i> Decisões adicionais (D8-D15) — vieram da Sala Secreta + perfil real</h3>
+    <p class="text-sm text-muted mb-4">Não precisa clicar aqui · só ler · responde no chat junto com D1-D7. Default todas = recomendação minha.</p>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead class="bg-surface2 text-xs uppercase text-muted">
+          <tr><th class="text-left p-2">ID</th><th class="text-left p-2">Pergunta (simples)</th><th class="text-left p-2">Default recomendado</th></tr>
+        </thead>
+        <tbody>
+          <tr class="border-t border-border"><td class="p-2 font-mono text-accent2">D8</td><td class="p-2">Pedir pro Claude desktop (que já te conhece) reescrever o SOUL.md da Jaque?</td><td class="p-2 text-muted">sim · ele te conhece melhor que template genérico</td></tr>
+          <tr class="border-t border-border"><td class="p-2 font-mono text-accent2">D9</td><td class="p-2">Ativar Debounce 10s no Telegram? (quando você manda áudio picado, junta tudo antes de responder)</td><td class="p-2 text-muted">sim · seu jeito de mandar mensagem agradece</td></tr>
+          <tr class="border-t border-border"><td class="p-2 font-mono text-accent2">D10</td><td class="p-2">Lista de bloqueados explícita (BLOCKED) além da whitelist?</td><td class="p-2 text-muted">sim · começa vazia · popular quando precisar</td></tr>
+          <tr class="border-t border-border bg-accent/5"><td class="p-2 font-mono text-accent2">D11</td><td class="p-2">Criar LP <code class="bg-bg px-1 rounded text-xs">imersaoIA.otimize.digital</code> grátis (HTML simples GitHub Pages)?</td><td class="p-2 text-muted">sim · 1 página · CTA grupo WhatsApp · 2h de trabalho</td></tr>
+          <tr class="border-t border-border bg-accent/5"><td class="p-2 font-mono text-accent2">D12</td><td class="p-2">Centralizar suas 10 pastas de projetos em <code class="bg-bg px-1 rounded text-xs">~/OTIMIZE/</code> (1 lugar só)?</td><td class="p-2 text-muted">sim · 30min seu + 2h minhas · NÃO bloqueia F6</td></tr>
+          <tr class="border-t border-border bg-accent2/5"><td class="p-2 font-mono text-accent2">D13</td><td class="p-2">Tema do workshop pago R$ 19 que abre pro pitch da comunidade?</td><td class="p-2 text-muted">"Crie seu assistente WhatsApp em 1 hora" · dor concreta · gancho quente</td></tr>
+          <tr class="border-t border-border bg-warn/5"><td class="p-2 font-mono text-accent2">D14</td><td class="p-2">Você já tem conta Hubla / Hotmart / Kiwify? <br/><span class="text-xs text-muted">Research 23 recomenda <strong class="text-warn">Hubla</strong> pra comunidade WhatsApp</span></td><td class="p-2 text-muted">se não tem · criar Hubla agora (taxa baixa · 8.9%)</td></tr>
+          <tr class="border-t border-border"><td class="p-2 font-mono text-accent2">D15</td><td class="p-2">Assinar HeyGen Creator US$ 29/mês pra avatar IA dos vídeos?</td><td class="p-2 text-muted">sim · vencedor PT-BR · mix 30% real + 70% avatar</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
   <div class="bg-gradient-to-br from-accent/10 to-accent2/10 border border-accent/40 rounded-xl p-6 text-center">
     <h4 class="font-bold mb-2">Pronto pra responder?</h4>
-    <p class="text-sm text-muted mb-4">Clica <strong class="text-accent">📋 Exportar</strong> no header e cola o resultado no chat comigo.</p>
-    <button id="btnExport2" class="px-5 py-2.5 rounded-lg bg-accent text-bg font-semibold hover:bg-accent/90"><i data-lucide="clipboard-copy" class="inline w-4 h-4 mr-1"></i> Exportar minhas decisões</button>
+    <p class="text-sm text-muted mb-4">Responda no chat assim: <code class="bg-bg px-2 py-1 rounded text-xs">D1=C, D2=sim, D3=ok default, D6=otimize.digital, D7=não, D8-D15=defaults ok</code> · ou ajusta o que quiser.</p>
+    <button id="btnExport2" class="px-5 py-2.5 rounded-lg bg-accent text-bg font-semibold hover:bg-accent/90"><i data-lucide="clipboard-copy" class="inline w-4 h-4 mr-1"></i> Exportar minhas decisões D1-D7</button>
   </div>
 </section>
 
