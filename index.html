@@ -157,7 +157,8 @@ tailwind.config = {
   <div class="bg-gradient-to-br from-surface to-surface2 border border-border rounded-xl p-6 mb-8">
     <h3 class="font-bold mb-3 flex items-center gap-2"><i data-lucide="zap" class="w-5 h-5 text-accent"></i> TL;DR</h3>
     <ul class="space-y-2 text-sm">
-      <li class="flex gap-2"><span class="text-accent">▸</span> <span><strong>Topologia:</strong> 1 mestre JAQUE + 6 subagents nomes do futebol (Ronaldinho · Rivaldo · Fenômeno · Kaká · Dida · Neymar) · D16 confirmado.</span></li>
+      <li class="flex gap-2"><span class="text-accent">▸</span> <span><strong>Topologia:</strong> 1 mestre JAQUE + 7 subagents nomes do futebol (Ronaldinho · Rivaldo · Fenômeno · Kaká · Dida · Neymar · Pelé) · D2+D4+D16 confirmados.</span></li>
+      <li class="flex gap-2"><span class="text-ok">▸</span> <span><strong>Auto-aprendizado (NOVO 21/mai):</strong> Jaque consulta <code>brain/01-skills/</code> ANTES de tentar fix. 8 skills cristalizadas. Quebrou 2x = vira skill obrigatória. Inspirado MetaClaw/Hermes/GenericAgent.</span></li>
       <li class="flex gap-2"><span class="text-accent">▸</span> <span><strong>LLM via LiteLLM gateway:</strong> DeepSeek V3.2 (95% operação) · Sonnet 4.5 API (5% deep) · Gemini 2.5 Flash Lite free (heartbeats). ToS OAuth BANIDO (Plus/Pro/Max não pode em automação OpenClaw).</span></li>
       <li class="flex gap-2"><span class="text-accent">▸</span> <span><strong>Cap R$5/dia hardcoded</strong> (D17) · Jaque pausa automático ao atingir + pede autorização Igor.</span></li>
       <li class="flex gap-2"><span class="text-accent">▸</span> <span><strong>Segurança:</strong> SOPS+age para segredos · Cloudflare Tunnel com 2 apps separadas · whitelist Telegram user_id + canary tokens.</span></li>
@@ -194,9 +195,9 @@ tailwind.config = {
 </section>
 
 <section id="feito-hoje" class="fade-in scroll-mt-20">
-  <p class="text-xs font-mono uppercase tracking-widest mb-2" style="color:#fbbf24">01-NOVO · Feito autonomo 20/mai/2026</p>
-  <h2 class="text-3xl font-bold mb-4">Hoje foi feito · em <span style="color:#fbbf24">amarelo</span> · 7 itens entregues.</h2>
-  <p class="text-muted mb-6 max-w-3xl">Igor autorizou modo autonomo · Claude executou 7 melhorias sem intervir · validacao 2x cada · QA profissional.</p>
+  <p class="text-xs font-mono uppercase tracking-widest mb-2" style="color:#fbbf24">01-NOVO · Feito 20-21/mai/2026 (sessões consecutivas)</p>
+  <h2 class="text-3xl font-bold mb-4">Foram entregues · <span style="color:#fbbf24">amarelo</span> 20/mai · <span style="color:#10b981">verde</span> 21/mai · 15 itens totais.</h2>
+  <p class="text-muted mb-6 max-w-3xl">Igor autorizou modo autônomo · Claude executou 15 melhorias sem intervir · validação 2x cada · QA profissional. Sessões 20/mai (7 itens) e 21/mai (8 itens · skill crystallization + memória persistente + perfil + mapa).</p>
 
   <div class="grid md:grid-cols-2 gap-4 mb-8">
     <div class="bg-surface border-2 rounded-xl p-5" style="border-color:#fbbf24">
@@ -275,19 +276,112 @@ tailwind.config = {
       </div>
       <p class="text-sm">Descobri Jaque travando porque Chrome do bot Freepik comia toda RAM da VPS. Liberei caches · parei LiteLLM idle · health response caiu de 10 segundos pra 12 milissegundos.</p>
     </div>
+
+    <div class="bg-surface border-2 rounded-xl p-5" style="border-color:#10b981">
+      <div class="flex items-start gap-3 mb-2">
+        <span class="text-2xl">8️⃣</span>
+        <div class="flex-1">
+          <h3 class="font-bold text-ok">Skill Crystallization v1.0 (21/mai)</h3>
+          <p class="text-xs text-muted">Auto-aprendizado · Jaque autodidata</p>
+        </div>
+      </div>
+      <p class="text-sm">Sistema novo de "memória evolutiva" implementado. Jaque agora consulta <code>brain/01-skills/</code> ANTES de tentar qualquer fix do zero. 8 skills reais cristalizadas (timeout LLM · RAM Chrome · DNS pós-migração · SSL SNI · Docker symlink · sub-agent race · setup Mac · wake-on-demand). Próxima vez que problema repetir = resolve em segundos. Inspirado MetaClaw/Hermes/GenericAgent (boas práticas 2026).</p>
+    </div>
+
+    <div class="bg-surface border-2 rounded-xl p-5" style="border-color:#10b981">
+      <div class="flex items-start gap-3 mb-2">
+        <span class="text-2xl">9️⃣</span>
+        <div class="flex-1">
+          <h3 class="font-bold text-ok">MEMORY workspace Jaque populado (21/mai)</h3>
+          <p class="text-xs text-muted">Antes 0 bytes · agora boot context completo</p>
+        </div>
+      </div>
+      <p class="text-sm">O arquivo que Jaque lê toda vez que inicia conversa estava VAZIO. Agora tem 119 linhas com tudo essencial: quem ela é · quem é Igor · 8 regras críticas · estado atual sistema · mapa de onde achar contexto profundo · skills crystallization. Igor nunca mais perde contexto entre sessões.</p>
+    </div>
+
+    <div class="bg-surface border-2 rounded-xl p-5" style="border-color:#10b981">
+      <div class="flex items-start gap-3 mb-2">
+        <span class="text-2xl">🔟</span>
+        <div class="flex-1">
+          <h3 class="font-bold text-ok">SECOND_BRAIN_INDEX.md v2.0 (21/mai)</h3>
+          <p class="text-xs text-muted">Era duplicata · agora índice navegação real</p>
+        </div>
+      </div>
+      <p class="text-sm">O "mapa de navegação" do sistema era cópia idêntica do MEMORY.md (lixo redundante). Refatorado em ÍNDICE REAL: tabela "tô buscando X → vai aqui". 10 perguntas frequentes mapeadas (idade Igor · custos negócios · sistemas produção · acesso VPS · etc). Jaque acha qualquer coisa em segundos.</p>
+    </div>
+
+    <div class="bg-surface border-2 rounded-xl p-5" style="border-color:#10b981">
+      <div class="flex items-start gap-3 mb-2">
+        <span class="text-2xl">1️⃣1️⃣</span>
+        <div class="flex-1">
+          <h3 class="font-bold text-ok">Auto-save brain v2 universal (21/mai)</h3>
+          <p class="text-xs text-muted">PC Windows + Mac + Jaque · 1 cérebro só</p>
+        </div>
+      </div>
+      <p class="text-sm">Hook Python no Claude Code do PC + Mac. Após cada turno: detecta triggers PT-BR ("salva no brain", "memoriza", "anota") · commit + push GitHub automático. Mac configurado via 1 prompt (Igor confirmou commit b4b8712). Cron 5min no VPS sincroniza Jaque. Todo conhecimento sobrevive entre sessões/dispositivos.</p>
+    </div>
+
+    <div class="bg-surface border-2 rounded-xl p-5" style="border-color:#10b981">
+      <div class="flex items-start gap-3 mb-2">
+        <span class="text-2xl">1️⃣2️⃣</span>
+        <div class="flex-1">
+          <h3 class="font-bold text-ok">Perfil Igor expandido (21/mai)</h3>
+          <p class="text-xs text-muted">USER.md 59 → 76 linhas · vida + IA + princípios</p>
+        </div>
+      </div>
+      <p class="text-sm">Adicionado: idade 36 (aniv 25/05) · Monique 37 (13/05) · cachorra Mel · Tiggo 7 (avaliando elétrico) · solar (avaliando) · 4 assinaturas IA (R$ 2k/mês real) · 10 princípios não-negociáveis (incluindo "Trabalho ACIMA da média" e "Faço ANTES de delegar"). Jaque agora conhece Igor como pessoa · não só como cliente técnico.</p>
+    </div>
+
+    <div class="bg-surface border-2 rounded-xl p-5" style="border-color:#10b981">
+      <div class="flex items-start gap-3 mb-2">
+        <span class="text-2xl">1️⃣3️⃣</span>
+        <div class="flex-1">
+          <h3 class="font-bold text-ok">Custos reais negócios documentados (21/mai)</h3>
+          <p class="text-xs text-muted">Higgsfield · Tá na Mão · CRM CAC</p>
+        </div>
+      </div>
+      <p class="text-sm">Higgsfield Ultra $130/mês (R$ 550-600) avaliando downgrade pro $49. Tá na Mão: margem REAL 85,2% (era 95,6% sem Supabase R$ 250 fixo + R$ 0,11/foto). OTIMIZE CRM: CAC R$ 200/cliente (Ronaldinho responsável · pendente quantificar LTV/churn).</p>
+    </div>
+
+    <div class="bg-surface border-2 rounded-xl p-5" style="border-color:#10b981">
+      <div class="flex items-start gap-3 mb-2">
+        <span class="text-2xl">1️⃣4️⃣</span>
+        <div class="flex-1">
+          <h3 class="font-bold text-ok">Tá na Mão MRR atualizado (21/mai)</h3>
+          <p class="text-xs text-muted">R$ 750 → R$ 2.799,95 · 25 clientes</p>
+        </div>
+      </div>
+      <p class="text-sm">Crescimento 3,7x desde último update no segundo cérebro. 25 clientes pagos. Parte Igor ~R$ 1.400/mês (50/50 Nando). Receita total Igor atualizada R$ 8,5k → R$ 9,15k/mês. Documentado em 04-areas/ta-na-mao-saas/README.md.</p>
+    </div>
+
+    <div class="bg-surface border-2 rounded-xl p-5" style="border-color:#10b981">
+      <div class="flex items-start gap-3 mb-2">
+        <span class="text-2xl">1️⃣5️⃣</span>
+        <div class="flex-1">
+          <h3 class="font-bold text-ok">Mapa github.io atualizado (21/mai)</h3>
+          <p class="text-xs text-muted">Este mapa · agora reflete realidade</p>
+        </div>
+      </div>
+      <p class="text-sm">Este mapa público estava defasado (receita R$ 8,5k · 21 decisões · 1+6 sub-agents · phases F6.10). Atualizado: R$ 9,15k · 29 decisões · 1+7 (Pelé incluso) · 8 skills cristalizadas · pendências reduzidas · 11 novas decisões D19-D29 acrescentadas.</p>
+    </div>
   </div>
 
   <div class="bg-gradient-to-br from-surface to-surface2 border-2 rounded-xl p-6 mb-8" style="border-color:#fbbf24">
-    <h3 class="font-bold mb-3 flex items-center gap-2" style="color:#fbbf24"><i data-lucide="alert-triangle" class="w-5 h-5"></i> Pendências (precisam Igor agir)</h3>
+    <h3 class="font-bold mb-3 flex items-center gap-2" style="color:#fbbf24"><i data-lucide="alert-triangle" class="w-5 h-5"></i> Pendências atualizadas 21/mai (precisam Igor agir)</h3>
+    <p class="text-xs text-muted mb-3">✅ <strong class="text-ok">Resolvido hoje:</strong> Nameservers (DNS OK · 6 subdomínios SSL Let's Encrypt) · Chrome RAM (wake-on-demand implementado · economia 1.7GB) · Debounce Telegram (10s → 5s nativo).</p>
     <ol class="space-y-3 text-sm">
-      <li><strong>1. Nameservers otimize.digital:</strong> Você clicou "Continuar para a ativação". Agora Cloudflare verifica em 5-30min. Depois URLs gateway/netdata/uptime/litellm.otimize.digital funcionam.</li>
-      <li><strong>2. Chrome bot Freepik consumindo RAM:</strong> Bot rodando 24/7 · 6 processos · 2GB RAM. Sugestão: parar quando não usar (comando: <code>pkill -f freepik-bot</code>) ou colocar limite memória Docker.</li>
-      <li><strong>3. LP imersaoIA finalizar:</strong> Rascunho HTML pronto · falta data workshop · Hotmart product ID · foto sua real (não emoji).</li>
-      <li><strong>4. HeyGen vs Higgsfield:</strong> Não testou ainda. Pra decidir qual usar pra avatar AI.</li>
-      <li><strong>5. Backup B2 (offsite):</strong> Não criou conta. Sem backup fora · só snapshot Hostinger. Risco se algo apagar.</li>
-      <li><strong>6. SSH chave ed25519:</strong> Senha SSH ainda em uso. Sugerido trocar por chave criptográfica · mais seguro.</li>
-      <li><strong>7. MCPs container:</strong> Helena · Higgsfield · Canva conectados no Claude Desktop · mas agentes Jaque sub-agentes não veem ainda.</li>
-      <li><strong>8. Testes OWASP 14/20 falhando:</strong> Precisa implementar Ed25519 signature memory · canary tokens · circuit breaker timeout. Trabalho futuro.</li>
+      <li><strong>1. LP imersaoIA finalizar:</strong> Rascunho HTML pronto · falta data workshop · Hotmart product ID · foto sua real (não emoji).</li>
+      <li><strong>2. HeyGen vs Higgsfield (D15+D21+D24):</strong> Higgsfield Ultra $130/mês atual. Testar HeyGen Creator $29/mês. Decidir manter/downgrade Higgsfield $49/mês.</li>
+      <li><strong>3. Backup B2 (offsite) (D7):</strong> Não criou conta. Sem backup fora · só snapshot Hostinger. Risco se algo apagar.</li>
+      <li><strong>4. SSH chave ed25519:</strong> Senha SSH ainda em uso. Sugerido trocar por chave criptográfica · mais seguro.</li>
+      <li><strong>5. MCPs container Jaque:</strong> Helena · Higgsfield · Canva conectados no Claude Desktop · mas sub-agents Jaque não veem ainda.</li>
+      <li><strong>6. Testes OWASP 14/20 falhando:</strong> Precisa Ed25519 signature memory · canary tokens · circuit breaker timeout. Trabalho futuro.</li>
+      <li><strong>7. Webhook Mercado Livre:</strong> Sistema ML legado apagado mas webhook em developers.mercadolivre.com.br ainda ativo (Igor desconfigurar manualmente).</li>
+      <li><strong>8. Bind mount Docker permanente (F6.32):</strong> Hoje cópia manual via <code>docker cp</code> entre VPS host e container. Permanente eliminaria sync manual.</li>
+      <li><strong>9. LiteLLM cap R$ 5/dia enforcement real (D17):</strong> Documentado · cost-tracker monitora · MAS sem hard-stop código. Hoje depende boa-fé LLM.</li>
+      <li><strong>10. OTIMIZE CRM Helena quantificar (D26):</strong> CAC R$ 200 documentado · falta LTV · churn · margem · clientes ativos · ticket médio.</li>
+      <li><strong>11. SOUL próprio dos 7 sub-agents:</strong> Cada Ronaldinho · Rivaldo · Fenômeno · Kaká · Dida · Neymar · Pelé tem cargo definido mas falta manual próprio (próxima fase F6.33).</li>
+      <li><strong>12. Decisões avaliando (D19+D20+D21+D24):</strong> Carro elétrico · solar · HeyGen · Higgsfield downgrade. Estudar ROI cada uma.</li>
     </ol>
   </div>
 </section>
@@ -313,11 +407,11 @@ tailwind.config = {
     <tr style="background:rgba(251,191,36,.08)"><td class="p-2 font-mono">D2</td><td class="p-2">1 mestre Jaque + 6 subs</td><td class="p-2" style="color:#fbbf24">✓ Feito</td><td class="p-2 text-muted">Topologia configurada. Pelé (7º · LP/copy) adicionado depois.</td></tr>
     <tr style="background:rgba(251,191,36,.08)"><td class="p-2 font-mono">D3</td><td class="p-2">13 destructive actions com /confirmar</td><td class="p-2" style="color:#fbbf24">✓ Feito</td><td class="p-2 text-muted">exec-approvals.json aplicado VPS.</td></tr>
     <tr style="background:rgba(251,191,36,.08)"><td class="p-2 font-mono">D4</td><td class="p-2">Topologia 1+6 confirmada</td><td class="p-2" style="color:#fbbf24">✓ Feito</td><td class="p-2 text-muted">Idem D2.</td></tr>
-    <tr style="background:rgba(239,68,68,.08)"><td class="p-2 font-mono">D5</td><td class="p-2">Active Memory plugin (A) + markdown fallback (B)</td><td class="p-2 text-danger">⚠ Parcial</td><td class="p-2 text-muted">Plugin nativo OpenClaw existe (memory-core) · markdown Plano B feito ~/OTIMIZE/memory · validação 24h não rodada.</td></tr>
-    <tr style="background:rgba(239,68,68,.08)"><td class="p-2 font-mono">D6</td><td class="p-2">otimize.digital domínio</td><td class="p-2 text-danger">✗ Pendente</td><td class="p-2 text-muted">Domínio existe Igor · Cloudflare Tunnel NÃO configurado · IP cru ainda.</td></tr>
+    <tr style="background:rgba(251,191,36,.08)"><td class="p-2 font-mono">D5</td><td class="p-2">Active Memory plugin (A) + markdown fallback (B)</td><td class="p-2" style="color:#fbbf24">✓ Feito</td><td class="p-2 text-muted">Skill crystallization v1.0 implementada 21/mai · 8 skills cristalizadas em brain/01-skills/ · Jaque consulta antes de fix · self-evolving.</td></tr>
+    <tr style="background:rgba(251,191,36,.08)"><td class="p-2 font-mono">D6</td><td class="p-2">otimize.digital domínio</td><td class="p-2" style="color:#fbbf24">✓ Feito</td><td class="p-2 text-muted">6 subdomínios SSL Let's Encrypt OK · grupos · maquinadefotos · conteudo · captacao · leads · imersaoIA · validado Chrome MCP 20/mai.</td></tr>
     <tr style="background:rgba(239,68,68,.08)"><td class="p-2 font-mono">D7</td><td class="p-2">Backup B2 Object Lock</td><td class="p-2 text-danger">✗ Pendente</td><td class="p-2 text-muted">Conta B2 não criada · sem backup offsite · só snapshot Hostinger.</td></tr>
     <tr style="background:rgba(251,191,36,.08)"><td class="p-2 font-mono">D8</td><td class="p-2">SOUL via Claude desktop</td><td class="p-2" style="color:#fbbf24">✓ Feito</td><td class="p-2 text-muted">SOUL/IDENTITY/USER/AGENTS criados 8 agents (Jaque + 7 subs).</td></tr>
-    <tr style="background:rgba(239,68,68,.08)"><td class="p-2 font-mono">D9</td><td class="p-2">Debounce 10s Telegram</td><td class="p-2 text-danger">✗ Pendente</td><td class="p-2 text-muted">OpenClaw 2026.5.7 sem flag nativo · precisa plugin custom · documentado · não implementado.</td></tr>
+    <tr style="background:rgba(251,191,36,.08)"><td class="p-2 font-mono">D9</td><td class="p-2">Debounce 5s Telegram (era 10s)</td><td class="p-2" style="color:#fbbf24">✓ Feito</td><td class="p-2 text-muted">Aplicado nativamente messages.inbound.debounceMs · OpenClaw 2026.5.18 · Igor mudou pra 5s 20/mai.</td></tr>
     <tr style="background:rgba(251,191,36,.08)"><td class="p-2 font-mono">D10</td><td class="p-2">BLOCKED list (vazia inicial)</td><td class="p-2" style="color:#fbbf24">✓ Feito</td><td class="p-2 text-muted">Vazia conforme plano.</td></tr>
     <tr style="background:rgba(239,68,68,.08)"><td class="p-2 font-mono">D11</td><td class="p-2">LP imersaoIA.otimize.digital</td><td class="p-2 text-danger">⚠ Parcial</td><td class="p-2 text-muted">Rascunho HTML criado · falta foto Igor · data workshop · Hotmart product ID.</td></tr>
     <tr style="background:rgba(251,191,36,.08)"><td class="p-2 font-mono">D12</td><td class="p-2">Centralizar ~/OTIMIZE/ Bruno Second Brain</td><td class="p-2" style="color:#fbbf24">✓ Feito</td><td class="p-2 text-muted">Estrutura 72KB · 9 arquivos · Git init + commit.</td></tr>
@@ -331,6 +425,17 @@ tailwind.config = {
     <tr style="background:rgba(251,191,36,.08)"><td class="p-2 font-mono">D-T9</td><td class="p-2">Bruno Second Brain</td><td class="p-2" style="color:#fbbf24">✓ Feito</td><td class="p-2 text-muted">Context+Skills+Routines + Git versioned.</td></tr>
     <tr style="background:rgba(251,191,36,.08)"><td class="p-2 font-mono">D-E1</td><td class="p-2">Rota C Tmux Claude Max MORTA (ToS)</td><td class="p-2" style="color:#fbbf24">✓ Confirmado</td><td class="p-2 text-muted">Banido conforme ToS Anthropic 20/fev.</td></tr>
     <tr style="background:rgba(251,191,36,.08)"><td class="p-2 font-mono">D-E5</td><td class="p-2">Cache 90% Anthropic + B2 + CF Worker</td><td class="p-2" style="color:#fbbf24">✓ Cache</td><td class="p-2 text-muted">Cache 90% validado (2x calls reais). B2 + CF Worker pendentes.</td></tr>
+    <tr style="background:rgba(16,185,129,.10);border-top:2px solid #10b981"><td class="p-2 font-mono">D19</td><td class="p-2">Carro elétrico avaliação</td><td class="p-2 text-warn">⏳ Avaliando</td><td class="p-2 text-muted">Substituir Tiggo 7 TXS · motivo economia combustível · estudar ROI 21/mai.</td></tr>
+    <tr style="background:rgba(16,185,129,.10)"><td class="p-2 font-mono">D20</td><td class="p-2">Energia solar casa Campinas</td><td class="p-2 text-warn">⏳ Avaliando</td><td class="p-2 text-muted">Economia luz + abastecimento futuro carro elétrico · payback 4-7 anos.</td></tr>
+    <tr style="background:rgba(16,185,129,.10)"><td class="p-2 font-mono">D21</td><td class="p-2">HeyGen Creator $29 vs Higgsfield $130</td><td class="p-2 text-warn">⏳ Avaliando</td><td class="p-2 text-muted">Produção conteúdo escala · comparar HeyGen Creator com Higgsfield Ultra atual ($130/mês).</td></tr>
+    <tr style="background:rgba(16,185,129,.10)"><td class="p-2 font-mono">D22</td><td class="p-2">Tá na Mão MRR atualizado</td><td class="p-2" style="color:#10b981">✓ Mudou pra melhor</td><td class="p-2 text-muted">R$ 750 → R$ 2.799,95 MRR · 25 clientes pagos · 50/50 Nando · parte Igor ~R$ 1.400 (21/mai).</td></tr>
+    <tr style="background:rgba(16,185,129,.10)"><td class="p-2 font-mono">D23</td><td class="p-2">10 princípios não-negociáveis Igor</td><td class="p-2" style="color:#10b981">✓ Documentado</td><td class="p-2 text-muted">Era 8 · +#9 Trabalho ACIMA da média +#10 Faço ANTES de delegar · em USER.md.</td></tr>
+    <tr style="background:rgba(16,185,129,.10)"><td class="p-2 font-mono">D24</td><td class="p-2">Higgsfield $130 → $49 downgrade?</td><td class="p-2 text-warn">⏳ Avaliando</td><td class="p-2 text-muted">Ultra atual $130/mês (~R$ 550-600) · plano $49 (~R$ 250-300) ou alternativa free.</td></tr>
+    <tr style="background:rgba(16,185,129,.10)"><td class="p-2 font-mono">D25</td><td class="p-2">Tá na Mão margem REAL 85,2%</td><td class="p-2" style="color:#10b981">✓ Corrigido</td><td class="p-2 text-muted">Era 95,6% (sem Supabase) · real 85,2% inclui R$ 250/mês fixo Supabase + R$ 0,11/foto.</td></tr>
+    <tr style="background:rgba(16,185,129,.10)"><td class="p-2 font-mono">D26</td><td class="p-2">OTIMIZE CRM CAC R$ 200/cliente</td><td class="p-2" style="color:#fbbf24">✓ Documentado</td><td class="p-2 text-muted">CAC por novo cliente · Ronaldinho responsável · pendente quantificar LTV/churn/margem.</td></tr>
+    <tr style="background:rgba(16,185,129,.10)"><td class="p-2 font-mono">D27</td><td class="p-2">Sistema Skill Crystallization v1.0</td><td class="p-2" style="color:#10b981">✓ NOVO</td><td class="p-2 text-muted">brain/01-skills/ · 4 docs estrutura + 8 skills reais cristalizadas · Jaque grep ANTES de fix · regra quebrou 2x = skill obrigatória.</td></tr>
+    <tr style="background:rgba(16,185,129,.10)"><td class="p-2 font-mono">D28</td><td class="p-2">MEMORY.md workspace Jaque populado</td><td class="p-2" style="color:#10b981">✓ NOVO</td><td class="p-2 text-muted">Era 0 bytes · boot context com 8 regras críticas + estado sistema + mapa contexto profundo.</td></tr>
+    <tr style="background:rgba(16,185,129,.10)"><td class="p-2 font-mono">D29</td><td class="p-2">SECOND_BRAIN_INDEX.md v2.0</td><td class="p-2" style="color:#10b981">✓ NOVO</td><td class="p-2 text-muted">De duplicata MEMORY.md PC → índice navegação real · 10 perguntas frequentes → doc + snapshot executivo.</td></tr>
     </tbody>
   </table>
   </div>
