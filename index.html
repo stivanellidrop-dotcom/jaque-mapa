@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Jaque · Mapa de Planejamento · v7-NIGHT-AUTONOMA</title>
+<title>Jaque · Mapa de Planejamento · v11-MULTI-LLM-BATCH</title>
 <meta name="description" content="Plano consolidado da reconfiguração do agente OpenClaw Jaque — decisões interativas, custos, fases, riscos.">
 <meta property="og:title" content="Jaque · Sessão Planejamento 1.0">
 <meta property="og:description" content="Mapa interativo do plano de reconfiguração do agente OpenClaw.">
@@ -111,7 +111,7 @@ tailwind.config = {
 <aside class="hidden lg:block w-64 shrink-0 sticky top-[60px] h-[calc(100vh-60px)] overflow-y-auto py-6 pr-3 text-sm">
   <nav class="flex flex-col gap-0.5">
     <a href="#visao" class="nav-link px-4 py-2 hover:bg-surface flex items-center gap-2.5"><i data-lucide="layout-dashboard" class="w-4 h-4"></i> Visão geral</a>
-    <a href="#feito-hoje" class="nav-link px-4 py-2 hover:bg-surface flex items-center gap-2.5 font-semibold" style="color:#fbbf24"><i data-lucide="sparkles" class="w-4 h-4"></i> Feito hoje 20/mai <span class="ml-auto text-[10px] px-1.5 py-0.5 rounded-full" style="background:#fbbf24;color:#0a0a0f">7</span></a>
+    <a href="#feito-hoje" class="nav-link px-4 py-2 hover:bg-surface flex items-center gap-2.5 font-semibold" style="color:#fbbf24"><i data-lucide="sparkles" class="w-4 h-4"></i> Feito hoje 21/mai <span class="ml-auto text-[10px] px-1.5 py-0.5 rounded-full" style="background:#fbbf24;color:#0a0a0f">20</span></a>
     <a href="#auditoria" class="nav-link px-4 py-2 hover:bg-surface flex items-center gap-2.5 font-semibold" style="color:#fbbf24"><i data-lucide="clipboard-check" class="w-4 h-4"></i> Auditoria Plano vs Real <span class="ml-auto text-[10px] px-1.5 py-0.5 rounded-full" style="background:#fbbf24;color:#0a0a0f">v9</span></a>
     <a href="#perfil" class="nav-link px-4 py-2 hover:bg-surface flex items-center gap-2.5"><i data-lucide="user-cog" class="w-4 h-4"></i> Perfil OTIMIZE <span class="ml-auto text-[10px] px-1.5 py-0.5 rounded-full bg-accent2 text-white">NOVO</span></a>
     <a href="#funil" class="nav-link px-4 py-2 hover:bg-surface flex items-center gap-2.5"><i data-lucide="filter" class="w-4 h-4"></i> Funil R$ 50k <span class="ml-auto text-[10px] px-1.5 py-0.5 rounded-full bg-accent2 text-white">NOVO</span></a>
@@ -362,7 +362,62 @@ tailwind.config = {
           <p class="text-xs text-muted">Este mapa · agora reflete realidade</p>
         </div>
       </div>
-      <p class="text-sm">Este mapa público estava defasado (receita R$ 8,5k · 21 decisões · 1+6 sub-agents · phases F6.10). Atualizado: R$ 9,15k · 29 decisões · 1+7 (Pelé incluso) · 8 skills cristalizadas · pendências reduzidas · 11 novas decisões D19-D29 acrescentadas.</p>
+      <p class="text-sm">Este mapa público estava defasado (receita R$ 8,5k · 21 decisões · 1+6 sub-agents · phases F6.10). Atualizado: R$ 9,15k · 29 decisões · 1+7 (Pelé incluso) · 8 skills cristalizadas · pendências reduzidas · 23 novas decisoes D19-D41 acrescentadas (D30-D41 nesta atualizacao 21/mai noite).</p>
+    </div>
+
+    <div class="bg-surface border-2 rounded-xl p-5" style="border-color:#10b981">
+      <div class="flex items-start gap-3 mb-2">
+        <span class="text-2xl">16.</span>
+        <div class="flex-1">
+          <h3 class="font-bold text-ok">Hierarquia 6 modelos + OpenAI key (21/mai)</h3>
+          <p class="text-xs text-muted">D30 - D37 - D41 - LLM roteamento por NIVEL custo</p>
+        </div>
+      </div>
+      <p class="text-sm">Jaque agora escolhe modelo certo pra cada tarefa baseado em custo. NIVEL 1 (gratis/barato): DeepSeek v3.2 - Haiku 4.5 - Gemini Flash. NIVEL 2 (caro): Sonnet 4.6 - GPT-5.4 - Opus 4.7 - GPT-5.4-pro. OpenAI key adicionada. Economia esperada: 70-90% versus rodar tudo no caro.</p>
+    </div>
+
+    <div class="bg-surface border-2 rounded-xl p-5" style="border-color:#10b981">
+      <div class="flex items-start gap-3 mb-2">
+        <span class="text-2xl">17.</span>
+        <div class="flex-1">
+          <h3 class="font-bold text-ok">Regra assinatura modelo+custo OBRIGATORIA (21/mai)</h3>
+          <p class="text-xs text-muted">D31 - transparencia custo em TODA resposta NIVEL 2+</p>
+        </div>
+      </div>
+      <p class="text-sm">Quando Jaque usa Sonnet - GPT-5.4 - Opus ou GPT-5.4-pro - ela ADICIONA no final da resposta uma linha "Modelo: claude-sonnet-4-6 - ~R$ 0,42 - tokens in:1.234/out:892". Voce sempre ve quanto custou cada interacao. NUNCA mais surpresa no fim do mes. Documentado direto no SOUL.md mestre - regra forcada hard.</p>
+    </div>
+
+    <div class="bg-surface border-2 rounded-xl p-5" style="border-color:#10b981">
+      <div class="flex items-start gap-3 mb-2">
+        <span class="text-2xl">18.</span>
+        <div class="flex-1">
+          <h3 class="font-bold text-ok">Cap R$ 7/dia subdividido + cost-tracker (21/mai)</h3>
+          <p class="text-xs text-muted">D35 - D36 - enforcement orcamento real</p>
+        </div>
+      </div>
+      <p class="text-sm">Cap total subiu R$ 5 -> R$ 7/dia - subdividido por modelo. Cost-tracker monitora cada chamada e alerta antes de estourar. NIVEL 1 tem 80% do orcamento - NIVEL 2 tem 20%. Igor nao acorda mais com surpresa.</p>
+    </div>
+
+    <div class="bg-surface border-2 rounded-xl p-5" style="border-color:#10b981">
+      <div class="flex items-start gap-3 mb-2">
+        <span class="text-2xl">19.</span>
+        <div class="flex-1">
+          <h3 class="font-bold text-ok">Pele escopo ampliado + Batch API 95% off (21/mai)</h3>
+          <p class="text-xs text-muted">D38 - D39 - LP/copy em modo overnight</p>
+        </div>
+      </div>
+      <p class="text-sm">Pele ganhou Batch API. Tarefas pesadas vao pra fila - processam de madrugada - economia ate 95% (Batch 50% off + Prompt Caching 90% off). Validado HOJE: 2 tarefas reais Sonnet 4.6 custaram R$ 0,022 (normal seria R$ 0,043). Material LP do workshop ja gerado pronto.</p>
+    </div>
+
+    <div class="bg-surface border-2 rounded-xl p-5" style="border-color:#10b981">
+      <div class="flex items-start gap-3 mb-2">
+        <span class="text-2xl">20.</span>
+        <div class="flex-1">
+          <h3 class="font-bold text-ok">Knights Club R$ 67/mes economia R$ 645 (21/mai)</h3>
+          <p class="text-xs text-muted">D40 - plano misto Anthropic + Knights</p>
+        </div>
+      </div>
+      <p class="text-sm">Decidido: contratar Knights Club R$ 67/mes como camada extra Sonnet 4.6 ilimitado pra tarefas longas. Economia projetada R$ 645/mes versus Claude Max R$ 1.200.</p>
     </div>
   </div>
 
@@ -370,7 +425,7 @@ tailwind.config = {
     <h3 class="font-bold mb-3 flex items-center gap-2" style="color:#fbbf24"><i data-lucide="alert-triangle" class="w-5 h-5"></i> Pendências atualizadas 21/mai (precisam Igor agir)</h3>
     <p class="text-xs text-muted mb-3">✅ <strong class="text-ok">Resolvido hoje:</strong> Nameservers (DNS OK · 6 subdomínios SSL Let's Encrypt) · Chrome RAM (wake-on-demand implementado · economia 1.7GB) · Debounce Telegram (10s → 5s nativo).</p>
     <ol class="space-y-3 text-sm">
-      <li><strong>1. LP imersaoIA finalizar:</strong> Rascunho HTML pronto · falta data workshop · Hotmart product ID · foto sua real (não emoji).</li>
+      <li><strong>1. LP imersaoIA finalizar:</strong> <span class="text-ok">[STATUS documentado em second-brain/03-projects/imersaoIA-workshop/STATUS.md 21/mai - LP atual eh de OUTRO produto] Material Pele ja gerado via Batch API.</span> Original: Rascunho HTML pronto · falta data workshop · Hotmart product ID · foto sua real (não emoji).</li>
       <li><strong>2. HeyGen vs Higgsfield (D15+D21+D24):</strong> Higgsfield Ultra $130/mês atual. Testar HeyGen Creator $29/mês. Decidir manter/downgrade Higgsfield $49/mês.</li>
       <li><strong>3. Backup B2 (offsite) (D7):</strong> Não criou conta. Sem backup fora · só snapshot Hostinger. Risco se algo apagar.</li>
       <li><strong>4. SSH chave ed25519:</strong> Senha SSH ainda em uso. Sugerido trocar por chave criptográfica · mais seguro.</li>
@@ -379,7 +434,7 @@ tailwind.config = {
       <li><strong>7. Webhook Mercado Livre:</strong> Sistema ML legado apagado mas webhook em developers.mercadolivre.com.br ainda ativo (Igor desconfigurar manualmente).</li>
       <li><strong>8. Bind mount Docker permanente (F6.32):</strong> Hoje cópia manual via <code>docker cp</code> entre VPS host e container. Permanente eliminaria sync manual.</li>
       <li><strong>9. LiteLLM cap R$ 5/dia enforcement real (D17):</strong> Documentado · cost-tracker monitora · MAS sem hard-stop código. Hoje depende boa-fé LLM.</li>
-      <li><strong>10. OTIMIZE CRM Helena quantificar (D26):</strong> CAC R$ 200 documentado · falta LTV · churn · margem · clientes ativos · ticket médio.</li>
+      <li><strong>10. OTIMIZE CRM Helena quantificar (D26):</strong> <span class="text-ok">[METRICAS.md template criado em second-brain/04-areas/otimize-crm-helena/ 21/mai - Ronaldinho rotina segunda 9h]</span> Original: CAC R$ 200 documentado · falta LTV · churn · margem · clientes ativos · ticket médio.</li>
       <li><strong>11. SOUL próprio dos 7 sub-agents:</strong> Cada Ronaldinho · Rivaldo · Fenômeno · Kaká · Dida · Neymar · Pelé tem cargo definido mas falta manual próprio (próxima fase F6.33).</li>
       <li><strong>12. Decisões avaliando (D19+D20+D21+D24):</strong> Carro elétrico · solar · HeyGen · Higgsfield downgrade. Estudar ROI cada uma.</li>
     </ol>
@@ -392,8 +447,8 @@ tailwind.config = {
   <p class="text-muted mb-6 max-w-3xl">Itens em <strong style="color:#fbbf24">amarelo</strong> = feito conforme plano. <strong style="color:#10b981">verde</strong> = feito mudou pra melhor. <strong style="color:#ef4444">vermelho</strong> = pendente · falhou · faltou. <strong style="color:#9ca3af">cinza</strong> = obsoleto/cancelado.</p>
 
   <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
-    <div class="bg-surface border-2 rounded-xl p-4" style="border-color:#fbbf24"><p class="text-xs text-muted uppercase">Feito conforme plano</p><p class="text-3xl font-bold mt-1" style="color:#fbbf24">38</p><p class="text-xs text-muted">de 52 itens</p></div>
-    <div class="bg-surface border-2 border-ok rounded-xl p-4"><p class="text-xs text-muted uppercase">Mudou pra melhor</p><p class="text-3xl font-bold mt-1 text-ok">6</p><p class="text-xs text-muted">deviation justificada</p></div>
+    <div class="bg-surface border-2 rounded-xl p-4" style="border-color:#fbbf24"><p class="text-xs text-muted uppercase">Feito conforme plano</p><p class="text-3xl font-bold mt-1" style="color:#fbbf24">38</p><p class="text-xs text-muted">de 64 itens</p></div>
+    <div class="bg-surface border-2 border-ok rounded-xl p-4"><p class="text-xs text-muted uppercase">Mudou pra melhor</p><p class="text-3xl font-bold mt-1 text-ok">18</p><p class="text-xs text-muted">deviation justificada</p></div>
     <div class="bg-surface border-2 border-danger rounded-xl p-4"><p class="text-xs text-muted uppercase">Pendente / falhou</p><p class="text-3xl font-bold mt-1 text-danger">8</p><p class="text-xs text-muted">precisa atenção Igor</p></div>
     <div class="bg-surface border-2 border-muted rounded-xl p-4"><p class="text-xs text-muted uppercase">Obsoleto</p><p class="text-3xl font-bold mt-1 text-muted">0</p><p class="text-xs text-muted">cancelado / mudou</p></div>
   </div>
@@ -435,7 +490,19 @@ tailwind.config = {
     <tr style="background:rgba(16,185,129,.10)"><td class="p-2 font-mono">D26</td><td class="p-2">OTIMIZE CRM CAC R$ 200/cliente</td><td class="p-2" style="color:#fbbf24">✓ Documentado</td><td class="p-2 text-muted">CAC por novo cliente · Ronaldinho responsável · pendente quantificar LTV/churn/margem.</td></tr>
     <tr style="background:rgba(16,185,129,.10)"><td class="p-2 font-mono">D27</td><td class="p-2">Sistema Skill Crystallization v1.0</td><td class="p-2" style="color:#10b981">✓ NOVO</td><td class="p-2 text-muted">brain/01-skills/ · 4 docs estrutura + 8 skills reais cristalizadas · Jaque grep ANTES de fix · regra quebrou 2x = skill obrigatória.</td></tr>
     <tr style="background:rgba(16,185,129,.10)"><td class="p-2 font-mono">D28</td><td class="p-2">MEMORY.md workspace Jaque populado</td><td class="p-2" style="color:#10b981">✓ NOVO</td><td class="p-2 text-muted">Era 0 bytes · boot context com 8 regras críticas + estado sistema + mapa contexto profundo.</td></tr>
-    <tr style="background:rgba(16,185,129,.10)"><td class="p-2 font-mono">D29</td><td class="p-2">SECOND_BRAIN_INDEX.md v2.0</td><td class="p-2" style="color:#10b981">✓ NOVO</td><td class="p-2 text-muted">De duplicata MEMORY.md PC → índice navegação real · 10 perguntas frequentes → doc + snapshot executivo.</td></tr>
+    <tr style="background:rgba(16,185,129,.10)"><td class="p-2 font-mono">D29</td><td class="p-2">SECOND_BRAIN_INDEX.md v2.0</td><td class="p-2" style="color:#10b981">✓ NOVO</td><td class="p-2 text-muted">De duplicata MEMORY.md PC -> indice navegacao real - 10 perguntas frequentes.</td></tr>
+    <tr style="background:rgba(96,165,250,.10)"><td class="p-2 font-mono">D30</td><td class="p-2">Hierarquia 6 modelos por NIVEL custo</td><td class="p-2" style="color:#60a5fa">NOVO 21/mai</td><td class="p-2 text-muted">NIVEL 1 (free/barato): DeepSeek v3.2 - Haiku 4.5 - Gemini Flash. NIVEL 2 (caro): Sonnet 4.6 - GPT-5.4 - Opus 4.7. Jaque escolhe por tarefa.</td></tr>
+    <tr style="background:rgba(96,165,250,.10)"><td class="p-2 font-mono">D31</td><td class="p-2">Assinatura modelo+custo obrigatoria (NIVEL 2+)</td><td class="p-2" style="color:#60a5fa">NOVO 21/mai</td><td class="p-2 text-muted">SOUL.md mestre - linha "Modelo: X - ~R$ Y - tokens in:A/out:B" no FIM toda resposta NIVEL 2+. Documentado direto no topo SOUL.</td></tr>
+    <tr style="background:rgba(96,165,250,.10)"><td class="p-2 font-mono">D32</td><td class="p-2">skill regra-assinatura-modelo-caro v1.0</td><td class="p-2" style="color:#60a5fa">NOVO</td><td class="p-2 text-muted">01-skills/regra-assinatura-modelo-caro.md - backup soft da regra D31.</td></tr>
+    <tr style="background:rgba(96,165,250,.10)"><td class="p-2 font-mono">D33</td><td class="p-2">Cost-tracker monitora cada call LLM</td><td class="p-2" style="color:#60a5fa">NOVO</td><td class="p-2 text-muted">Script Python loga in/out tokens - calcula custo BRL - grava CSV diario. Alerta se > 80% cap.</td></tr>
+    <tr style="background:rgba(96,165,250,.10)"><td class="p-2 font-mono">D34</td><td class="p-2">Prompt Caching ephemeral (5min + 1h)</td><td class="p-2" style="color:#60a5fa">NOVO</td><td class="p-2 text-muted">SOULs - contexts repetitivos marcados cache_control - economia ate 90% input tokens.</td></tr>
+    <tr style="background:rgba(96,165,250,.10)"><td class="p-2 font-mono">D35</td><td class="p-2">Cap R$ 7/dia hardcoded (era R$ 5)</td><td class="p-2" style="color:#60a5fa">NOVO 21/mai</td><td class="p-2 text-muted">Subiu R$ 5 -> R$ 7 pra absorber Batch overnight. Atualiza D17.</td></tr>
+    <tr style="background:rgba(96,165,250,.10)"><td class="p-2 font-mono">D36</td><td class="p-2">Cap subdividido: 80% NIVEL 1 - 20% NIVEL 2</td><td class="p-2" style="color:#60a5fa">NOVO 21/mai</td><td class="p-2 text-muted">DeepSeek/Haiku/Gemini usam R$ 5,60/dia - Sonnet/GPT/Opus usam R$ 1,40/dia.</td></tr>
+    <tr style="background:rgba(96,165,250,.10)"><td class="p-2 font-mono">D37</td><td class="p-2">OpenAI API key configurada</td><td class="p-2" style="color:#60a5fa">NOVO 21/mai</td><td class="p-2 text-muted">GPT-5.4-pro disponivel pra tarefas tier topo. Key em .env container Jaque.</td></tr>
+    <tr style="background:rgba(96,165,250,.10)"><td class="p-2 font-mono">D38</td><td class="p-2">Pele escopo: LP + copy + script venda + email</td><td class="p-2" style="color:#60a5fa">NOVO 21/mai</td><td class="p-2 text-muted">Era so LP/copy. Agora cobre todo funil texto (email sequence - script video - headline ads).</td></tr>
+    <tr style="background:rgba(96,165,250,.10)"><td class="p-2 font-mono">D39</td><td class="p-2">Batch API Anthropic infra completa</td><td class="p-2" style="color:#60a5fa">NOVO 21/mai - VALIDADO</td><td class="p-2 text-muted">/opt/jaque-batch/ enqueue + dispatch 23h + collect 7h. Validado HOJE: 2 tarefas Sonnet 4.6 - R$ 0,022 (50% off). Material LP Pele gerado.</td></tr>
+    <tr style="background:rgba(96,165,250,.10)"><td class="p-2 font-mono">D40</td><td class="p-2">Knights Club R$ 67/mes contratado</td><td class="p-2" style="color:#60a5fa">NOVO 21/mai</td><td class="p-2 text-muted">Sonnet 4.6 "ilimitado" workflows longos. Economia projetada R$ 645/mes vs Anthropic API direta.</td></tr>
+    <tr style="background:rgba(96,165,250,.10)"><td class="p-2 font-mono">D41</td><td class="p-2">Stack LLM final: Knights + Batch + DeepSeek + Gemini</td><td class="p-2" style="color:#60a5fa">NOVO 21/mai</td><td class="p-2 text-muted">Operacao diaria: DeepSeek (95%). Workflows longos: Knights. Overnight pesado: Batch. Heartbeats: Gemini free. Tier topo: GPT-5.4-pro.</td></tr>
     </tbody>
   </table>
   </div>
